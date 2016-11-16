@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style >
+nav {
+    float: left;
+    max-width: 160px;
+    margin: 0;
+    padding: 1em;
+}
+nav ul a {
+    text-decoration: none;
+}
+article {
+    margin-left: 170px;
+    border-left: 1px solid gray;
+    padding: 1em;
+    overflow: hidden;
+    }
+</style>
+	<meta charset="ISO-8859-1">
+	<title>CouponSite</title>
+</head>
+<body id="createcompany">
+	<header>
+   		<h1>Welcome Admin</h1>
+	</header>
+
+<nav>
+  <ul>
+    <li><a href="#">Create Company</a></li>
+    <li><a href="#">Update Company</a></li>
+    <li><a href="#">Delete Company</a></li>
+    <li><a href="#">Find Company</a></li>
+    <li><a href="#">Get All Companies</a></li>
+    <br/>
+	<br/>
+    <li><a href="#">Create Customer</a></li>
+    <li><a href="#">Update Customer</a></li>
+    <li><a href="#">Delete Customer</a></li>
+    <li><a href="#">Find Customer</a></li>
+    <li><a href="#">Get All Customers</a></li>
+    
+  </ul>
+</nav>
+
+
+<article>
+  <h1>Create Company</h1>
+	<form action="company.html" method "post">
+				<div> 
+					Company ID: <input type="text" placeholder="Company ID"  name="companyid"/> 
+					<br/>
+					<br/>
+					  Company Name: <input type="text" placeholder="Company Name"  name="companyname"/> 			
+					<br/>
+					<br/>
+					  Password: <input type="text" placeholder="Password"  name="password"/> 
+					<br/>
+					<br/>
+					  Email: <input type="text" placeholder="Email"  name="email"/>
+					<br/>
+					<br/>
+					<br/>
+					<input type="Submit" />
+				</div>		
+	</form>
+</article>
+</body>
+
+<article>
+  <h1>Create Customer</h1>
+<body id="customer">
+	<form action="customer.html" method "post">
+				<div> 
+					Customer ID: <input type="text" placeholder="Customer ID"  name="customerid"/> 
+					<br/>
+					<br/>
+					  Customer Name: <input type="text" placeholder="Customer Name"  name="customername"/> 			
+					<br/>
+					<br/>
+					  Password: <input type="text" placeholder="Password"  name="password"/> 
+					<br/>
+					<br/>
+					  Email: <input type="text" placeholder="Email"  name="email"/>
+					<br/>
+					<br/>
+					<br/>
+					<input type="Submit" />
+				</div>		
+	</form>
+</body>
+</article>
+
+</body>
+</html>

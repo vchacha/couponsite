@@ -34,7 +34,7 @@ public class CompanyService {
 		couponClientFacadeCompany.createCoupon(tempCouponDO);
 	}
 
-	@Path("/removeCoupon/couponId={couponId}&companyId={companyId}&title={title}&startDate={startDate}&endDate={endDate}&amount={amount}&type={type}&message={message}&price={price}&image={image}")
+	@Path("/removecoupon/couponid={couponId}&companyid={companyId}&title={title}&startdate={startDate}&enddate={endDate}&amount={amount}&type={type}&message={message}&price={price}&image={image}")
 	@DELETE
 	@Produces({ "application/json" })
 	public void removeCoupon(@PathParam("couponId") long couponId, @PathParam("companyId") long companyId,
@@ -46,7 +46,7 @@ public class CompanyService {
 		couponClientFacadeCompany.removeCoupon(tempCouponDO);
 	}
 
-	@Path("/updateCoupon/couponId={couponId}&companyId={companyId}&title={title}&startDate={startDate}&endDate={endDate}&amount={amount}&type={type}&message={message}&price={price}&image={image}")
+	@Path("/updatecoupon/couponid={couponId}&companyid={companyId}&title={title}&startdate={startDate}&enddate={endDate}&amount={amount}&type={type}&message={message}&price={price}&image={image}")
 	@POST
 	@Produces({ "application/json" })
 	public void updateCoupon(@PathParam("couponId") long couponId, @PathParam("companyId") long companyId,
@@ -58,21 +58,21 @@ public class CompanyService {
 		couponClientFacadeCompany.updateCoupon(tempCouponDO);
 	}
 
-	@Path("/getCoupon/couponId={couponId}&companyId={companyId}")
+	@Path("/getcoupon/couponid={couponId}&companyid={companyId}")
 	@GET
 	@Produces({ "application/json" })
 	public CouponDO getCoupon(@PathParam("couponId") long couponId, @PathParam("companyId") long companyId) {
 		return couponClientFacadeCompany.getCoupon(companyId, couponId);
 	}
 
-	@Path("/getAllCoupon/companyId={companyId}")
+	@Path("/getallcoupon/companyid={companyId}")
 	@GET
 	@Produces({ "application/json" })
 	public Collection<CouponDO> getAllCouponsByCompany(@PathParam("companyId") long companyId) {
 		return couponClientFacadeCompany.getAllCouponsByCompany(companyId);
 	}
 
-	@Path("/getCouponByType/companyId={companyId}&type={type}")
+	@Path("/getcouponbytype/companyid={companyId}&type={type}")
 	@GET
 	@Produces("application/json")
 	public Collection<CouponDO> getAllCouponsByCompanyAndType(@PathParam("companyId") long companyId,

@@ -20,7 +20,7 @@ public class CustomerService {
 	LoginManager loginManagerCustomer = new LoginManager();
 	CouponClientFacade couponClientFacadeCustomer = loginManagerCustomer.login("12345", "eB765", ClientType.CUSTOMER);
 
-	@Path("/purchaseCoupon/couponId={couponId}&companyId={companyId}&title={title}&startDate={startDate}&endDate={endDate}&amount={amount}&type={type}&message={message}&price={price}&image={image}&customerId={customerId}")
+	@Path("/purchasecoupon/couponid={couponId}&companyid={companyId}&title={title}&startdate={startDate}&enddate={endDate}&amount={amount}&type={type}&message={message}&price={price}&image={image}&customerId={customerId}")
 	@POST
 	@Produces("application/json")
 	public void purchaseCoupon(@PathParam("couponId") long couponId, @PathParam("companyId") long companyId,
@@ -34,7 +34,7 @@ public class CustomerService {
 
 	}
 
-	@Path("/getAllPurchaseCouponByType/type={type}&customerId={customerId}")
+	@Path("/getallpurchasecouponbytype/type={type}&customerid={customerId}")
 	@GET
 	@Produces("application/json")
 	public Collection<CouponDO> getAllPurchaseCouponsByType(@PathParam("type") Type type,
@@ -42,14 +42,14 @@ public class CustomerService {
 		return couponClientFacadeCustomer.getAllPurchaseCouponsByType(customerId, type);
 	}
 
-	@Path("/getAllPurchaseCouponsByCustomer/customerId={customerId}")
+	@Path("/getallpurchasecouponsbycustomer/customerid={customerId}")
 	@GET
 	@Produces("application/json")
 	public Collection<CouponDO> getAllPurchaseCouponsByCustomer(@PathParam("customerId") long customerId) {
 		return couponClientFacadeCustomer.getAllPurchaseCouponsByCustomer(customerId);
 	}
 
-	@Path("/getAllPurchaseCouponByPrice/couponId={couponId}&companyId={companyId}&title={title}&startDate={startDate}&endDate={endDate}&amount={amount}&type={type}&message={message}&price={price}&image={image}&customerId={customerId}")
+	@Path("/getallpurchasecouponbyprice/couponid={couponId}&companyid={companyId}&title={title}&startdate={startDate}&enddate={endDate}&amount={amount}&type={type}&message={message}&price={price}&image={image}&customerId={customerId}")
 	@GET
 	@Produces("application/json")
 	public Collection<CouponDO> getAllPurchaseCouponsByPrice(@PathParam("price") int price,

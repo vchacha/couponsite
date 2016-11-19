@@ -1,51 +1,59 @@
 <!DOCTYPE html>
 <html>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
 <head>
-<style >
-nav {
-    float: left;
-    max-width: 160px;
-    margin: 0;
-    padding: 1em;
-}
-nav ul a {
-    text-decoration: none;
-}
-article {
-    margin-left: 170px;
-    border-left: 1px solid gray;
-    padding: 1em;
-    overflow: hidden;
-    }
-</style>
-	<meta charset="ISO-8859-1">
-	<title>CouponSite</title>
+	<style >
+		nav {
+			    float: left;
+			    max-width: 160px;
+			    margin: 0;
+			    padding: 1em;
+		}
+		nav ul a {
+		    text-decoration: none;
+		}
+		article {
+		    margin-left: 170px;
+		    border-left: 1px solid gray;
+		    padding: 1em;
+		    overflow: hidden;
+		    }
+	</style>
+<meta charset="ISO-8859-1">
+<title>CouponSite</title>
 </head>
-<body id="createcompany">
+
+<body id="Admin">
 	<header>
    		<h1>Welcome Admin</h1>
 	</header>
 
-<nav>
-  <ul>
-    <li><a href="#">Create Company</a></li>
-    <li><a href="#">Update Company</a></li>
-    <li><a href="#">Delete Company</a></li>
-    <li><a href="#">Find Company</a></li>
-    <li><a href="#">Get All Companies</a></li>
-    <br/>
-	<br/>
-    <li><a href="#">Create Customer</a></li>
-    <li><a href="#">Update Customer</a></li>
-    <li><a href="#">Delete Customer</a></li>
-    <li><a href="#">Find Customer</a></li>
-    <li><a href="#">Get All Customers</a></li>
-    
-  </ul>
-</nav>
+
+	<nav>
+  		<ul>
+  			<div ng-app="myAppCreateCompany" ng-controller="myCtrlCreateCompany">
+		    <li><a ng-click="myFuncCreateCompany()" href="#">Create Company</a></li>
+		    </div>
+		    <li><a href="#">Update Company</a></li>
+		    <li><a href="#">Delete Company</a></li>
+		    <li><a href="#">Find Company</a></li>
+		    <li><a href="#">Get All Companies</a></li>
+		    <br/>
+			<br/>
+			<div ng-app="myAppCreateCustomer" ng-controller="myCtrlCreateCustomer">
+			<li><a ng-click="myFuncCreateCustomer()" href="#">Create Customer</a></li>
+			</div>
+		    <li><a href="#">Update Customer</a></li>
+		    <li><a href="#">Delete Customer</a></li>
+		    <li><a href="#">Find Customer</a></li>
+		    <li><a href="#">Get All Customers</a></li>
+  		</ul>
+	</nav>
 
 
-<article>
+<!-- <div ng-app="myAppCreateCustomer" ng-controller="myCtrlCreateCustomer"> -->
+
+<article ng-show="showMeCreateCompany">
   <h1>Create Company</h1>
 	<form action="company.html" method "post">
 				<div> 
@@ -63,14 +71,12 @@ article {
 					<br/>
 					<br/>
 					<input type="Submit" />
-				</div>		
+				</div>			
 	</form>
 </article>
-</body>
 
-<article>
+<article ng-show="showMeCreateCustomer">
   <h1>Create Customer</h1>
-<body id="customer">
 	<form action="customer.html" method "post">
 				<div> 
 					Customer ID: <input type="text" placeholder="Customer ID"  name="customerid"/> 
@@ -87,10 +93,35 @@ article {
 					<br/>
 					<br/>
 					<input type="Submit" />
-				</div>		
+				</div>			
 	</form>
-</body>
 </article>
+
+
+
+</div>
+</div>
+
+<script>
+var app = angular.module('myAppCreateCompany', []);
+app.controller('myCtrlCreateCompany', function($scope) {
+    $scope.showMeCreateCompany = false;
+    $scope.myFuncCreateCompany = function() {
+        $scope.showMeCreateCompany = !$scope.showMeCreateCompany;
+    }
+});
+var app2 = angular.module('myAppCreateCustomer', []);
+app2.controller('myCtrlCreateCustomer', function($scope) {
+    $scope.showMeCreateCustomer = false;
+    $scope.myFuncCreateCustomer = function() {
+        $scope.showMeCreateCustomer = !$scope.showMeCreateCustomer;
+    }
+});
+/* angular.bootstrap(document, ['myAppCreateCompany', 'myAppCreateCustomer']); */
+</script>
+
+<!-- <script>
+</script> -->
 
 </body>
 </html>

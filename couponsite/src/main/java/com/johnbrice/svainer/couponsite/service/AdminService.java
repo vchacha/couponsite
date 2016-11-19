@@ -30,7 +30,6 @@ public class AdminService {
 		return "hello world";
 	}
 	
-//	@GET
 	@Path("/createcompany/companyid={companyId}&companyname={companyName}&password={password}&email={email}")
 	@PUT
 	@Produces("application/json")
@@ -89,7 +88,7 @@ public class AdminService {
 			couponClientFacadeAdmin.createCustomer(tempCustomerDO);
 	}
 	
-	@Path("/deletecustomer/customerId={customerId}&customerName={customerName}&password={password}&email={email}")
+	@Path("/deletecustomer/customerid={customerId}&customername={customerName}&password={password}&email={email}")
 	@DELETE
 	@Produces("application/json")
 	public void removeCustomer(@PathParam ("customerId") long customerId,
@@ -100,7 +99,7 @@ public class AdminService {
 			couponClientFacadeAdmin.removeCustomer(tempCustomerDO);
 	}
 	
-	@Path("/updateCustomer/customerId={customerId}&customerName={customerName}&password={password}&email={email}")
+	@Path("/updatecustomer/customerid={customerId}&customername={customerName}&password={password}&email={email}")
 	@POST
 	@Produces("application/json")
 	public void updateCustomer(@PathParam ("customerId") long customerId,

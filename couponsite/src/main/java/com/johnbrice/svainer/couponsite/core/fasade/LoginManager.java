@@ -23,6 +23,7 @@ public class LoginManager {
 	public CouponClientFacade login(String id, String password, ClientType clientType) {
 		if (isLoginSucceed(id, password, clientType)) {
 			if (clientType.equals(ClientType.ADMIN)) {
+				System.out.println("ADMIN SUCCESS");
 				return new AdminFacade(new CompanyDBDAO(), new CustomerDBDAO(), new CouponDBDAO());
 			}
 

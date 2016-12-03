@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Coupon site</title>
+</head>
+<body>
+<form name="login">
+Username<input type="text" name="userid"/>
+Password<input type="text" name="password"/>
+Client Type<select id="clientTypeSelector">
+      <option value="ADMIN">ADMIN
+      <option value="Customer">Customer
+      <option value="User">User
+	</select>
+<input type="button" onclick="check(this.form)"  value="Login"/>
+<input type="reset" value="Cancel"/>
+</form>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script language="javascript">
+function check(form) {
+	
+	//http://localhost:8080/jerseyservice/rest/admin/login/Admin/1234/ADMIN
+	var request = $.ajax({
+        //url: "http://localhost:8080/jerseyservice/rest/admin/hello",
+        //url: "http://localhost:8080/jerseyservice/rest/admin/login/Admin/1234/ADMIN",
+        url: "http://localhost:8080/jerseyservice/rest/login/" + form.userid.value + "/" + form.password.value + "/ADMIN",
+        type: "GET",
+        dataType: "html"
+    });
+	console.log(request);
+
+    request.done(function(msg) {
+    	//document.write("hy " + msg + " form.userid.value: " + form.userid.value + " form.password.value: " + form.password.value);
+    	//writeCookie(form);
+    	//cookiearray = readCookie();
+    	//document.write(cookiearray[0] + " " + cookiearray.length);
+    	//deleteCookie();
+    	//justPrintMe(form);
+        $("#mybox").html(msg);          
+    });
+    window.location="admin.html";
+
+    /* request.fail(function(jqXHR, textStatus) {
+        alert( "Request failed: " + textStatus );
+    }); */
+}
+
+function justPrintMe(form) {
+	document.write(" form.userid.value: " + form.userid.value + " form.password.value: " + form.password.value);
+}
+
+function writeCookie(form) {
+   if(form.userid.value == "" ){
+      alert("Enter some value!");
+      return;
+   }
+   cookievalue= escape(form.userid.value) + ";";
+   document.cookie="username=" + cookievalue;
+   cookiePassword= escape(form.password.value) + ";";
+   document.cookie="password=" + cookiePassword;
+   //document.write(" form.userid.value: " + form.userid.value + " form.password.value: " + form.password.value);
+   //document.write ("Setting Cookies : " + "name=" + cookievalue );
+}
+
+function deleteCookie()
+{
+   var now = new Date();
+   now.setMonth( now.getMonth() - 1 );
+  //cookievalue = escape(form.customer.value) + ";"
+   
+   document.cookie="name=" + "kkk";
+   document.cookie = "expires=" + now.toUTCString() + ";"
+   //document.write("Setting Cookies : " + "name=" + cookievalue );
+}
+
+function readCookie()
+{
+   var allcookies = document.cookie;
+   //document.write ("All Cookies : " + allcookies );
+   
+   // Get all the cookies pairs in an array
+   cookiearray = allcookies.split(';');
+   
+   // Now take key value pair out of this array
+   for(var i=0; i<cookiearray.length; i++){
+      name = cookiearray[i].split('=')[0];
+      value = cookiearray[i].split('=')[1];
+      //document.write ("Key is : " + name + " and Value is : " + value);
+   }
+   return cookiearray;
+}
+ /*the following code checkes whether the entered userid and password are matching*/
+ /* if(form.userid.value == "my" && form.password.value == "my") {   
+    alert("good Password and Username")
+  }
+ else {
+   alert("Error Password or Username")/*displays error message
+  } 
+}*/
+</script>
+
+</body>
+</html>

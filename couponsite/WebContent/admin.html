@@ -40,7 +40,7 @@
 		    <li><a href="#">Get All Companies</a></li>
 		    <br/>
 			<br/>
-			<div ng-app="myAppCreateCustomer" ng-controller="myCtrlCreateCustomer">
+			<!-- <div ng-app="myAppCreateCustomer" ng-controller="myCtrlCreateCustomer"> -->
 			<li><a ng-click="myFuncCreateCustomer()" href="#">Create Customer</a></li>
 			</div>
 		    <li><a href="#">Update Customer</a></li>
@@ -55,7 +55,8 @@
 
 <article ng-show="showMeCreateCompany">
   <h1>Create Company</h1>
-	<form action="company.html" method "post">
+	<!-- <form action="company.html" method "post"> -->
+	<form name= "company">
 				<div> 
 					Company ID: <input type="text" placeholder="Company ID"  name="companyid"/> 
 					<br/>
@@ -67,17 +68,19 @@
 					<br/>
 					<br/>
 					  Email: <input type="text" placeholder="Email"  name="email"/>
+					<br/>					
 					<br/>
-					<br/>
-					<br/>
-					<input type="Submit" />
-				</div>			
+					<!-- <input value="Submit" type="Submit" onclick="createCompany(this.form)"/> -->
+					<input value="Submit" type="Submit" onsubmit="return createCompany(this.form)"/>
+				</div>
+				<input id="createdcompanyid" type="text" placeholder="Created CompanyId"  name="createdcompanyid"/> 
 	</form>
 </article>
 
 <article ng-show="showMeCreateCustomer">
   <h1>Create Customer</h1>
-	<form action="customer.html" method "post">
+	<!-- <form action="customer.html" method "post"> -->
+	<form name="customer" method "post">
 				<div> 
 					Customer ID: <input type="text" placeholder="Customer ID"  name="customerid"/> 
 					<br/>
@@ -92,7 +95,7 @@
 					<br/>
 					<br/>
 					<br/>
-					<input type="Submit" />
+					<input value="Submit" type="Submit" />
 				</div>			
 	</form>
 </article>
@@ -110,18 +113,41 @@ app.controller('myCtrlCreateCompany', function($scope) {
         $scope.showMeCreateCompany = !$scope.showMeCreateCompany;
     }
 });
-var app2 = angular.module('myAppCreateCustomer', []);
+
+function createCompany(form) {	
+	//http://localhost:8080/jerseyservice/rest/admin/login/Admin/1234/ADMIN
+	//var request = $.ajax({
+        //url: "http://localhost:8080/jerseyservice/rest/admin/hello",
+        //url: "http://localhost:8080/jerseyservice/rest/admin/login/Admin/1234/ADMIN",
+        ///createcompany/companyid={companyId}&companyname={companyName}&password={password}&email={email}
+      //  url: "http://localhost:8080/jerseyservice/rest/admin/createcompany/companyid=" + form.companyid.value + "&companyname=" + form.companyname.value + "&password=" + form.password.value + "&email=" + form.password.value,
+        //type: "GET",            
+        //dataType: "html"
+    //});
+
+	 //window.location="admin.html";
+    /* request.done(function() {    	
+        $("#createdcompanyid").html("created new company");          
+    });
+
+    request.fail(function(jqXHR, textStatus) {
+        alert( "Request failed: " + textStatus );
+    }); */
+	//$('#createdcompanyid').html("ht");
+	document.getElementById("createdcompanyid").innerHTML = "hu";
+}
+
+
+/* var app2 = angular.module('myAppCreateCustomer', []);
 app2.controller('myCtrlCreateCustomer', function($scope) {
     $scope.showMeCreateCustomer = false;
     $scope.myFuncCreateCustomer = function() {
         $scope.showMeCreateCustomer = !$scope.showMeCreateCustomer;
     }
 });
-/* angular.bootstrap(document, ['myAppCreateCompany', 'myAppCreateCustomer']); */
-</script>
+angular.bootstrap(document, ['myAppCreateCompany', 'myAppCreateCustomer']); */
 
-<!-- <script>
-</script> -->
+</script>
 
 </body>
 </html>

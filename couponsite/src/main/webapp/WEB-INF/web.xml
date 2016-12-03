@@ -6,6 +6,11 @@
 
 	<display-name>helloworld</display-name>
 
+	<welcome-file-list>
+		<welcome-file>login.html</welcome-file>
+		<!-- <welcome-file>admin.html</welcome-file> -->
+	</welcome-file-list>
+
 	<servlet>
 		<servlet-name>helloworld</servlet-name>
 		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
@@ -20,6 +25,15 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+
+	<filter>
+		<filter-name>SessionFilter</filter-name>
+		<filter-class>com.johnbrice.svainer.couponsite.service.filters.SessionFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>SessionFilter</filter-name>		
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 
 	<servlet-mapping>
 		<servlet-name>helloworld</servlet-name>

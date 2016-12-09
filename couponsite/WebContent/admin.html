@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 <head>
 	<style >
 		nav {
@@ -23,94 +23,334 @@
 <title>CouponSite</title>
 </head>
 
-<body id="Admin">
+<div id="Admin">
 	<header>
    		<h1>Welcome Admin</h1>
 	</header>
-
-
+</div>
+<body ng-app="myApp" ng-controller="myCtrl">
 	<nav>
   		<ul>
-  			<div ng-app="myAppCreateCompany" ng-controller="myCtrlCreateCompany">
 		    <li><a ng-click="myFuncCreateCompany()" href="#">Create Company</a></li>
-		    </div>
-		    <li><a href="#">Update Company</a></li>
-		    <li><a href="#">Delete Company</a></li>
-		    <li><a href="#">Find Company</a></li>
-		    <li><a href="#">Get All Companies</a></li>
+		    <li><a ng-click="myFuncUpdateCompany()" href="#">Update Company</a></li>
+		    <li><a ng-click="myFuncDeleteCompany()" href="#">Delete Company</a></li>
+		    <li><a ng-click="myFuncFindCompany()" href="#">Find Company</a></li>
+		    <li><a ng-click="myFuncGetAllCompany()" href="#">Get All Companies</a></li>
 		    <br/>
 			<br/>
-			<!-- <div ng-app="myAppCreateCustomer" ng-controller="myCtrlCreateCustomer"> -->
 			<li><a ng-click="myFuncCreateCustomer()" href="#">Create Customer</a></li>
-			</div>
-		    <li><a href="#">Update Customer</a></li>
-		    <li><a href="#">Delete Customer</a></li>
-		    <li><a href="#">Find Customer</a></li>
-		    <li><a href="#">Get All Customers</a></li>
+		    <li><a ng-click="myFuncUpdateCustomer()" href="#">Update Customer</a></li>
+		    <li><a ng-click="myFuncDeleteCustomer()" href="#">Delete Customer</a></li>
+		    <li><a ng-click="myFuncFindCustomer()" href="#">Find Customer</a></li>
+		    <li><a ng-click="myFuncGetAllCustomer()" href="#">Get All Customers</a></li>
   		</ul>
 	</nav>
 
-
-<!-- <div ng-app="myAppCreateCustomer" ng-controller="myCtrlCreateCustomer"> -->
-
 <article ng-show="showMeCreateCompany">
-  <h1>Create Company</h1>
-	<!-- <form action="company.html" method "post"> -->
-	<form name= "company">
-				<div> 
+		<h1>Create Company</h1>
+			<form action="createcompany" method "post">
+				<div name= "createcompany">
 					Company ID: <input type="text" placeholder="Company ID"  name="companyid"/> 
 					<br/>
 					<br/>
-					  Company Name: <input type="text" placeholder="Company Name"  name="companyname"/> 			
+					Company Name: <input type="text" placeholder="Company Name"  name="companyname"/> 			
 					<br/>
 					<br/>
-					  Password: <input type="text" placeholder="Password"  name="password"/> 
+					Password: <input type="text" placeholder="Password"  name="password"/> 
 					<br/>
 					<br/>
-					  Email: <input type="text" placeholder="Email"  name="email"/>
+					Email: <input type="text" placeholder="Email"  name="email"/>
 					<br/>					
 					<br/>
-					<!-- <input value="Submit" type="Submit" onclick="createCompany(this.form)"/> -->
 					<input value="Submit" type="Submit" onsubmit="return createCompany(this.form)"/>
 				</div>
-				<input id="createdcompanyid" type="text" placeholder="Created CompanyId"  name="createdcompanyid"/> 
-	</form>
+			</form>		
 </article>
 
-<article ng-show="showMeCreateCustomer">
-  <h1>Create Customer</h1>
-	<!-- <form action="customer.html" method "post"> -->
-	<form name="customer" method "post">
-				<div> 
+<article ng-show="showMeUpdateCompany">
+		<h1>Update Company</h1>
+			<form action="updatecompany" method "post">
+				<div name= "updatecompany">
+					Company ID: <input type="text" placeholder="Company ID"  name="companyid"/> 
+					<br/>
+					<br/>
+					Company Name: <input type="text" placeholder="Company Name"  name="companyname"/> 			
+					<br/>
+					<br/>
+					Password: <input type="text" placeholder="Password"  name="password"/> 
+					<br/>
+					<br/>
+					Email: <input type="text" placeholder="Email"  name="email"/>
+					<br/>					
+					<br/>
+					<input value="Submit" type="Submit"/>
+				</div> 
+			</form>		
+</article>
+
+<article ng-show="showMeDeleteCompany">
+		<h1>Delete Company</h1>
+			<form action="deletecompany" method "post">
+				<div name= "deletecompany">
+					Company ID: <input type="text" placeholder="Company ID"  name="companyid"/> 
+					<br/>
+					<br/>
+					Company Name: <input type="text" placeholder="Company Name"  name="companyname"/> 			
+					<br/>
+					<br/>
+					Password: <input type="text" placeholder="Password"  name="password"/> 
+					<br/>
+					<br/>
+					Email: <input type="text" placeholder="Email"  name="email"/>
+					<br/>					
+					<br/>
+					<input value="Submit" type="Submit")"/>
+				</div>
+			</form>		
+</article>
+
+<article ng-show="showMeFindCompany">
+		<h1>Find Company by ID</h1>
+			<form action="findcompany" method "post">
+				<div name= "findcompany">
+					Company ID: <input type="text" placeholder="Company ID"  name="companyid"/> 
+					<br/>
+					<br/>
+					Company Name: <input type="text" placeholder="Company Name"  name="companyname"/> 			
+					<br/>
+					<br/>
+					Password: <input type="text" placeholder="Password"  name="password"/> 
+					<br/>
+					<br/>
+					Email: <input type="text" placeholder="Email"  name="email"/>
+					<br/>					
+					<br/>
+					<input value="Submit" type="Submit")"/>
+				</div>
+			</form>		
+</article>
+
+<article ng-show="showMeCreateCustomer"> 
+		<h1>Create Customer</h1>
+			<form action="createcustomer" method "post">
+				<div name="createcustomer">
+					<div> 
 					Customer ID: <input type="text" placeholder="Customer ID"  name="customerid"/> 
 					<br/>
 					<br/>
-					  Customer Name: <input type="text" placeholder="Customer Name"  name="customername"/> 			
+					Customer Name: <input type="text" placeholder="Customer Name"  name="customername"/> 			
 					<br/>
 					<br/>
-					  Password: <input type="text" placeholder="Password"  name="password"/> 
+					Password: <input type="text" placeholder="Password"  name="password"/> 
 					<br/>
 					<br/>
-					  Email: <input type="text" placeholder="Email"  name="email"/>
-					<br/>
+					Email: <input type="text" placeholder="Email"  name="email"/>
 					<br/>
 					<br/>
 					<input value="Submit" type="Submit" />
-				</div>			
-	</form>
+					</div>			
+				</div>	
 </article>
 
+<article ng-show="showMeUpdateCustomer"> 
+		<h1>Update Customer</h1>
+			<form action="updatecustomer" method "post">
+				<div name="updatecustomer">
+					<div> 
+					Customer ID: <input type="text" placeholder="Customer ID"  name="customerid"/> 
+					<br/>
+					<br/>
+					Customer Name: <input type="text" placeholder="Customer Name"  name="customername"/> 			
+					<br/>
+					<br/>
+					Password: <input type="text" placeholder="Password"  name="password"/> 
+					<br/>
+					<br/>
+					Email: <input type="text" placeholder="Email"  name="email"/>
+					<br/>
+					<br/>
+					<input value="Submit" type="Submit" />
+					</div>			
+				</div>	
+</article>
 
+<article ng-show="showMeDeleteCustomer"> 
+		<h1>Delete Customer</h1>
+			<form action="deletecustomer" method "post">
+				<div name="deletecustomer">
+					<div> 
+					Customer ID: <input type="text" placeholder="Customer ID"  name="customerid"/> 
+					<br/>
+					<br/>
+					Customer Name: <input type="text" placeholder="Customer Name"  name="customername"/> 			
+					<br/>
+					<br/>
+					Password: <input type="text" placeholder="Password"  name="password"/> 
+					<br/>
+					<br/>
+					Email: <input type="text" placeholder="Email"  name="email"/>
+					<br/>
+					<br/>
+					<input value="Submit" type="Submit" />
+					</div>			
+				</div>	
+</article>
 
-</div>
-</div>
+<article ng-show="showMeFindCustomer"> 
+		<h1>Find Customer by ID</h1>
+			<form action="findcustomer" method "post">
+				<div name="findcustomer">
+					<div> 
+					Customer ID: <input type="text" placeholder="Customer ID"  name="customerid"/> 
+					<br/>
+					<br/>
+					Customer Name: <input type="text" placeholder="Customer Name"  name="customername"/> 			
+					<br/>
+					<br/>
+					Password: <input type="text" placeholder="Password"  name="password"/> 
+					<br/>
+					<br/>
+					Email: <input type="text" placeholder="Email"  name="email"/>
+					<br/>
+					<br/>
+					<input value="Submit" type="Submit" />
+					</div>			
+				</div>	
+</article>
 
 <script>
-var app = angular.module('myAppCreateCompany', []);
-app.controller('myCtrlCreateCompany', function($scope) {
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope) {
     $scope.showMeCreateCompany = false;
     $scope.myFuncCreateCompany = function() {
         $scope.showMeCreateCompany = !$scope.showMeCreateCompany;
+        $scope.showMeUpdateCompany = false;
+		$scope.showMeDeleteCompany = false;
+		$scope.showMeFindCompany = false;
+		$scope.showMeGetAllCompany = false;
+		$scope.showMeCreateCustomer = false;
+		$scope.showMeUpdateCustomer = false;
+		$scope.showMeDeleteCustomer = false;
+		$scope.showMeFindCustomer = false;
+		$scope.showMeGetAllCustomer = false;
+    }
+	$scope.showMeUpdateCompany = false;
+    $scope.myFuncUpdateCompany = function() {
+        $scope.showMeCreateCompany = false;
+		$scope.showMeUpdateCompany = !$scope.showMeUpdateCompany;
+		$scope.showMeDeleteCompany = false;
+		$scope.showMeFindCompany = false;
+		$scope.showMeGetAllCompany = false;
+		$scope.showMeCreateCustomer = false;
+		$scope.showMeUpdateCustomer = false;
+		$scope.showMeDeleteCustomer = false;
+		$scope.showMeFindCustomer = false;
+		$scope.showMeGetAllCustomer = false;
+    }
+	$scope.showMeDeleteCompany = false;
+	$scope.myFuncDeleteCompany = function() {
+        $scope.showMeCreateCompany = false;
+        $scope.showMeUpdateCompany = false;
+		$scope.showMeDeleteCompany = !$scope.showMeDeleteCompany;
+		$scope.showMeFindCompany = false;
+		$scope.showMeGetAllCompany = false;
+		$scope.showMeCreateCustomer = false;
+		$scope.showMeUpdateCustomer = false;
+		$scope.showMeDeleteCustomer = false;
+		$scope.showMeFindCustomer = false;
+		$scope.showMeGetAllCustomer = false;
+    }
+	$scope.showMeFindCompany = false;
+	$scope.myFuncFindCompany = function() {
+        $scope.showMeCreateCompany = false;
+        $scope.showMeUpdateCompany = false;
+		$scope.showMeDeleteCompany = false;
+		$scope.showMeFindCompany = !$scope.showMeFindCompany;
+		$scope.showMeGetAllCompany = false;
+		$scope.showMeCreateCustomer = false;
+		$scope.showMeUpdateCustomer = false;
+		$scope.showMeDeleteCustomer = false;
+		$scope.showMeFindCustomer = false;
+		$scope.showMeGetAllCustomer = false;
+    }	
+	$scope.showMeGetAllCompany = false;
+	$scope.myFuncGetAllCompany = function() {
+        $scope.showMeCreateCompany = false;
+        $scope.showMeUpdateCompany = false;
+		$scope.showMeDeleteCompany = false;
+		$scope.showMeFindCompany = false;
+		$scope.showMeGetAllCompany = false;
+		$scope.showMeCreateCustomer = false;
+		$scope.showMeUpdateCustomer = false;
+		$scope.showMeDeleteCustomer = false;
+		$scope.showMeFindCustomer = false;
+		$scope.showMeGetAllCustomer = false;
+    }		
+	
+    $scope.showMeCreateCustomer = false;
+    $scope.myFuncCreateCustomer = function() {
+        $scope.showMeCreateCompany = false;
+		$scope.showMeUpdateCompany = false;
+		$scope.showMeDeleteCompany = false;
+		$scope.showMeFindCompany = false;
+		$scope.showMeGetAllCompany = false;
+		$scope.showMeCreateCustomer = !$scope.showMeCreateCustomer;
+		$scope.showMeUpdateCustomer = false;
+		$scope.showMeDeleteCustomer = false;
+		$scope.showMeFindCustomer = false;
+		$scope.showMeGetAllCustomer = false;
+    }	
+	$scope.showMeUpdateCustomer = false;
+    $scope.myFuncUpdateCustomer = function() {
+        $scope.showMeCreateCompany = false;
+		$scope.showMeUpdateCompany = false;
+		$scope.showMeDeleteCompany = false;
+		$scope.showMeFindCompany = false;
+		$scope.showMeGetAllCompany = false;
+		$scope.showMeCreateCustomer = false;
+		$scope.showMeUpdateCustomer = !$scope.showMeUpdateCustomer;
+		$scope.showMeDeleteCustomer = false;
+		$scope.showMeFindCustomer = false;
+		$scope.showMeGetAllCustomer = false;
+    }
+	$scope.showMeDeleteCustomer = false;
+    $scope.myFuncDeleteCustomer = function() {
+        $scope.showMeCreateCompany = false;
+		$scope.showMeUpdateCompany = false;
+		$scope.showMeDeleteCompany = false;
+		$scope.showMeFindCompany = false;
+		$scope.showMeGetAllCompany = false;
+		$scope.showMeCreateCustomer = false;
+		$scope.showMeUpdateCustomer = false;
+		$scope.showMeDeleteCustomer = !$scope.showMeDeleteCustomer;
+		$scope.showMeFindCustomer = false;
+		$scope.showMeGetAllCustomer = false;
+    }
+	$scope.showMeFindCustomer = false;
+    $scope.myFuncFindCustomer = function() {
+        $scope.showMeCreateCompany = false;
+		$scope.showMeUpdateCompany = false;
+		$scope.showMeDeleteCompany = false;
+		$scope.showMeFindCompany = false;
+		$scope.showMeGetAllCompany = false;
+		$scope.showMeCreateCustomer = false;
+		$scope.showMeUpdateCustomer = false;
+		$scope.showMeDeleteCustomer = false;
+		$scope.showMeFindCustomer = !$scope.showMeFindCustomer;
+		$scope.showMeGetAllCustomer = false;
+    }
+	$scope.showMeGetAllCustomer = false;
+    $scope.myFuncGetAllCustomer = function() {
+        $scope.showMeCreateCompany = false;
+		$scope.showMeUpdateCompany = false;
+		$scope.showMeDeleteCompany = false;
+		$scope.showMeFindCompany = false;
+		$scope.showMeGetAllCompany = false;
+		$scope.showMeCreateCustomer = false;
+		$scope.showMeUpdateCustomer = false;
+		$scope.showMeDeleteCustomer = false;
+		$scope.showMeFindCustomer = false;
+		$scope.showMeGetAllCustomer = false;
     }
 });
 

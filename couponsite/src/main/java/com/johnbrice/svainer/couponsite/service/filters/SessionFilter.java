@@ -30,7 +30,7 @@ public class SessionFilter implements Filter {
 
 		if (requestURI.contains("login")) {
 			System.out.println("session login");
-			HttpSession session = request.getSession(false);
+			HttpSession session = request.getSession();
 			boolean isSessionActive = session == null ? false : true;
 			System.out.println("isSessionActive: " + isSessionActive);
 			if (session != null) {

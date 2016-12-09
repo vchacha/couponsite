@@ -36,7 +36,7 @@ public class LoginService {
 			loginManager.login(userid, password, clientType.get());
 			System.out.println("starting from login");
 			HttpSession session = httpServletRequest.getSession(true);
-			session.setMaxInactiveInterval(20);
+			session.setMaxInactiveInterval(30);
 			if (session != null) {
 				System.out.println("login page: sessioId: " + session.getId());
 			}

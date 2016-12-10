@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="js/jquery.dataTables.js"></script>
 <head>
 	<style >
 		nav {
@@ -23,200 +26,6 @@
 <title>CouponSite</title>
 </head>
 
-<div id="Admin">
-	<header>
-   		<h1>Welcome Admin</h1>
-	</header>
-</div>
-<body ng-app="myApp" ng-controller="myCtrl">
-	<nav>
-  		<ul>
-		    <li><a ng-click="myFuncCreateCompany()" href="#">Create Company</a></li>
-		    <li><a ng-click="myFuncUpdateCompany()" href="#">Update Company</a></li>
-		    <li><a ng-click="myFuncDeleteCompany()" href="#">Delete Company</a></li>
-		    <li><a ng-click="myFuncFindCompany()" href="#">Find Company</a></li>
-		    <li><a ng-click="myFuncGetAllCompany()" href="#">Get All Companies</a></li>
-		    <br/>
-			<br/>
-			<li><a ng-click="myFuncCreateCustomer()" href="#">Create Customer</a></li>
-		    <li><a ng-click="myFuncUpdateCustomer()" href="#">Update Customer</a></li>
-		    <li><a ng-click="myFuncDeleteCustomer()" href="#">Delete Customer</a></li>
-		    <li><a ng-click="myFuncFindCustomer()" href="#">Find Customer</a></li>
-		    <li><a ng-click="myFuncGetAllCustomer()" href="#">Get All Customers</a></li>
-  		</ul>
-	</nav>
-
-<article ng-show="showMeCreateCompany">
-		<h1>Create Company</h1>
-			<form action="createcompany" method "post">
-				<div name= "createcompany">
-					Company ID: <input type="text" placeholder="Company ID"  name="companyid"/> 
-					<br/>
-					<br/>
-					Company Name: <input type="text" placeholder="Company Name"  name="companyname"/> 			
-					<br/>
-					<br/>
-					Password: <input type="text" placeholder="Password"  name="password"/> 
-					<br/>
-					<br/>
-					Email: <input type="text" placeholder="Email"  name="email"/>
-					<br/>					
-					<br/>
-					<input value="Submit" type="Submit" onsubmit="return createCompany(this.form)"/>
-				</div>
-			</form>		
-</article>
-
-<article ng-show="showMeUpdateCompany">
-		<h1>Update Company</h1>
-			<form action="updatecompany" method "post">
-				<div name= "updatecompany">
-					Company ID: <input type="text" placeholder="Company ID"  name="companyid"/> 
-					<br/>
-					<br/>
-					Company Name: <input type="text" placeholder="Company Name"  name="companyname"/> 			
-					<br/>
-					<br/>
-					Password: <input type="text" placeholder="Password"  name="password"/> 
-					<br/>
-					<br/>
-					Email: <input type="text" placeholder="Email"  name="email"/>
-					<br/>					
-					<br/>
-					<input value="Submit" type="Submit"/>
-				</div> 
-			</form>		
-</article>
-
-<article ng-show="showMeDeleteCompany">
-		<h1>Delete Company</h1>
-			<form action="deletecompany" method "post">
-				<div name= "deletecompany">
-					Company ID: <input type="text" placeholder="Company ID"  name="companyid"/> 
-					<br/>
-					<br/>
-					Company Name: <input type="text" placeholder="Company Name"  name="companyname"/> 			
-					<br/>
-					<br/>
-					Password: <input type="text" placeholder="Password"  name="password"/> 
-					<br/>
-					<br/>
-					Email: <input type="text" placeholder="Email"  name="email"/>
-					<br/>					
-					<br/>
-					<input value="Submit" type="Submit")"/>
-				</div>
-			</form>		
-</article>
-
-<article ng-show="showMeFindCompany">
-		<h1>Find Company by ID</h1>
-			<form action="findcompany" method "post">
-				<div name= "findcompany">
-					Company ID: <input type="text" placeholder="Company ID"  name="companyid"/> 
-					<br/>
-					<br/>
-					Company Name: <input type="text" placeholder="Company Name"  name="companyname"/> 			
-					<br/>
-					<br/>
-					Password: <input type="text" placeholder="Password"  name="password"/> 
-					<br/>
-					<br/>
-					Email: <input type="text" placeholder="Email"  name="email"/>
-					<br/>					
-					<br/>
-					<input value="Submit" type="Submit")"/>
-				</div>
-			</form>		
-</article>
-
-<article ng-show="showMeCreateCustomer"> 
-		<h1>Create Customer</h1>
-			<form action="createcustomer" method "post">
-				<div name="createcustomer">
-					<div> 
-					Customer ID: <input type="text" placeholder="Customer ID"  name="customerid"/> 
-					<br/>
-					<br/>
-					Customer Name: <input type="text" placeholder="Customer Name"  name="customername"/> 			
-					<br/>
-					<br/>
-					Password: <input type="text" placeholder="Password"  name="password"/> 
-					<br/>
-					<br/>
-					Email: <input type="text" placeholder="Email"  name="email"/>
-					<br/>
-					<br/>
-					<input value="Submit" type="Submit" />
-					</div>			
-				</div>	
-</article>
-
-<article ng-show="showMeUpdateCustomer"> 
-		<h1>Update Customer</h1>
-			<form action="updatecustomer" method "post">
-				<div name="updatecustomer">
-					<div> 
-					Customer ID: <input type="text" placeholder="Customer ID"  name="customerid"/> 
-					<br/>
-					<br/>
-					Customer Name: <input type="text" placeholder="Customer Name"  name="customername"/> 			
-					<br/>
-					<br/>
-					Password: <input type="text" placeholder="Password"  name="password"/> 
-					<br/>
-					<br/>
-					Email: <input type="text" placeholder="Email"  name="email"/>
-					<br/>
-					<br/>
-					<input value="Submit" type="Submit" />
-					</div>			
-				</div>	
-</article>
-
-<article ng-show="showMeDeleteCustomer"> 
-		<h1>Delete Customer</h1>
-			<form action="deletecustomer" method "post">
-				<div name="deletecustomer">
-					<div> 
-					Customer ID: <input type="text" placeholder="Customer ID"  name="customerid"/> 
-					<br/>
-					<br/>
-					Customer Name: <input type="text" placeholder="Customer Name"  name="customername"/> 			
-					<br/>
-					<br/>
-					Password: <input type="text" placeholder="Password"  name="password"/> 
-					<br/>
-					<br/>
-					Email: <input type="text" placeholder="Email"  name="email"/>
-					<br/>
-					<br/>
-					<input value="Submit" type="Submit" />
-					</div>			
-				</div>	
-</article>
-
-<article ng-show="showMeFindCustomer"> 
-		<h1>Find Customer by ID</h1>
-			<form action="findcustomer" method "post">
-				<div name="findcustomer">
-					<div> 
-					Customer ID: <input type="text" placeholder="Customer ID"  name="customerid"/> 
-					<br/>
-					<br/>
-					Customer Name: <input type="text" placeholder="Customer Name"  name="customername"/> 			
-					<br/>
-					<br/>
-					Password: <input type="text" placeholder="Password"  name="password"/> 
-					<br/>
-					<br/>
-					Email: <input type="text" placeholder="Email"  name="email"/>
-					<br/>
-					<br/>
-					<input value="Submit" type="Submit" />
-					</div>			
-				</div>	
-</article>
 
 <script>
 var app = angular.module('myApp', []);
@@ -354,40 +163,289 @@ app.controller('myCtrl', function($scope) {
     }
 });
 
-function createCompany(form) {	
-	//http://localhost:8080/jerseyservice/rest/admin/login/Admin/1234/ADMIN
-	//var request = $.ajax({
-        //url: "http://localhost:8080/jerseyservice/rest/admin/hello",
-        //url: "http://localhost:8080/jerseyservice/rest/admin/login/Admin/1234/ADMIN",
-        ///createcompany/companyid={companyId}&companyname={companyName}&password={password}&email={email}
-      //  url: "http://localhost:8080/jerseyservice/rest/admin/createcompany/companyid=" + form.companyid.value + "&companyname=" + form.companyname.value + "&password=" + form.password.value + "&email=" + form.password.value,
-        //type: "GET",            
-        //dataType: "html"
-    //});
-
-	 //window.location="admin.html";
-    /* request.done(function() {    	
-        $("#createdcompanyid").html("created new company");          
-    });
-
-    request.fail(function(jqXHR, textStatus) {
-        alert( "Request failed: " + textStatus );
-    }); */
-	//$('#createdcompanyid').html("ht");
-	document.getElementById("createdcompanyid").innerHTML = "hu";
+function CreateCompany1() {
+	var companyid = $("#createcompanycompanyid").val();
+	var companyname = $("#createcompanycompanyname").val();
+	var password = $("#createcompanypassword").val();
+	var email = $("#createcompanyemail").val();
+	xhr = new XMLHttpRequest();
+	var url = "http://localhost:8080/jerseyservice/rest/admin/createcompany/" + companyid + "/" + companyname + "/" + password + "/" + email;
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-type", "application/json");
+	xhr.onreadystatechange = function () { 
+	     if (xhr.status == 200) {
+	        var messageboxHtml = document.getElementById("createcompanymessagebox");
+	        messageboxHtml.innerHTML = xhr.responseText;
+	    } else {
+	    	 alert('Action failed: ' + xhr.responseText);
+	    }
+	}
+	xhr.send();
 }
 
+function UpdateCompany1() {
+	var companyid = $("#updatecompanycompanyid").val();
+	var companyname = $("#updatecompanycompanyname").val();
+	var password = $("#updatecompanypassword").val();
+	var email = $("#updatecompanyemail").val();
+	xhr = new XMLHttpRequest();
+	var url = "http://localhost:8080/jerseyservice/rest/admin/updatecompany/" + companyid + "/" + companyname + "/" + password + "/" + email;
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-type", "application/json");
+	xhr.onreadystatechange = function () { 
+	     if (xhr.status == 200) {
+	        var messageboxHtml = document.getElementById("updatecompanymessagebox");
+	        messageboxHtml.innerHTML = xhr.responseText;
+	    } else {
+	    	if (xhr.status == 201) {
+		        var messageboxHtml = document.getElementById("updatecompanymessagebox");
+		        messageboxHtml.innerHTML = xhr.responseText;
+	    			} else {
+	    				 alert('Action failed: ' + xhr.responseText);
+	    				}
+	    		}
+		}
+	xhr.send();
+}
 
-/* var app2 = angular.module('myAppCreateCustomer', []);
-app2.controller('myCtrlCreateCustomer', function($scope) {
-    $scope.showMeCreateCustomer = false;
-    $scope.myFuncCreateCustomer = function() {
-        $scope.showMeCreateCustomer = !$scope.showMeCreateCustomer;
-    }
-});
-angular.bootstrap(document, ['myAppCreateCompany', 'myAppCreateCustomer']); */
-
+function DeleteCompany1() {
+	var companyid = $("#deletecompanycompanyid").val();
+	var companyname = $("#deletecompanycompanyname").val();
+	var password = $("#deletecompanypassword").val();
+	var email = $("#deletecompanyemail").val();
+	xhr = new XMLHttpRequest();
+	var url = "http://localhost:8080/jerseyservice/rest/admin/deletecompany/" + companyid + "/" + companyname + "/" + password + "/" + email;
+	xhr.open("DELETE", url, true);
+	xhr.setRequestHeader("Content-type", "application/json");
+	xhr.onreadystatechange = function () { 
+	     if (xhr.status == 200) {
+	        var messageboxHtml = document.getElementById("deletecompanymessagebox");
+	        messageboxHtml.innerHTML = xhr.responseText;
+	    } else {
+	    	if (xhr.status == 201) {
+		        var messageboxHtml = document.getElementById("deletecompanymessagebox");
+		        messageboxHtml.innerHTML = xhr.responseText;
+	    			} else {
+	    				 alert('Action failed: ' + xhr.responseText);
+	    				}
+	    		}
+		}
+	xhr.send();
+}
 </script>
+
+<div id="Admin">
+	<header>
+   		<h1>Welcome Admin</h1>
+	</header>
+</div>
+<body ng-app="myApp" ng-controller="myCtrl">
+	<nav>
+  		<ul>
+		    <li><a ng-click="myFuncCreateCompany()" href="#">Create Company</a></li>
+		    <li><a ng-click="myFuncUpdateCompany()" href="#">Update Company</a></li>
+		    <li><a ng-click="myFuncDeleteCompany()" href="#">Delete Company</a></li>
+		    <li><a ng-click="myFuncFindCompany()" href="#">Find Company</a></li>
+		    <li><a ng-click="myFuncGetAllCompany()" href="#">Get All Companies</a></li>
+		    <br/>
+			<br/>
+			<li><a ng-click="myFuncCreateCustomer()" href="#">Create Customer</a></li>
+		    <li><a ng-click="myFuncUpdateCustomer()" href="#">Update Customer</a></li>
+		    <li><a ng-click="myFuncDeleteCustomer()" href="#">Delete Customer</a></li>
+		    <li><a ng-click="myFuncFindCustomer()" href="#">Find Customer</a></li>
+		    <li><a ng-click="myFuncGetAllCustomer()" href="#">Get All Customers</a></li>
+  		</ul>
+	</nav>
+
+<article ng-show="showMeCreateCompany">
+		<h1>Create Company</h1>
+			<form action="createcompany">
+				<div name= "createcompany">
+					Company ID: <input type="text" placeholder="Company ID"  name="companyid" id="createcompanycompanyid"/> 
+					<br/>
+					<br/>
+					Company Name: <input type="text" placeholder="Company Name"  name="companyname" id="createcompanycompanyname"/> 			
+					<br/>
+					<br/>
+					Password: <input type="text" placeholder="Password"  name="password" id="createcompanypassword"/> 
+					<br/>
+					<br/>
+					Email: <input type="text" placeholder="Email"  name="email" id="createcompanyemail"/>
+					<br/>					
+					<br/>
+					<input value="Submit" type="button" onclick="CreateCompany1()"/>
+					<br/>
+					<br/>
+					<div id="createcompanymessagebox"> <textarea> </textarea></div>
+				</div>
+			</form>		
+</article>
+
+<article ng-show="showMeUpdateCompany">
+		<h1>Update Company</h1>
+			<form action="updatecompany">
+				<div name= "updatecompany">
+					Company ID: <input type="text" placeholder="Company ID"  name="companyid" id="updatecompanycompanyid"/> 
+					<br/>
+					<br/>
+					Company Name: <input type="text" placeholder="Company Name"  name="companyname" id="updatecompanycompanyname"/> 			
+					<br/>
+					<br/>
+					Password: <input type="text" placeholder="Password"  name="password" id="updatecompanypassword"/> 
+					<br/>
+					<br/>
+					Email: <input type="text" placeholder="Email"  name="email" id="updatecompanyemail"/>
+					<br/>					
+					<br/>
+					<input value="Submit" type="button" onclick="UpdateCompany1()"/>
+					<br/>
+					<br/>
+					<div id="updatecompanymessagebox"> <textarea> </textarea></div>
+				</div> 
+			</form>		
+</article>
+
+<article ng-show="showMeDeleteCompany">
+		<h1>Delete Company</h1>
+			<form action="deletecompany">
+				<div name= "deletecompany">
+					Company ID: <input type="text" placeholder="Company ID"  name="companyid" id="deletecompanycompanyid"/> 
+					<br/>
+					<br/>
+					Company Name: <input type="text" placeholder="Company Name"  name="companyname" id="deletecompanycompanyname"/> 			
+					<br/>
+					<br/>
+					Password: <input type="text" placeholder="Password"  name="password" id="deletecompanypassword"/> 
+					<br/>
+					<br/>
+					Email: <input type="text" placeholder="Email"  name="email" id="deletecompanyemail"/>
+					<br/>					
+					<br/>
+					<input value="Submit" type="button" onclick="DeleteCompany1()"/>
+					<br/>
+					<br/>
+					<div id="deletecompanymessagebox"> <textarea> </textarea></div>
+				</div>
+			</form>		
+</article>
+
+<article ng-show="showMeFindCompany">
+		<h1>Find Company by ID</h1>
+			<form action="findcompany">
+				<div name= "findcompany">
+					Company ID: <input type="text" placeholder="Company ID"  name="companyid"/> 
+					<br/>
+					<br/>
+					Company Name: <input type="text" placeholder="Company Name"  name="companyname"/> 			
+					<br/>
+					<br/>
+					Password: <input type="text" placeholder="Password"  name="password"/> 
+					<br/>
+					<br/>
+					Email: <input type="text" placeholder="Email"  name="email"/>
+					<br/>					
+					<br/>
+					<input value="Submit" type="button" onclick="FindCompany1()"/>
+					<br/>
+					<br/>
+					<div id="messagebox"> <textarea> </textarea></div>
+				</div>
+			</form>		
+</article>
+
+<article ng-show="showMeCreateCustomer"> 
+		<h1>Create Customer</h1>
+			<form action="createcustomer">
+				<div name="createcustomer"> 
+					Customer ID: <input type="text" placeholder="Customer ID"  name="customerid"/> 
+					<br/>
+					<br/>
+					Customer Name: <input type="text" placeholder="Customer Name"  name="customername"/> 			
+					<br/>
+					<br/>
+					Password: <input type="text" placeholder="Password"  name="password"/> 
+					<br/>
+					<br/>
+					Email: <input type="text" placeholder="Email"  name="email"/>
+					<br/>
+					<br/>
+					<input value="Submit" type="button" onclick="CreateCustomer1()"/>
+					<br/>
+					<br/>
+					<div id="messagebox"> <textarea> </textarea></div>
+					</div>			
+				</div>	
+</article>
+
+<article ng-show="showMeUpdateCustomer"> 
+		<h1>Update Customer</h1>
+			<form action="updatecustomer">
+				<div name="updatecustomer">
+					Customer ID: <input type="text" placeholder="Customer ID"  name="customerid"/> 
+					<br/>
+					<br/>
+					Customer Name: <input type="text" placeholder="Customer Name"  name="customername"/> 			
+					<br/>
+					<br/>
+					Password: <input type="text" placeholder="Password"  name="password"/> 
+					<br/>
+					<br/>
+					Email: <input type="text" placeholder="Email"  name="email"/>
+					<br/>
+					<br/>
+					<input value="Submit" type="button" onclick="UpdateCustomer1()"/>
+					<br/>
+					<br/>
+					<div id="messagebox"> <textarea> </textarea></div>
+					</div>			
+				</div>	
+</article>
+
+<article ng-show="showMeDeleteCustomer"> 
+		<h1>Delete Customer</h1>
+			<form action="deletecustomer">
+				<div name="deletecustomer">
+					<div> 
+					Customer ID: <input type="text" placeholder="Customer ID"  name="customerid"/> 
+					<br/>
+					<br/>
+					Customer Name: <input type="text" placeholder="Customer Name"  name="customername"/> 			
+					<br/>
+					<br/>
+					Password: <input type="text" placeholder="Password"  name="password"/> 
+					<br/>
+					<br/>
+					Email: <input type="text" placeholder="Email"  name="email"/>
+					<br/>
+					<br/>
+					<input value="Submit" type="Submit" />
+					</div>			
+				</div>	
+</article>
+
+<article ng-show="showMeFindCustomer"> 
+		<h1>Find Customer by ID</h1>
+			<form action="findcustomer">
+				<div name="findcustomer">
+					Customer ID: <input type="text" placeholder="Customer ID"  name="customerid"/> 
+					<br/>
+					<br/>
+					Customer Name: <input type="text" placeholder="Customer Name"  name="customername"/> 			
+					<br/>
+					<br/>
+					Password: <input type="text" placeholder="Password"  name="password"/> 
+					<br/>
+					<br/>
+					Email: <input type="text" placeholder="Email"  name="email"/>
+					<br/>
+					<br/>
+					<input value="Submit" type="button" onclick="FindCustomer1()"/>
+					<br/>
+					<br/>
+					<div id="messagebox"> <textarea> </textarea></div>
+					</div>			
+				</div>	
+</article>
 
 </body>
 </html>

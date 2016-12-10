@@ -73,17 +73,17 @@ public class AdminFacade implements CouponClientFacade {
 	}
 
 	@Override
-	public void removeCompany(CompanyDO companyDO) {
-		companyDAO.removeCompany(companyDO);
+	public int removeCompany(CompanyDO companyDO) {
+		return companyDAO.removeCompany(companyDO);
 	}
 
 	@Override
-	public void updateCompany(CompanyDO companyDO) {
+	public int updateCompany(CompanyDO companyDO) {
 		DataValidator<CompanyDO> companyValidator = new CompanyValidator();
 		ValidationResponse companyValidatorResponse = companyValidator.validateData(companyDO);
 		if (companyValidatorResponse.isOk()) {
-			companyDAO.updateCompany(companyDO);
-			return;
+			return companyDAO.updateCompany(companyDO);
+		
 		}
 		throw new CompanyValidationException(companyValidatorResponse.getErrorMessage());
 	}
@@ -110,17 +110,16 @@ public class AdminFacade implements CouponClientFacade {
 	}
 
 	@Override
-	public void removeCustomer(CustomerDO customerDO) {
-		customerDAO.removeCustomer(customerDO);
+	public int removeCustomer(CustomerDO customerDO) {
+		return customerDAO.removeCustomer(customerDO);
 	}
 
 	@Override
-	public void updateCustomer(CustomerDO customerDO) {
+	public int updateCustomer(CustomerDO customerDO) {
 		DataValidator<CustomerDO> customerValidator = new CustomerValidator();
 		ValidationResponse customerValidatorResponse = customerValidator.validateData(customerDO);
 		if (customerValidatorResponse.isOk()) {
-		customerDAO.updateCustomer(customerDO);
-		return;
+		return customerDAO.updateCustomer(customerDO);
 		}
 		throw new CustomerValidationException(customerValidatorResponse.getErrorMessage());
 	}
@@ -141,12 +140,12 @@ public class AdminFacade implements CouponClientFacade {
 	}
 
 	@Override
-	public void removeCoupon(CouponDO coupon) {
+	public int removeCoupon(CouponDO coupon) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void updateCoupon(CouponDO coupon) {
+	public int updateCoupon(CouponDO coupon) {
 		throw new UnsupportedOperationException();
 	}
 

@@ -9,7 +9,7 @@ public interface CouponDAO {
 
 	int createCoupon(CouponDO couponDO);
 
-	void removeCoupon(CouponDO couponDO);
+	int removeCoupon(CouponDO couponDO);
 
 	int updateCoupon(CouponDO couponDO);
 	

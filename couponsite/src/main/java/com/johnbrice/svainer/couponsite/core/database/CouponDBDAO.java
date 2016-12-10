@@ -73,7 +73,7 @@ public class CouponDBDAO implements CouponDAO {
 	 * 		   if wasn't able to remove coupon
 	 *   */
 	@Override
-	public void removeCoupon(CouponDO couponDO) {
+	public int removeCoupon(CouponDO couponDO) {
 		try {
 			Statement statement = connection.createStatement();
 			List<PurchasedCouponDO> purchasedCouponDOs = fetchPurchasedCouponsByCouponId(couponDO.getCouponId());
@@ -81,8 +81,9 @@ public class CouponDBDAO implements CouponDAO {
 				String query = deletePurchasedCouponsByCouponId(purchasedCouponDOs);
 				statement.executeUpdate(query);				
 			}
-			statement.executeUpdate("DELETE FROM Coupon WHERE coupon_id = " + couponDO.getCouponId());
+			int numberOfRemoveRecords = statement.executeUpdate("DELETE FROM Coupon WHERE coupon_id = " + couponDO.getCouponId());
 			statement.close();
+			return numberOfRemoveRecords;
 		} catch (SQLException e) {
 			throw new DAOException(
 					"wasn't able to remove coupon ..." + couponDO.toString() + "\n" + e.getMessage());

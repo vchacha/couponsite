@@ -12,10 +12,12 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
 
 import com.johnbrice.svainer.couponsite.core.fasade.ClientType;
 import com.johnbrice.svainer.couponsite.core.fasade.CouponClientFacade;
 import com.johnbrice.svainer.couponsite.core.fasade.LoginManager;
+import com.johnbrice.svainer.couponsite.core.logic.exception.CompanyValidationException;
 import com.johnbrice.svainer.couponsite.core.model.CompanyDO;
 import com.johnbrice.svainer.couponsite.core.model.CustomerDO;
 
@@ -36,39 +38,71 @@ public class AdminService {
 		return "hello world " + "session.id: " + session.getId();
 	}
 
-	@Path("/createcompany/companyid={companyId}&companyname={companyName}&password={password}&email={email}")
-	@GET
-	@Produces("application/json")
-	public String createCompany(@PathParam("companyId") long companyId, @PathParam("companyName") String companyName,
-			@PathParam("password") String password, @PathParam("email") String email) {
-		CompanyDO tempCompanyDO = new CompanyDO(companyId, companyName, password, email);
-		couponClientFacadeAdmin.createCompany(tempCompanyDO);
-		return "success";
-	}
-
-	@Path("/deletecompany/companyid={companyId}&companyname={companyName}&password={password}&email={email}")
-	@DELETE
-	@Produces("application/json")
-	public void removeCompany(@PathParam("companyId") long companyId, @PathParam("companyName") String companyName,
-			@PathParam("password") String password, @PathParam("email") String email) {
-		CompanyDO tempCompanyDO = new CompanyDO(companyId, companyName, password, email);
-		couponClientFacadeAdmin.removeCompany(tempCompanyDO);
-	}
-
-	@Path("/updatecompany/companyid={companyId}&companyname={companyName}&password={password}&email={email}")
+	@Path("/createcompany/{companyid}/{companyname}/{password}/{email}")
 	@POST
 	@Produces("application/json")
-	public void updateCompany(@PathParam("companyId") long companyId, @PathParam("companyName") String companyName,
+	public Response createCompany(@PathParam("companyid") long companyId, @PathParam("companyname") String companyName,
 			@PathParam("password") String password, @PathParam("email") String email) {
-		CompanyDO tempCompanyDO = new CompanyDO(companyId, companyName, password, email);
-		couponClientFacadeAdmin.updateCompany(tempCompanyDO);
+		CompanyDO companyDO = new CompanyDO(companyId, companyName, password, email);
+		
+		try {
+			couponClientFacadeAdmin.createCompany(companyDO);
+			return Response.status(200).entity("Successfully created company").build();
+			
+		} catch (CompanyValidationException e) {
+			return Response.status(500).entity("Wasn't able to create company").build();
+		}
 	}
 
-	@Path("/getcompany/companyid={companyId}")
+	@Path("/deletecompany/{companyid}/{companyname}/{password}/{email}")
+	@DELETE
+	@Produces("application/json")
+	public Response removeCompany(@PathParam("companyid") long companyId, @PathParam("companyname") String companyName,
+			@PathParam("password") String password, @PathParam("email") String email) {
+		CompanyDO companyDO = new CompanyDO(companyId, companyName, password, email);
+		try {
+			int numberOfDeletedCompanies = couponClientFacadeAdmin.removeCompany(companyDO);
+			if (numberOfDeletedCompanies > 0){
+			return Response.status(200).entity("Company successfully deleted").build();
+			} else {
+				return Response.status(201).entity("Company doesn't exist").build();
+				}
+		} catch (CompanyValidationException e) {	
+			return Response.status(500).entity("Wasn't able to delete company").build();
+		}
+	}
+
+	@Path("/updatecompany/{companyid}/{companyname}/{password}/{email}")
+	@POST
+	@Produces("application/json")
+	public Response updateCompany(@PathParam("companyid") long companyId, @PathParam("companyname") String companyName,
+			@PathParam("password") String password, @PathParam("email") String email) {
+			CompanyDO companyDO = new CompanyDO(companyId, companyName, password, email);
+		try{
+			int numberOfUpdatedCompanies = couponClientFacadeAdmin.updateCompany(companyDO);
+			if (numberOfUpdatedCompanies > 0){
+			return Response.status(200).entity("Company successfully updated").build();
+			} else {
+				return Response.status(201).entity("Company doesn't exist").build();
+			}
+			
+		} catch (CompanyValidationException e) {	
+			return Response.status(500).entity("Wasn't able to update company").build();
+		}
+	}
+
+	@Path("/getcompany/{companyid}")
 	@GET
 	@Produces("application/json")
-	public CompanyDO getCompany(@PathParam("companyId") long companyId) {
-		return couponClientFacadeAdmin.getCompany(companyId);
+	public Response getCompany(@PathParam("companyid") long companyId) {
+		
+		try{
+			couponClientFacadeAdmin.getCompany(companyId);
+			return Response.status(200).entity("Successfully find company").build();
+			
+		} catch (CompanyValidationException e) {	
+			return Response.status(500).entity("Wasn't able to find company").build();
+		}
 	}
 
 	@Path("/getallcompanies")
@@ -78,28 +112,28 @@ public class AdminService {
 		return couponClientFacadeAdmin.getAllCompanies();
 	}
 
-	@Path("/createcustomer/customerid={customerId}&customername={customerName}&password={password}&email={email}")
+	@Path("/createcustomer/{customerid}/{customername}/{password}/{email}")
 	@PUT
 	@Produces("application/json")
-	public void createCustomer(@PathParam("customerId") long customerId, @PathParam("customerName") String customerName,
+	public void createCustomer(@PathParam("customerid") long customerId, @PathParam("customername") String customerName,
 			@PathParam("password") String password, @PathParam("email") String email) {
 		CustomerDO tempCustomerDO = new CustomerDO(customerId, customerName, password, email);
 		couponClientFacadeAdmin.createCustomer(tempCustomerDO);
 	}
 
-	@Path("/deletecustomer/customerid={customerId}&customername={customerName}&password={password}&email={email}")
+	@Path("/deletecustomer/{customerid}/{customername}/{password}/{email}")
 	@DELETE
 	@Produces("application/json")
-	public void removeCustomer(@PathParam("customerId") long customerId, @PathParam("customerName") String customerName,
+	public void removeCustomer(@PathParam("customerid") long customerId, @PathParam("customername") String customerName,
 			@PathParam("password") String password, @PathParam("email") String email) {
 		CustomerDO tempCustomerDO = new CustomerDO(customerId, customerName, password, email);
 		couponClientFacadeAdmin.removeCustomer(tempCustomerDO);
 	}
 
-	@Path("/updatecustomer/customerid={customerId}&customername={customerName}&password={password}&email={email}")
+	@Path("/updatecustomer/{customerId}/{customerName}/{password}/{email}")
 	@POST
 	@Produces("application/json")
-	public void updateCustomer(@PathParam("customerId") long customerId, @PathParam("customerName") String customerName,
+	public void updateCustomer(@PathParam("customerid") long customerId, @PathParam("customername") String customerName,
 			@PathParam("password") String password, @PathParam("email") String email) {
 		CustomerDO tempCustomerDO = new CustomerDO(customerId, customerName, password, email);
 		couponClientFacadeAdmin.updateCustomer(tempCustomerDO);

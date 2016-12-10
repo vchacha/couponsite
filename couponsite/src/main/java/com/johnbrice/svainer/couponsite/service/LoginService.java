@@ -3,6 +3,7 @@ package com.johnbrice.svainer.couponsite.service;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -13,6 +14,7 @@ import javax.ws.rs.core.Context;
 import com.johnbrice.svainer.couponsite.core.fasade.ClientType;
 import com.johnbrice.svainer.couponsite.core.fasade.LoginManager;
 import com.johnbrice.svainer.couponsite.core.logic.exception.LoginException;
+import javax.ws.rs.core.Response;
 
 @Path("/")
 public class LoginService {
@@ -20,32 +22,34 @@ public class LoginService {
 	private LoginManager loginManager = new LoginManager();
 
 	@Context
-	private HttpServletRequest httpServletRequest;
+	private HttpServletRequest httpServletRequest;	
+	@Context 
+    private HttpServletResponse httpServletResponse;
 
 	@Path("/login/{userid}/{password}/{clientTypeParam}")
 	@GET()
 	@Produces("application/json")
-	public boolean login(@PathParam("userid") String userid, @PathParam("password") String password,
+	public Response login(@PathParam("userid") String userid, @PathParam("password") String password,
 			@PathParam("clientTypeParam") String clientTypeParam) {
 		Optional<ClientType> clientType = toClientType(clientTypeParam);
 		if (!clientType.isPresent()) {
 			System.err.println("ClientType is invalid: " + clientTypeParam);
-			return false;
+			return Response.status(500).entity("failure in client type").build();
 		}
 		try {
 			loginManager.login(userid, password, clientType.get());
 			System.out.println("starting from login");
 			HttpSession session = httpServletRequest.getSession(true);
-			session.setMaxInactiveInterval(30);
+			session.setMaxInactiveInterval(3000);
 			if (session != null) {
 				System.out.println("login page: sessioId: " + session.getId());
 			}
 			System.out.println("this is printed from login page - line after session id print");
-
-			return true;
+			
+			return  Response.status(200).entity("success").build();
 		} catch (LoginException e) {
 			System.err.println(e.getMessage());
-			return false;
+			return Response.status(500).entity("failure").build();
 		}
 	}
 

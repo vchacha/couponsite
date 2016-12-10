@@ -58,12 +58,12 @@ public class CustomerFacade implements CouponClientFacade {
 	}
 
 	@Override
-	public void removeCompany(CompanyDO companyDO) {
+	public int removeCompany(CompanyDO companyDO) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void updateCompany(CompanyDO companyDO) {
+	public int updateCompany(CompanyDO companyDO) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -78,12 +78,12 @@ public class CustomerFacade implements CouponClientFacade {
 	}
 
 	@Override
-	public void removeCustomer(CustomerDO customerDO) {
+	public int removeCustomer(CustomerDO customerDO) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void updateCustomer(CustomerDO customerDO) {
+	public int updateCustomer(CustomerDO customerDO) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -103,12 +103,12 @@ public class CustomerFacade implements CouponClientFacade {
 	}
 
 	@Override
-	public void removeCoupon(CouponDO couponDO) {
+	public int removeCoupon(CouponDO couponDO) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void updateCoupon(CouponDO couponDO) {
+	public int updateCoupon(CouponDO couponDO) {
 		throw new UnsupportedOperationException();
 	}
 

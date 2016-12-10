@@ -13,9 +13,9 @@ public interface CouponClientFacade {
 	
 	void createCompany(CompanyDO company);
 	
-	void removeCompany(CompanyDO company);
+	int removeCompany(CompanyDO company);
 	
-	void updateCompany(CompanyDO company);
+	int updateCompany(CompanyDO company);
 	
 	CompanyDO getCompany( long companyId);
 	
@@ -23,9 +23,9 @@ public interface CouponClientFacade {
 
 	void createCustomer(CustomerDO customer);
 	
-	void removeCustomer(CustomerDO customer);
+	int removeCustomer(CustomerDO customer);
 	
-	void updateCustomer(CustomerDO customer);
+	int updateCustomer(CustomerDO customer);
 	
 	CustomerDO getCustomer(long customerId);
 	
@@ -33,9 +33,9 @@ public interface CouponClientFacade {
 	
 	void createCoupon(CouponDO coupon);
 	
-	void removeCoupon(CouponDO coupon);
+	int removeCoupon(CouponDO coupon);
 	
-	void updateCoupon(CouponDO coupon);
+	int updateCoupon(CouponDO coupon);
 	
 	CouponDO getCoupon(long companyId, long couponId);
 	

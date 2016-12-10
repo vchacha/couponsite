@@ -59,12 +59,12 @@ public class CompanyFacade implements CouponClientFacade {
 	}
 
 	@Override
-	public void removeCompany(CompanyDO company) {
+	public int removeCompany(CompanyDO company) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void updateCompany(CompanyDO company) {
+	public int updateCompany(CompanyDO company) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -84,12 +84,12 @@ public class CompanyFacade implements CouponClientFacade {
 	}
 
 	@Override
-	public void removeCustomer(CustomerDO customer) {
+	public int removeCustomer(CustomerDO customer) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void updateCustomer(CustomerDO customer) {
+	public int updateCustomer(CustomerDO customer) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -115,17 +115,16 @@ public class CompanyFacade implements CouponClientFacade {
 	}
 
 	@Override
-	public void removeCoupon(CouponDO couponDO) {
-		couponDAO.removeCoupon(couponDO);
+	public int removeCoupon(CouponDO couponDO) {
+		return couponDAO.removeCoupon(couponDO);
 	}
 
 	@Override
-	public void updateCoupon(CouponDO couponDO) {
+	public int updateCoupon(CouponDO couponDO) {
 		DataValidator<CouponDO> couponValidator = new CouponValidator();
 		ValidationResponse couponValidatorResponse = couponValidator.validateData(couponDO);
 		if (couponValidatorResponse.isOk()) {
-			couponDAO.updateCoupon(couponDO);
-			return;
+			return couponDAO.updateCoupon(couponDO);
 		}
 		throw new CouponValidationException(couponValidatorResponse.getErrorMessage());
 	}

@@ -232,6 +232,143 @@ function DeleteCompany1() {
 		}
 	xhr.send();
 }
+function FindCompany1() {
+	var extractedCompanyId = $("#findcompanycompanyid").val();
+	xhr = new XMLHttpRequest();
+	var url = "http://localhost:8080/jerseyservice/rest/admin/getcompany/" + extractedCompanyId;
+	xhr.open("GET", url, true);
+	xhr.setRequestHeader("Content-type", "application/json");
+	xhr.send();	
+	xhr.onreadystatechange = function() {
+		if (this.status == 200) {
+			var responseAsString = xhr.responseText;
+			try {
+				var responseAsJsonObj = JSON.parse(responseAsString);
+			} catch (err) {
+				console.log("error in parsing JSON");
+			}							
+			var findcompanycompanynameHtml = document.getElementById("findcompanycompanyname");
+			findcompanycompanynameHtml.value = responseAsJsonObj.companyName;
+			var findcompanypasswordHtml = document.getElementById("findcompanypassword");
+			findcompanypasswordHtml.value = responseAsJsonObj.password;
+			var findcompanyemailHtml = document.getElementById("findcompanyemail");
+			findcompanyemailHtml.value = responseAsJsonObj.email;
+			var messageBox = document.getElementById("findcompanymessagebox");
+			messageBox.innerHTML = "got company: " + extractedCompanyId;
+			
+		} else { 
+				if (this.status == 201){
+					var messageboxHtml = document.getElementById("findcompanymessagebox");
+	        		messageboxHtml.innerHTML = xhr.responseText;
+				} else {
+						alert('Action failed: ' + xhr.responseText);
+						}
+				}
+	}	 
+}
+function CreateCustomer1() {
+	var customerid = $("#createcustomercustomerid").val();
+	var customername = $("#createcustomercustomername").val();
+	var password = $("#createcustomerpassword").val();
+	var email = $("#createcustomeremail").val();
+	xhr = new XMLHttpRequest();
+	var url = "http://localhost:8080/jerseyservice/rest/admin/createcustomer/" + customerid + "/" + customername + "/" + password + "/" + email;
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-type", "application/json");
+	xhr.onreadystatechange = function () { 
+	     if (xhr.status == 200) {
+	        var messageboxHtml = document.getElementById("createcustomermessagebox");
+	        messageboxHtml.innerHTML = xhr.responseText;
+	    } else {
+	    	 alert('Action failed: ' + xhr.responseText);
+	    }
+	}
+	xhr.send();
+}
+
+function UpdateCustomer1() {
+	var customerid = $("#updatecustomercustomerid").val();
+	var customername = $("#updatecustomercustomername").val();
+	var password = $("#updatecustomerpassword").val();
+	var email = $("#updatecustomeremail").val();
+	xhr = new XMLHttpRequest();
+	var url = "http://localhost:8080/jerseyservice/rest/admin/updatecustomer/" + customerid + "/" + customername + "/" + password + "/" + email;
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-type", "application/json");
+	xhr.onreadystatechange = function () { 
+	     if (xhr.status == 200) {
+	        var messageboxHtml = document.getElementById("updatecustomermessagebox");
+	        messageboxHtml.innerHTML = xhr.responseText;
+	    } else {
+	    	if (xhr.status == 201) {
+		        var messageboxHtml = document.getElementById("updatecustomermessagebox");
+		        messageboxHtml.innerHTML = xhr.responseText;
+	    			} else {
+	    				 alert('Action failed: ' + xhr.responseText);
+	    				}
+	    		}
+		}
+	xhr.send();
+}
+
+function DeleteCustomer1() {
+	var customerid = $("#deletecustomercustomerid").val();
+	var customername = $("#deletecustomercustomername").val();
+	var password = $("#deletecustomerpassword").val();
+	var email = $("#deletecustomeremail").val();
+	xhr = new XMLHttpRequest();
+	var url = "http://localhost:8080/jerseyservice/rest/admin/deletecustomer/" + customerid + "/" + customername + "/" + password + "/" + email;
+	xhr.open("DELETE", url, true);
+	xhr.setRequestHeader("Content-type", "application/json");
+	xhr.onreadystatechange = function () { 
+	     if (xhr.status == 200) {
+	        var messageboxHtml = document.getElementById("deletecustomermessagebox");
+	        messageboxHtml.innerHTML = xhr.responseText;
+	    } else {
+	    	if (xhr.status == 201) {
+		        var messageboxHtml = document.getElementById("deletecustomermessagebox");
+		        messageboxHtml.innerHTML = xhr.responseText;
+	    			} else {
+	    				 alert('Action failed: ' + xhr.responseText);
+	    				}
+	    		}
+		}
+	xhr.send();
+}
+function FindCustomer1() {
+	var extractedCustomerId = $("#findcustomercustomerid").val();
+	xhr = new XMLHttpRequest();
+	var url = "http://localhost:8080/jerseyservice/rest/admin/getcustomer/" + extractedCustomerId;
+	xhr.open("GET", url, true);
+	xhr.setRequestHeader("Content-type", "application/json");
+	xhr.send();	
+	xhr.onreadystatechange = function() {
+		if (this.status == 200) {
+			var responseAsString = xhr.responseText;
+			try {
+				var responseAsJsonObj = JSON.parse(responseAsString);
+			} catch (err) {
+				console.log("error in parsing JSON");
+			}							
+			var findcustomercustomernameHtml = document.getElementById("findcustomercustomername");
+			findcustomercustomernameHtml.value = responseAsJsonObj.customerName;
+			var findcustomerpasswordHtml = document.getElementById("findcustomerpassword");
+			findcustomerpasswordHtml.value = responseAsJsonObj.password;
+			var findcustomeremailHtml = document.getElementById("findcustomeremail");
+			findcustomeremailHtml.value = responseAsJsonObj.email;
+			var messageBox = document.getElementById("findcustomermessagebox");
+			messageBox.innerHTML = "got customer: " + extractedCustomerId;
+			
+		} else { 
+				if (this.status == 201){
+					var messageboxHtml = document.getElementById("findcustomermessagebox");
+	        		messageboxHtml.innerHTML = xhr.responseText;
+				} else {
+						alert('Action failed: ' + xhr.responseText);
+						}
+				}
+	}	 
+}
 </script>
 
 <div id="Admin">
@@ -333,22 +470,23 @@ function DeleteCompany1() {
 		<h1>Find Company by ID</h1>
 			<form action="findcompany">
 				<div name= "findcompany">
-					Company ID: <input type="text" placeholder="Company ID"  name="companyid"/> 
+					Company ID: <input type="text" placeholder="Company ID"  name="companyid" id="findcompanycompanyid"/> 
 					<br/>
 					<br/>
-					Company Name: <input type="text" placeholder="Company Name"  name="companyname"/> 			
+					Company Name: <input type="text" placeholder="Company Name"  name="companyname" id="findcompanycompanyname"/> 			
 					<br/>
 					<br/>
-					Password: <input type="text" placeholder="Password"  name="password"/> 
+					Password: <input type="text" placeholder="Password"  name="password" id="findcompanypassword"/> 
 					<br/>
 					<br/>
-					Email: <input type="text" placeholder="Email"  name="email"/>
+					Email: <input type="text" placeholder="Email"  name="email" id="findcompanyemail"/>
 					<br/>					
 					<br/>
 					<input value="Submit" type="button" onclick="FindCompany1()"/>
+					<button type="reset" value="Reset">Reset</button>
 					<br/>
 					<br/>
-					<div id="messagebox"> <textarea> </textarea></div>
+					<div id="findcompanymessagebox"> <textarea> </textarea></div>
 				</div>
 			</form>		
 </article>
@@ -357,94 +495,97 @@ function DeleteCompany1() {
 		<h1>Create Customer</h1>
 			<form action="createcustomer">
 				<div name="createcustomer"> 
-					Customer ID: <input type="text" placeholder="Customer ID"  name="customerid"/> 
+					Customer ID: <input type="text" placeholder="Customer ID"  name="customerid" id="createcustomercustomerid"/> 
 					<br/>
 					<br/>
-					Customer Name: <input type="text" placeholder="Customer Name"  name="customername"/> 			
+					Customer Name: <input type="text" placeholder="Customer Name"  name="customername" id="createcustomercustomername"/> 			
 					<br/>
 					<br/>
-					Password: <input type="text" placeholder="Password"  name="password"/> 
+					Password: <input type="text" placeholder="Password"  name="password" id="createcustomerpassword"/> 
 					<br/>
 					<br/>
-					Email: <input type="text" placeholder="Email"  name="email"/>
+					Email: <input type="text" placeholder="Email"  name="email" id="createcustomeremail"/>
 					<br/>
 					<br/>
 					<input value="Submit" type="button" onclick="CreateCustomer1()"/>
 					<br/>
 					<br/>
-					<div id="messagebox"> <textarea> </textarea></div>
+					<div id="createcustomermessagebox"> <textarea> </textarea></div>
 					</div>			
-				</div>	
+				</form>		
 </article>
 
 <article ng-show="showMeUpdateCustomer"> 
 		<h1>Update Customer</h1>
 			<form action="updatecustomer">
 				<div name="updatecustomer">
-					Customer ID: <input type="text" placeholder="Customer ID"  name="customerid"/> 
+					Customer ID: <input type="text" placeholder="Customer ID"  name="customerid" id="updatecustomercustomerid"/> 
 					<br/>
 					<br/>
-					Customer Name: <input type="text" placeholder="Customer Name"  name="customername"/> 			
+					Customer Name: <input type="text" placeholder="Customer Name"  name="customername" id="updatecustomercustomername"/> 			
 					<br/>
 					<br/>
-					Password: <input type="text" placeholder="Password"  name="password"/> 
+					Password: <input type="text" placeholder="Password"  name="password" id="updatecustomerpassword"/> 
 					<br/>
 					<br/>
-					Email: <input type="text" placeholder="Email"  name="email"/>
+					Email: <input type="text" placeholder="Email"  name="email" id="updatecustomeremail"/>
 					<br/>
 					<br/>
 					<input value="Submit" type="button" onclick="UpdateCustomer1()"/>
 					<br/>
 					<br/>
-					<div id="messagebox"> <textarea> </textarea></div>
+					<div id="updatecustomermessagebox"> <textarea> </textarea></div>
 					</div>			
-				</div>	
+				</form>		
 </article>
 
 <article ng-show="showMeDeleteCustomer"> 
 		<h1>Delete Customer</h1>
 			<form action="deletecustomer">
 				<div name="deletecustomer">
-					<div> 
-					Customer ID: <input type="text" placeholder="Customer ID"  name="customerid"/> 
+					Customer ID: <input type="text" placeholder="Customer ID"  name="customerid" id="deletecustomercustomerid"/> 
 					<br/>
 					<br/>
-					Customer Name: <input type="text" placeholder="Customer Name"  name="customername"/> 			
+					Customer Name: <input type="text" placeholder="Customer Name"  name="customername" id="deletecustomercustomername"/> 			
 					<br/>
 					<br/>
-					Password: <input type="text" placeholder="Password"  name="password"/> 
+					Password: <input type="text" placeholder="Password"  name="password" id="deletecustomerpassword"/> 
 					<br/>
 					<br/>
-					Email: <input type="text" placeholder="Email"  name="email"/>
+					Email: <input type="text" placeholder="Email"  name="email" id="deletecustomeremail"/>
 					<br/>
 					<br/>
-					<input value="Submit" type="Submit" />
+					<input value="Submit" type="button" onclick="DeleteCustomer1()"/>
+					<br/>
+					<br/>
+					<div id="deletecustomermessagebox"> <textarea> </textarea></div>
 					</div>			
-				</div>	
+			</form>	
 </article>
 
 <article ng-show="showMeFindCustomer"> 
 		<h1>Find Customer by ID</h1>
 			<form action="findcustomer">
 				<div name="findcustomer">
-					Customer ID: <input type="text" placeholder="Customer ID"  name="customerid"/> 
+					Customer ID: <input type="text" placeholder="Customer ID"  name="customerid" id="findcustomercustomerid"/> 
 					<br/>
 					<br/>
-					Customer Name: <input type="text" placeholder="Customer Name"  name="customername"/> 			
+					Customer Name: <input type="text" placeholder="Customer Name"  name="customername" id="findcustomercustomername"/> 			
 					<br/>
 					<br/>
-					Password: <input type="text" placeholder="Password"  name="password"/> 
+					Password: <input type="text" placeholder="Password"  name="password" id="findcustomerpassword"/> 
 					<br/>
 					<br/>
-					Email: <input type="text" placeholder="Email"  name="email"/>
+					Email: <input type="text" placeholder="Email"  name="email" id="findcustomeremail"/>
 					<br/>
 					<br/>
 					<input value="Submit" type="button" onclick="FindCustomer1()"/>
+					<button type="reset" value="Reset">Reset</button>
 					<br/>
 					<br/>
-					<div id="messagebox"> <textarea> </textarea></div>
+					<div id="findcustomermessagebox"> <textarea> </textarea></div>
 					</div>			
-				</div>	
+			</form>		
 </article>
 
 </body>

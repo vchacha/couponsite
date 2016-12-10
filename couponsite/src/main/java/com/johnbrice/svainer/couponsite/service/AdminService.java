@@ -18,6 +18,7 @@ import com.johnbrice.svainer.couponsite.core.fasade.ClientType;
 import com.johnbrice.svainer.couponsite.core.fasade.CouponClientFacade;
 import com.johnbrice.svainer.couponsite.core.fasade.LoginManager;
 import com.johnbrice.svainer.couponsite.core.logic.exception.CompanyValidationException;
+import com.johnbrice.svainer.couponsite.core.logic.exception.CustomerValidationException;
 import com.johnbrice.svainer.couponsite.core.model.CompanyDO;
 import com.johnbrice.svainer.couponsite.core.model.CustomerDO;
 
@@ -44,7 +45,6 @@ public class AdminService {
 	public Response createCompany(@PathParam("companyid") long companyId, @PathParam("companyname") String companyName,
 			@PathParam("password") String password, @PathParam("email") String email) {
 		CompanyDO companyDO = new CompanyDO(companyId, companyName, password, email);
-		
 		try {
 			couponClientFacadeAdmin.createCompany(companyDO);
 			return Response.status(200).entity("Successfully created company").build();
@@ -97,8 +97,12 @@ public class AdminService {
 	public Response getCompany(@PathParam("companyid") long companyId) {
 		
 		try{
-			couponClientFacadeAdmin.getCompany(companyId);
-			return Response.status(200).entity("Successfully find company").build();
+			CompanyDO company = couponClientFacadeAdmin.getCompany(companyId);
+			if (company == null){
+				return Response.status(201).entity("Company doesn't exist").build();
+			} else {		
+			return Response.status(200).entity(company).build();
+			}
 			
 		} catch (CompanyValidationException e) {	
 			return Response.status(500).entity("Wasn't able to find company").build();
@@ -113,29 +117,71 @@ public class AdminService {
 	}
 
 	@Path("/createcustomer/{customerid}/{customername}/{password}/{email}")
-	@PUT
+	@POST
 	@Produces("application/json")
-	public void createCustomer(@PathParam("customerid") long customerId, @PathParam("customername") String customerName,
+	public Response createCustomer(@PathParam("customerid") long customerId, @PathParam("customername") String customerName,
 			@PathParam("password") String password, @PathParam("email") String email) {
 		CustomerDO tempCustomerDO = new CustomerDO(customerId, customerName, password, email);
+		try {
 		couponClientFacadeAdmin.createCustomer(tempCustomerDO);
+		return Response.status(200).entity("Successfully created customer").build();
+		} catch (CustomerValidationException e) {
+		  return Response.status(500).entity("Wasn't able to create customer").build();
+		}
 	}
 
 	@Path("/deletecustomer/{customerid}/{customername}/{password}/{email}")
 	@DELETE
 	@Produces("application/json")
-	public void removeCustomer(@PathParam("customerid") long customerId, @PathParam("customername") String customerName,
+	public Response removeCustomer(@PathParam("customerid") long customerId, @PathParam("customername") String customerName,
 			@PathParam("password") String password, @PathParam("email") String email) {
 		CustomerDO tempCustomerDO = new CustomerDO(customerId, customerName, password, email);
-		couponClientFacadeAdmin.removeCustomer(tempCustomerDO);
-	}
+		try {
+			int numberOfDeletedCustomers = couponClientFacadeAdmin.removeCustomer(tempCustomerDO);
+			if (numberOfDeletedCustomers > 0){
+				return Response.status(200).entity("Customer successfully updated").build();
+			} else {
+				return Response.status(201).entity("Customer doesn't exist").build();
+			}
+		} catch (CustomerValidationException e) {	
+			return Response.status(500).entity("Wasn't able to delete customer").build();
+		}	
+}
 
-	@Path("/updatecustomer/{customerId}/{customerName}/{password}/{email}")
+	@Path("/updatecustomer/{customerid}/{customername}/{password}/{email}")
 	@POST
 	@Produces("application/json")
-	public void updateCustomer(@PathParam("customerid") long customerId, @PathParam("customername") String customerName,
+	public Response updateCustomer(@PathParam("customerid") long customerId, @PathParam("customername") String customerName,
 			@PathParam("password") String password, @PathParam("email") String email) {
-		CustomerDO tempCustomerDO = new CustomerDO(customerId, customerName, password, email);
-		couponClientFacadeAdmin.updateCustomer(tempCustomerDO);
+		CustomerDO customerDO = new CustomerDO(customerId, customerName, password, email);
+		try{
+			int numberOfUpdatedcustomers = couponClientFacadeAdmin.updateCustomer(customerDO);
+			if (numberOfUpdatedcustomers > 0){
+			return Response.status(200).entity("Customer successfully updated").build();
+			} else {
+				return Response.status(201).entity("Customer doesn't exist").build();
+				}
+		} catch (CustomerValidationException e) {	
+			return Response.status(500).entity("Wasn't able to update customer").build();
+		}
 	}
+	
+	@Path("/getcustomer/{customerid}")
+	@GET
+	@Produces("application/json")
+	public Response getCustomer(@PathParam("customerid") long customerId) {
+		
+		try{
+			CustomerDO customer = couponClientFacadeAdmin.getCustomer(customerId);
+			if (customer == null){
+				return Response.status(201).entity("Customer doesn't exist").build();
+			} else {		
+			return Response.status(200).entity(customer).build();
+			}
+			
+		} catch (CustomerValidationException e) {	
+			return Response.status(500).entity("Wasn't able to find customer").build();
+		}
+	}
+
 }

@@ -398,7 +398,7 @@ function FindCustomer1() {
 		<h1>Create Company</h1>
 			<form action="createcompany">
 				<div name= "createcompany">
-					Company ID: <input type="text" placeholder="Company ID"  name="companyid" id="createcompanycompanyid"/> 
+					Company ID: <input type="number" placeholder="Company ID"  name="companyid" id="createcompanycompanyid"/> 
 					<br/>
 					<br/>
 					Company Name: <input type="text" placeholder="Company Name"  name="companyname" id="createcompanycompanyname"/> 			
@@ -407,7 +407,7 @@ function FindCustomer1() {
 					Password: <input type="text" placeholder="Password"  name="password" id="createcompanypassword"/> 
 					<br/>
 					<br/>
-					Email: <input type="text" placeholder="Email"  name="email" id="createcompanyemail"/>
+					Email: <input type="email" placeholder="Email"  name="email" id="createcompanyemail"/>
 					<br/>					
 					<br/>
 					<input value="Submit" type="button" onclick="CreateCompany1()"/>
@@ -422,7 +422,7 @@ function FindCustomer1() {
 		<h1>Update Company</h1>
 			<form action="updatecompany">
 				<div name= "updatecompany">
-					Company ID: <input type="text" placeholder="Company ID"  name="companyid" id="updatecompanycompanyid"/> 
+					Company ID: <input type="number" placeholder="Company ID"  name="companyid" id="updatecompanycompanyid"/> 
 					<br/>
 					<br/>
 					Company Name: <input type="text" placeholder="Company Name"  name="companyname" id="updatecompanycompanyname"/> 			
@@ -431,7 +431,7 @@ function FindCustomer1() {
 					Password: <input type="text" placeholder="Password"  name="password" id="updatecompanypassword"/> 
 					<br/>
 					<br/>
-					Email: <input type="text" placeholder="Email"  name="email" id="updatecompanyemail"/>
+					Email: <input type="email" placeholder="Email"  name="email" id="updatecompanyemail"/>
 					<br/>					
 					<br/>
 					<input value="Submit" type="button" onclick="UpdateCompany1()"/>
@@ -446,7 +446,7 @@ function FindCustomer1() {
 		<h1>Delete Company</h1>
 			<form action="deletecompany">
 				<div name= "deletecompany">
-					Company ID: <input type="text" placeholder="Company ID"  name="companyid" id="deletecompanycompanyid"/> 
+					Company ID: <input type="number" placeholder="Company ID"  name="companyid" id="deletecompanycompanyid"/> 
 					<br/>
 					<br/>
 					Company Name: <input type="text" placeholder="Company Name"  name="companyname" id="deletecompanycompanyname"/> 			
@@ -455,7 +455,7 @@ function FindCustomer1() {
 					Password: <input type="text" placeholder="Password"  name="password" id="deletecompanypassword"/> 
 					<br/>
 					<br/>
-					Email: <input type="text" placeholder="Email"  name="email" id="deletecompanyemail"/>
+					Email: <input type="email" placeholder="Email"  name="email" id="deletecompanyemail"/>
 					<br/>					
 					<br/>
 					<input value="Submit" type="button" onclick="DeleteCompany1()"/>
@@ -470,16 +470,16 @@ function FindCustomer1() {
 		<h1>Find Company by ID</h1>
 			<form action="findcompany">
 				<div name= "findcompany">
-					Company ID: <input type="text" placeholder="Company ID"  name="companyid" id="findcompanycompanyid"/> 
+					Company ID: <input type="number" placeholder="Company ID"  name="companyid" id="findcompanycompanyid"/> 
 					<br/>
 					<br/>
-					Company Name: <input type="text" placeholder="Company Name"  name="companyname" id="findcompanycompanyname"/> 			
+					Company Name: <input type="text" readonly placeholder="Company Name"  name="companyname" id="findcompanycompanyname"/> 			
 					<br/>
 					<br/>
-					Password: <input type="text" placeholder="Password"  name="password" id="findcompanypassword"/> 
+					Password: <input type="text" readonly placeholder="Password"  name="password" id="findcompanypassword"/> 
 					<br/>
 					<br/>
-					Email: <input type="text" placeholder="Email"  name="email" id="findcompanyemail"/>
+					Email: <input type="email" readonly placeholder="Email"  name="email" id="findcompanyemail"/>
 					<br/>					
 					<br/>
 					<input value="Submit" type="button" onclick="FindCompany1()"/>
@@ -495,7 +495,7 @@ function FindCustomer1() {
 		<h1>Create Customer</h1>
 			<form action="createcustomer">
 				<div name="createcustomer"> 
-					Customer ID: <input type="text" placeholder="Customer ID"  name="customerid" id="createcustomercustomerid"/> 
+					Customer ID: <input type="number" placeholder="Customer ID"  name="customerid" id="createcustomercustomerid"/> 
 					<br/>
 					<br/>
 					Customer Name: <input type="text" placeholder="Customer Name"  name="customername" id="createcustomercustomername"/> 			
@@ -504,7 +504,7 @@ function FindCustomer1() {
 					Password: <input type="text" placeholder="Password"  name="password" id="createcustomerpassword"/> 
 					<br/>
 					<br/>
-					Email: <input type="text" placeholder="Email"  name="email" id="createcustomeremail"/>
+					Email: <input type="email" placeholder="Email"  name="email" id="createcustomeremail"/>
 					<br/>
 					<br/>
 					<input value="Submit" type="button" onclick="CreateCustomer1()"/>
@@ -519,7 +519,7 @@ function FindCustomer1() {
 		<h1>Update Customer</h1>
 			<form action="updatecustomer">
 				<div name="updatecustomer">
-					Customer ID: <input type="text" placeholder="Customer ID"  name="customerid" id="updatecustomercustomerid"/> 
+					Customer ID: <input type="number" placeholder="Customer ID"  name="customerid" id="updatecustomercustomerid"/> 
 					<br/>
 					<br/>
 					Customer Name: <input type="text" placeholder="Customer Name"  name="customername" id="updatecustomercustomername"/> 			
@@ -528,7 +528,7 @@ function FindCustomer1() {
 					Password: <input type="text" placeholder="Password"  name="password" id="updatecustomerpassword"/> 
 					<br/>
 					<br/>
-					Email: <input type="text" placeholder="Email"  name="email" id="updatecustomeremail"/>
+					Email: <input type="email" placeholder="Email"  name="email" id="updatecustomeremail"/>
 					<br/>
 					<br/>
 					<input value="Submit" type="button" onclick="UpdateCustomer1()"/>
@@ -543,7 +543,7 @@ function FindCustomer1() {
 		<h1>Delete Customer</h1>
 			<form action="deletecustomer">
 				<div name="deletecustomer">
-					Customer ID: <input type="text" placeholder="Customer ID"  name="customerid" id="deletecustomercustomerid"/> 
+					Customer ID: <input type="number" placeholder="Customer ID"  name="customerid" id="deletecustomercustomerid"/> 
 					<br/>
 					<br/>
 					Customer Name: <input type="text" placeholder="Customer Name"  name="customername" id="deletecustomercustomername"/> 			
@@ -552,7 +552,7 @@ function FindCustomer1() {
 					Password: <input type="text" placeholder="Password"  name="password" id="deletecustomerpassword"/> 
 					<br/>
 					<br/>
-					Email: <input type="text" placeholder="Email"  name="email" id="deletecustomeremail"/>
+					Email: <input type="email" placeholder="Email"  name="email" id="deletecustomeremail"/>
 					<br/>
 					<br/>
 					<input value="Submit" type="button" onclick="DeleteCustomer1()"/>
@@ -567,16 +567,16 @@ function FindCustomer1() {
 		<h1>Find Customer by ID</h1>
 			<form action="findcustomer">
 				<div name="findcustomer">
-					Customer ID: <input type="text" placeholder="Customer ID"  name="customerid" id="findcustomercustomerid"/> 
+					Customer ID: <input type="number" placeholder="Customer ID"  name="customerid" id="findcustomercustomerid"/> 
 					<br/>
 					<br/>
-					Customer Name: <input type="text" placeholder="Customer Name"  name="customername" id="findcustomercustomername"/> 			
+					Customer Name: <input type="text" readonly placeholder="Customer Name"  name="customername" id="findcustomercustomername"/> 			
 					<br/>
 					<br/>
-					Password: <input type="text" placeholder="Password"  name="password" id="findcustomerpassword"/> 
+					Password: <input type="text" readonly placeholder="Password"  name="password" id="findcustomerpassword"/> 
 					<br/>
 					<br/>
-					Email: <input type="text" placeholder="Email"  name="email" id="findcustomeremail"/>
+					Email: <input type="email" readonly placeholder="Email"  name="email" id="findcustomeremail"/>
 					<br/>
 					<br/>
 					<input value="Submit" type="button" onclick="FindCustomer1()"/>

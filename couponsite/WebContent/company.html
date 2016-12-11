@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="js/jquery.dataTables.js"></script>
+<head>
+	<style >
+		nav {
+			    float: left;
+			    max-width: 160px;
+			    margin: 0;
+			    padding: 1em;
+		}
+		nav ul a {
+		    text-decoration: none;
+		}
+		article {
+		    margin-left: 170px;
+		    border-left: 1px solid gray;
+		    padding: 1em;
+		    overflow: hidden;
+		    }
+	</style>
+<meta charset="ISO-8859-1">
+<title>CouponSite</title>
+</head>
+
+<script>
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope) {
+    $scope.showMeCreateCoupon = false;
+    $scope.myFuncCreateCoupon = function() {
+        $scope.showMeCreateCoupon = !$scope.showMeCreateCoupon;
+        $scope.showMeUpdateCoupon = false;
+		$scope.showMeDeleteCoupon = false;
+		$scope.showMeFindCoupon = false;
+		$scope.showMeGetAllCoupons = false;
+		$scope.showMeGetAllCouponsByType = false;
+    }
+    $scope.showMeUpdateCoupon = false;
+    $scope.myFuncUpdateCoupon = function() {
+        $scope.showMeCreateCoupon = false;
+        $scope.showMeUpdateCoupon = !$scope.showMeUpdateCoupon;
+		$scope.showMeDeleteCoupon = false;
+		$scope.showMeFindCoupon = false;
+		$scope.showMeGetAllCoupons = false;
+		$scope.showMeGetAllCouponsByType = false;
+    }
+    $scope.showMeDeleteCoupon = false;
+    $scope.myFuncDeleteCoupon = function() {
+        $scope.showMeCreateCoupon = false;
+        $scope.showMeUpdateCoupon = false;
+		$scope.showMeDeleteCoupon = !$scope.showMeDeleteCoupon;
+		$scope.showMeFindCoupon = false;
+		$scope.showMeGetAllCoupons = false;
+		$scope.showMeGetAllCouponsByType = false;
+    }
+    $scope.showMeFindCoupon = false;
+    $scope.myFuncFindCoupon = function() {
+        $scope.showMeCreateCoupon = false;
+        $scope.showMeUpdateCoupon = false;
+		$scope.showMeDeleteCoupon = false;
+		$scope.showMeFindCoupon = !$scope.showMeFindCoupon;
+		$scope.showMeGetAllCoupons = false;
+		$scope.showMeGetAllCouponsByType = false;
+    }
+    $scope.showMeGetAllCoupons = false;
+    $scope.myFuncGetAllCoupons = function() {
+        $scope.showMeCreateCoupon = false;
+        $scope.showMeUpdateCoupon = false;
+		$scope.showMeDeleteCoupon = false;
+		$scope.showMeFindCoupon = false;
+		$scope.showMeGetAllCoupons = !$scope.showMeGetAllCoupons;
+		$scope.showMeGetAllCouponsByType = false;
+    }
+    $scope.showMeGetAllCouponsByType = false;
+    $scope.myFuncGetAllCouponsByType = function() {
+        $scope.showMeCreateCoupon = false;
+        $scope.showMeUpdateCoupon = false;
+		$scope.showMeDeleteCoupon = false;
+		$scope.showMeFindCoupon = false;
+		$scope.showMeGetAllCoupons = false;
+		$scope.showMeGetAllCouponsByType = !$scope.showMeGetAllCouponsByType;
+    }
+});
+
+function CreateCoupon1() {
+    	var couponid = $("#createcouponcompanyid").val();
+    	var companyid = $("#createcouponcouponid").val();
+    	var title = $("#createcoupontitle").val();
+    	var startdate = $("#createcouponstartdate").val();
+    	var enddate = $("#createcouponenddate").val();
+    	var amount = $("#createcouponamount").val();
+    	var type = $("#createcoupontype").val();
+    	var message = $("#createcouponmessage").val();
+    	var price = $("#createcouponprice").val();
+    	var image = $("#createcouponimage").val();
+    	
+    	console.log(typeof startdate);
+    	
+    	xhr = new XMLHttpRequest();
+    	var url = "http://localhost:8080/jerseyservice/rest/company/createcoupon/" + couponid + "/" + companyid + "/" + title + "/" + startdate + "/" + enddate + "/" + amount + "/" + type + "/" + message + "/" + price;
+    	xhr.open("POST", url, true);
+    	xhr.setRequestHeader("Content-type", "application/json");
+    	xhr.onreadystatechange = function () { 
+    	     if (xhr.status == 200) {
+    	        var messageboxHtml = document.getElementById("createcouponmessagebox");
+    	        messageboxHtml.innerHTML = xhr.responseText;
+    	    } else {
+    	    	 alert('Action failed: ' + xhr.responseText);
+    	    }
+    	}
+    	xhr.send();
+    }
+    
+</script>
+
+<div id="Company">
+	<header>
+   		<h1>Welcome Company Client</h1>
+	</header>
+</div>
+<body ng-app="myApp" ng-controller="myCtrl">
+	<nav>
+  		<ul>
+		    <li><a ng-click="myFuncCreateCoupon()" href="#">Create Coupon</a></li>
+		    <li><a ng-click="myFuncUpdateCoupon()" href="#">Update Coupon</a></li>
+		    <li><a ng-click="myFuncDeleteCoupon()" href="#">Delete Coupon</a></li>
+		    <li><a ng-click="myFuncFindCoupon()" href="#">Find Coupon</a></li>
+		    <li><a ng-click="myFuncGetAllCoupons()" href="#">Get All Coupons</a></li>
+		    <li><a ng-click="myFuncGetAllCouponsByType()" href="#">Get All Coupons By Type</a></li>
+ 		</ul>
+	</nav>
+
+<article ng-show="showMeCreateCoupon">
+		<h1>Create Coupon</h1>
+			<form action="createcoupon">
+				<div name= "createcoupon">
+					Coupon ID: <input type="number" placeholder="Coupon ID" name="couponId" id="createcouponcouponid"/> 
+					<br/>
+					<br/>
+					Company ID: <input type="number" placeholder="Company ID"  name="companyId" id="createcouponcompanyid"/>  			
+					<br/>
+					<br/>
+					Title: <input type="text" placeholder="Title"  name="title" id="createcoupontitle"/> 
+					<br/>
+					<br/>
+					Start Date: <input type="date" placeholder="Start Date"  name="startDate" id="createcouponstartdate"/>
+					<br/>
+					<br/>
+					End Date: <input type="date" placeholder="End Date"  name="endDate" id="createcouponenddate"/>
+					<br/>
+					<br/>
+					Amount: <input type="number" placeholder="Amount"  name="amount" id="createcouponamount"/>
+					<br/>
+					<br/>
+					Type: <select name="Type" id="createcoupontype"> 
+					<option value="RESTURANT"> RESTURANT </option> 
+					<option value="ELECTRICITY"> ELECTRICITY </option>
+					<option value="FOOD"> FOOD </option> 
+					<option value="HEALTH"> HEALTH </option> 
+					<option value="SPORTS"> SPORTS </option> 
+					<option value="CAMPING"> CAMPING </option> 
+					<option value="TRAVELLING"> TRAVELLING </option> 
+					</select>
+					<br/>
+					<br/>
+					Message:
+					<br/>
+					<textarea cols="30" rows="5" id="createcouponmessage"> </textarea>
+					<br/>
+					<br/>
+					Price: <input type="number" placeholder="Price"  name="price" id="createcouponprice"/>
+					<br/>
+					<br/>
+					Select an image : <input type="file" name="image" size="45" id="createcouponimage"/> 
+					<br/>
+					<br/>
+					<br/>
+					<input value="Submit" type="button" onclick="CreateCoupon1()"/>
+					<br/>
+					<br/>
+					<div id="createcouponmessagebox"> <textarea> </textarea></div>
+				</div>
+			</form>		
+</article>
+
+<article ng-show="showMeUpdateCoupon">
+		<h1>Update Coupon</h1>
+			<form action="updatecoupon">
+				<div name= "updatecoupon">
+					Coupon ID: <input type="number" placeholder="Coupon ID"  name="couponId" id="updatecouponcouponid"/> 
+					<br/>
+					<br/>
+					Company ID: <input type="number" placeholder="Company ID"  name="companyId" id="updatecouponcompanyid"/>  			
+					<br/>
+					<br/>
+					Title: <input type="text" placeholder="Title"  name="title" id="updatecoupontitle"/> 
+					<br/>
+					<br/>
+					Start Date: <input type="date" placeholder="Start Date"  name="startDate" id="updatecouponstartdate"/>
+					<br/>
+					<br/>
+					End Date: <input type="date" placeholder="End Date"  name="endDate" id="updatecouponenddate"/>
+					<br/>
+					<br/>
+					Amount: <input type="number" placeholder="Amount"  name="amount" id="updatecouponamount"/>
+					<br/>
+					<br/>
+					Type: <select name="Type" id="updatecoupontype"> 
+					<option value="RESTURANT"> RESTURANT </option> 
+					<option value="ELECTRICITY"> ELECTRICITY </option>
+					<option value="FOOD"> FOOD </option> 
+					<option value="HEALTH"> HEALTH </option> 
+					<option value="SPORTS"> SPORTS </option> 
+					<option value="CAMPING"> CAMPING </option> 
+					<option value="TRAVELLING"> TRAVELLING </option> 
+					</select>
+					<br/>
+					<br/>
+					Message:
+					<br/>
+					<textarea cols="30" rows="5" id="updatecouponmessage"> </textarea>
+					<br/>
+					<br/>
+					Price: <input type="number" placeholder="Price"  name="price" id="updatecouponprice"/>
+					<br/>
+					<br/>
+					Select an image : <input type="file" name="image" size="45" id="updatecouponimage"/> 
+					<br/>
+					<br/>
+					<br/>
+					<input value="Submit" type="button" onclick="UpdateCoupon1()"/>
+					<br/>
+					<br/>
+					<div id="updatecouponmessagebox"> <textarea> </textarea></div>
+				</div>
+			</form>		
+</article>
+
+<article ng-show="showMeDeleteCoupon">
+		<h1>Delete Coupon</h1>
+			<form action="deletecoupon">
+				<div name= "deletecoupon">
+					Coupon ID: <input type="number" placeholder="Coupon ID"  name="couponId" id="deletecouponcouponid"/> 
+					<br/>
+					<br/>
+					Company ID: <input type="number" placeholder="Company ID"  name="companyId" id="deletecouponcompanyid"/>  			
+					<br/>
+					<br/>
+					Title: <input type="text" placeholder="Title"  name="title" id="deletecoupontitle"/> 
+					<br/>
+					<br/>
+					Start Date: <input type="date" placeholder="Start Date"  name="startDate" id="deletecouponstartdate"/>
+					<br/>
+					<br/>
+					End Date: <input type="date" placeholder="End Date"  name="endDate" id="deletecouponenddate"/>
+					<br/>
+					<br/>
+					Amount: <input type="number" placeholder="Amount"  name="amount" id="deletecouponamount"/>
+					<br/>
+					<br/>
+					Type: <select name="Type" id="deletecoupontype"> 
+					<option value="RESTURANT"> RESTURANT </option> 
+					<option value="ELECTRICITY"> ELECTRICITY </option>
+					<option value="FOOD"> FOOD </option> 
+					<option value="HEALTH"> HEALTH </option> 
+					<option value="SPORTS"> SPORTS </option> 
+					<option value="CAMPING"> CAMPING </option> 
+					<option value="TRAVELLING"> TRAVELLING </option> 
+					</select>
+					<br/>
+					<br/>
+					Message:
+					<br/>
+					<textarea cols="30" rows="5" id="deletecouponmessage"> </textarea>
+					<br/>
+					<br/>
+					Price: <input type="number" placeholder="Price"  name="price" id="deletecouponprice"/>
+					<br/>
+					<br/>
+					Select an image : <input type="file" name="image" size="45" id="deletecouponimage"/> 
+					<br/>
+					<br/>
+					<br/>
+					<input value="Submit" type="button" onclick="DeleteCoupon1()"/>
+					<br/>
+					<br/>
+					<div id="deletecouponmessagebox"> <textarea> </textarea></div>
+				</div>
+			</form>		
+</article>
+
+<article ng-show="showMeFindCoupon">
+		<h1>Find Coupon</h1>
+			<form action="findcoupon">
+				<div name= "findcoupon">
+					Coupon ID: <input type="number" placeholder="Coupon ID"  name="couponId" id="findcouponcouponid"/> 
+					<br/>
+					<br/>
+					Company ID: <input type="number" placeholder="Company ID"  name="companyId" id="findcouponcompanyid"/>  			
+					<br/>
+					<br/>
+					Title: <input type="text" placeholder="Title"  name="title" id="findcoupontitle"/> 
+					<br/>
+					<br/>
+					Start Date: <input type="date" placeholder="Start Date"  name="startDate" id="findcouponstartdate"/>
+					<br/>
+					<br/>
+					End Date: <input type="date" placeholder="End Date"  name="endDate" id="findcouponenddate"/>
+					<br/>
+					<br/>
+					Amount: <input type="number" placeholder="Amount"  name="amount" id="findcouponamount"/>
+					<br/>
+					<br/>
+					Type: <select name="Type" id="findcoupontype"> 
+					<option value="RESTURANT"> RESTURANT </option> 
+					<option value="ELECTRICITY"> ELECTRICITY </option>
+					<option value="FOOD"> FOOD </option> 
+					<option value="HEALTH"> HEALTH </option> 
+					<option value="SPORTS"> SPORTS </option> 
+					<option value="CAMPING"> CAMPING </option> 
+					<option value="TRAVELLING"> TRAVELLING </option> 
+					</select>
+					<br/>
+					<br/>
+					Message:
+					<br/>
+					<textarea cols="30" rows="5" id="findcouponmessage"> </textarea>
+					<br/>
+					<br/>
+					Price: <input type="number" placeholder="Price"  name="price" id="findcouponprice"/>
+					<br/>
+					<br/>
+					Select an image : <input type="file" name="image" size="45" id="findcouponimage"/> 
+					<br/>
+					<br/>
+					<br/>
+					<input value="Submit" type="button" onclick="FindCoupon1()"/>
+					<br/>
+					<br/>
+					<div id="findcouponmessagebox"> <textarea> </textarea></div>
+				</div>
+			</form>		
+</article>
+
+<article ng-show="showMeGetAllCoupons">
+		<h1>Get All Coupons</h1>
+			<form action="getallcoupons">
+				<div name= "getallcoupons">
+					Coupon ID: <input type="number" placeholder="Coupon ID"  name="couponId" id="getallcouponscouponid"/> 
+					<br/>
+					<br/>
+					Company ID: <input type="number" placeholder="Company ID"  name="companyId" id="getallcouponscompanyid"/>  			
+					<br/>
+					<br/>
+					Title: <input type="text" placeholder="Title"  name="title" id="getallcouponstitle"/> 
+					<br/>
+					<br/>
+					Start Date: <input type="date" placeholder="Start Date"  name="startDate" id="getallcouponsstartdate"/>
+					<br/>
+					<br/>
+					End Date: <input type="date" placeholder="End Date"  name="endDate" id="getallcouponsenddate"/>
+					<br/>
+					<br/>
+					Amount: <input type="number" placeholder="Amount"  name="amount" id="getallcouponsamount"/>
+					<br/>
+					<br/>
+					Type: <select name="Type" id="getallcouponstype"> 
+					<option value="RESTURANT"> RESTURANT </option> 
+					<option value="ELECTRICITY"> ELECTRICITY </option>
+					<option value="FOOD"> FOOD </option> 
+					<option value="HEALTH"> HEALTH </option> 
+					<option value="SPORTS"> SPORTS </option> 
+					<option value="CAMPING"> CAMPING </option> 
+					<option value="TRAVELLING"> TRAVELLING </option> 
+					</select>
+					<br/>
+					<br/>
+					Message:
+					<br/>
+					<textarea cols="30" rows="5" id="getallcouponsmessage"> </textarea>
+					<br/>
+					<br/>
+					Price: <input type="number" placeholder="Price"  name="price" id="getallcouponsprice"/>
+					<br/>
+					<br/>
+					Select an image : <input type="file" name="image" size="45" id="getallcouponsimage"/> 
+					<br/>
+					<br/>
+					<br/>
+					<input value="Submit" type="button" onclick="GetAllCouponsCoupon1()"/>
+					<br/>
+					<br/>
+					<div id="getallcouponsmessagebox"> <textarea> </textarea></div>
+				</div>
+			</form>		
+</article>
+
+<article ng-show="showMeGetAllCouponsByType">
+		<h1>Get All Coupons By Type</h1>
+			<form action="getallcouponsbytype">
+				<div name= "getallcouponsbytype">
+					Coupon ID: <input type="number" placeholder="Coupon ID"  name="couponId" id="getallcouponsbytypecouponid"/> 
+					<br/>
+					<br/>
+					Company ID: <input type="number" placeholder="Company ID"  name="companyId" id="getallcouponsbytypecompanyid"/>  			
+					<br/>
+					<br/>
+					Title: <input type="text" placeholder="Title"  name="title" id="getallcouponsbytypetitle"/> 
+					<br/>
+					<br/>
+					Start Date: <input type="date" placeholder="Start Date"  name="startDate" id="getallcouponsbytypestartdate"/>
+					<br/>
+					<br/>
+					End Date: <input type="date" placeholder="End Date"  name="endDate" id="getallcouponsbytypeenddate"/>
+					<br/>
+					<br/>
+					Amount: <input type="number" placeholder="Amount"  name="amount" id="getallcouponsbytypeamount"/>
+					<br/>
+					<br/>
+					Type: <select name="Type" id="getallcouponsbytypetype"> 
+					<option value="RESTURANT"> RESTURANT </option> 
+					<option value="ELECTRICITY"> ELECTRICITY </option>
+					<option value="FOOD"> FOOD </option> 
+					<option value="HEALTH"> HEALTH </option> 
+					<option value="SPORTS"> SPORTS </option> 
+					<option value="CAMPING"> CAMPING </option> 
+					<option value="TRAVELLING"> TRAVELLING </option> 
+					</select>
+					<br/>
+					<br/>
+					Message:
+					<br/>
+					<textarea cols="30" rows="5" id="getallcouponsbytypemessage"> </textarea>
+					<br/>
+					<br/>
+					Price: <input type="number" placeholder="Price"  name="price" id="getallcouponsbytypeprice"/>
+					<br/>
+					<br/>
+					Select an image : <input type="file" name="image" size="45" id="getallcouponsbytypeimage"/> 
+					<br/>
+					<br/>
+					<br/>
+					<input value="Submit" type="button" onclick="GetAllCouponsByTypeCoupon1()"/>
+					<br/>
+					<br/>
+					<div id="getallcouponsbytypemessagebox"> <textarea> </textarea></div>
+				</div>
+			</form>		
+</article>
+</body>
+</html>

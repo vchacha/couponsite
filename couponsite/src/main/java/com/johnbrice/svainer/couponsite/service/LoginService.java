@@ -26,11 +26,11 @@ public class LoginService {
 	@Context 
     private HttpServletResponse httpServletResponse;
 
-	@Path("/login/{userid}/{password}/{clientTypeParam}")
+	@Path("/login/{userid}/{password}/{clienttype}")
 	@GET()
 	@Produces("application/json")
 	public Response login(@PathParam("userid") String userid, @PathParam("password") String password,
-			@PathParam("clientTypeParam") String clientTypeParam) {
+			@PathParam("clienttype") String clientTypeParam) {
 		Optional<ClientType> clientType = toClientType(clientTypeParam);
 		if (!clientType.isPresent()) {
 			System.err.println("ClientType is invalid: " + clientTypeParam);

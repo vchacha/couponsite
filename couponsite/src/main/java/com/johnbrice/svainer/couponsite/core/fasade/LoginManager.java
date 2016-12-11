@@ -28,6 +28,7 @@ public class LoginManager {
 			}
 
 			if (clientType.equals(ClientType.COMPANY)) {
+				System.out.println("COMPANY SUCCESS");
 				return new CompanyFacade(new CouponDBDAO(), new CompanyDBDAO());
 			}
 

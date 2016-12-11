@@ -13,18 +13,27 @@
 function login1() {
 	var username = $("#userid").val();
 	var password = $("#password").val();
+	var clienttype = $("#clientTypeSelector").val();
 	xhr = new XMLHttpRequest();
-	var url = "http://localhost:8080/jerseyservice/rest/login/" + username + "/" + password + "/" + "ADMIN";
+	var url = "http://localhost:8080/jerseyservice/rest/login/" + username + "/" + password + "/" + clienttype;
 	xhr.open("GET", url, true);
 	xhr.setRequestHeader("Content-type", "application/json");
-	xhr.onreadystatechange = function () { 
-	     if (xhr.status == 200) {
-	        //var json = JSON.parse(xhr.responseText);
-	        console.log('json: ' + xhr.responseText);
-	        location.href="admin.html";	        
+	xhr.onreadystatechange = function () {
+		if (xhr.status == 200) {
+				switch(clienttype){
+				case "ADMIN":
+			        location.href="admin.html";
+			        break;
+				case "CUSTOMER":
+					location.href="customer.html";
+					break;
+				case "COMPANY":
+					location.href="company.html";
+					break;
+				default: alert('Login failed: Invalid user or password');	
+				}	
 	    } else {
 	    	 alert('Login failed: Invalid user or password');
-	    	 return;
 	    }
 	}
 	xhr.send();

@@ -1,5 +1,6 @@
 package com.johnbrice.svainer.couponsite.service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,26 +19,21 @@ import com.johnbrice.svainer.couponsite.core.fasade.ClientType;
 import com.johnbrice.svainer.couponsite.core.fasade.CouponClientFacade;
 import com.johnbrice.svainer.couponsite.core.fasade.LoginManager;
 import com.johnbrice.svainer.couponsite.core.logic.exception.CompanyValidationException;
+import com.johnbrice.svainer.couponsite.core.logic.exception.CouponValidationException;
 import com.johnbrice.svainer.couponsite.core.logic.exception.CustomerValidationException;
 import com.johnbrice.svainer.couponsite.core.model.CompanyDO;
+import com.johnbrice.svainer.couponsite.core.model.CouponDO;
 import com.johnbrice.svainer.couponsite.core.model.CustomerDO;
+import com.johnbrice.svainer.couponsite.core.model.Type;
 
 @Path("/admin")
 public class AdminService {
 
-	private LoginManager loginManagerAdmin = new LoginManager();
-	private CouponClientFacade couponClientFacadeAdmin = loginManagerAdmin.login("Admin", "1234", ClientType.ADMIN);
+	LoginManager loginManagerAdmin = new LoginManager();
+	CouponClientFacade couponClientFacadeAdmin = loginManagerAdmin.login("Admin", "1234", ClientType.ADMIN);
 
 	@Context
 	private HttpServletRequest httpServletRequest;
-
-	@Path("/hello")
-	@GET
-	@Produces("application/json")
-	public String helloWorld() {
-		HttpSession session = httpServletRequest.getSession();
-		return "hello world " + "session.id: " + session.getId();
-	}
 
 	@Path("/createcompany/{companyid}/{companyname}/{password}/{email}")
 	@POST
@@ -112,9 +108,20 @@ public class AdminService {
 	@Path("/getallcompanies")
 	@GET
 	@Produces("application/json")
-	public Collection<CompanyDO> getAllCompanies() {
-		return couponClientFacadeAdmin.getAllCompanies();
-	}
+	public Response getAllCompanies() {
+		Collection<CompanyDO> companies = new ArrayList<>();
+		try{
+		companies = couponClientFacadeAdmin.getAllCompanies();
+				if (companies.isEmpty()){
+					return Response.status(201).entity("Any company doesn't exist").build();
+				} else {		
+					return Response.status(200).entity(companies).build();
+				}
+		
+		} catch (CompanyValidationException e) {	
+			return Response.status(500).entity("Wasn't able to find any company").build();
+		}
+}
 
 	@Path("/createcustomer/{customerid}/{customername}/{password}/{email}")
 	@POST
@@ -139,7 +146,7 @@ public class AdminService {
 		try {
 			int numberOfDeletedCustomers = couponClientFacadeAdmin.removeCustomer(tempCustomerDO);
 			if (numberOfDeletedCustomers > 0){
-				return Response.status(200).entity("Customer successfully updated").build();
+				return Response.status(200).entity("Customer successfully deleted").build();
 			} else {
 				return Response.status(201).entity("Customer doesn't exist").build();
 			}
@@ -183,5 +190,101 @@ public class AdminService {
 			return Response.status(500).entity("Wasn't able to find customer").build();
 		}
 	}
+	
+	@Path("/getallcustomers")
+	@GET
+	@Produces("application/json")
+	public Response getAllCustomers() {
+		Collection<CustomerDO> customers = new ArrayList<>();
+		try{
+		customers = couponClientFacadeAdmin.getAllCustomers();
+				if (customers.isEmpty()){
+					return Response.status(201).entity("Any customer doesn't exist").build();
+				} else {		
+					return Response.status(200).entity(customers).build();
+				}
+		
+		} catch (CustomerValidationException e) {	
+			return Response.status(500).entity("Wasn't able to find any customer").build();
+		}
+}
 
+	@Path("/getallcoupons")
+	@GET
+	@Produces("application/json")
+	public Response getAllCoupons() {
+		Collection<CouponDO> coupons = new ArrayList<>();
+		try{
+			coupons = couponClientFacadeAdmin.getAllCoupons();
+				if (coupons.isEmpty()){
+					return Response.status(201).entity("Any coupon doesn't exist").build();
+				} else {		
+					return Response.status(200).entity(coupons).build();
+				}
+		
+		} catch (CouponValidationException e) {	
+			return Response.status(500).entity("Wasn't able to find any coupon").build();
+		}
+}
+	@Path("/getallcouponsbytype/{type}")
+	@GET
+	@Produces("application/json")
+	public Response getAllCouponsByType(@PathParam("type") String type) {
+		Collection<CouponDO> coupons = new ArrayList<>();
+		try{
+			coupons = couponClientFacadeAdmin.getAllCouponsByType(Type.valueOf(type));
+				if (coupons.isEmpty()){
+					return Response.status(201).entity("Any coupon doesn't exist").build();
+				} else {		
+					return Response.status(200).entity(coupons).build();
+				}
+		
+		} catch (CouponValidationException e) {	
+			return Response.status(500).entity("Wasn't able to find any coupon").build();
+		}
+}
+	@Path("/getallcouponsbycompany/{companyid}")
+	@GET
+	@Produces("application/json")
+	public Response getAllCouponsByCompany(@PathParam("companyid") long companyId) {
+		Collection<CouponDO> coupons = new ArrayList<>();
+		try{
+			coupons = couponClientFacadeAdmin.getAllCouponsByCompany(companyId);
+				if (coupons.isEmpty()){
+					return Response.status(201).entity("To this company doesn't exist any coupon").build();
+				} else {		
+					return Response.status(200).entity(coupons).build();
+				}
+		
+		} catch (CouponValidationException e) {	
+			return Response.status(500).entity("Wasn't able to find any coupon").build();
+		}
+}
+	
+	@Path("/getallcouponsbycompanyandtype/{companyid}/{type}")
+	@GET
+	@Produces("application/json")
+	public Response getAllCouponsByType(@PathParam("type") String type, @PathParam("companyid") long companyId) {
+		Collection<CouponDO> coupons = new ArrayList<>();
+		try{
+			coupons = couponClientFacadeAdmin.getAllCouponsByCompanyAndType(companyId, Type.valueOf(type));
+			System.out.println(coupons);
+				if (coupons.isEmpty()){
+					System.out.println("Im empty");
+					return Response.status(201).entity("To this company doesn't exist any coupon").build();
+				} else {		
+					return Response.status(200).entity(coupons).build();
+				}
+		
+		} catch (CouponValidationException e) {	
+			return Response.status(500).entity("Wasn't able to find any coupon").build();
+		}
+}
+	@Path("/hello")
+	@GET
+	@Produces("application/json")
+	public String helloWorld() {
+		HttpSession session = httpServletRequest.getSession();
+		return "hello world " + "session.id: " + session.getId();
+	}
 }

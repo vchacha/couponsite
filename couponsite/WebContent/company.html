@@ -4,6 +4,7 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script src="js/jquery-1.11.0.min.js"></script>
     <script src="js/jquery.dataTables.js"></script>
+    
 <head>
 	<style >
 		nav {
@@ -33,7 +34,6 @@ app.controller('myCtrl', function($scope) {
     $scope.myFuncCreateCoupon = function() {
         $scope.showMeCreateCoupon = !$scope.showMeCreateCoupon;
         $scope.showMeUpdateCoupon = false;
-		$scope.showMeDeleteCoupon = false;
 		$scope.showMeFindCoupon = false;
 		$scope.showMeGetAllCoupons = false;
 		$scope.showMeGetAllCouponsByType = false;
@@ -42,16 +42,6 @@ app.controller('myCtrl', function($scope) {
     $scope.myFuncUpdateCoupon = function() {
         $scope.showMeCreateCoupon = false;
         $scope.showMeUpdateCoupon = !$scope.showMeUpdateCoupon;
-		$scope.showMeDeleteCoupon = false;
-		$scope.showMeFindCoupon = false;
-		$scope.showMeGetAllCoupons = false;
-		$scope.showMeGetAllCouponsByType = false;
-    }
-    $scope.showMeDeleteCoupon = false;
-    $scope.myFuncDeleteCoupon = function() {
-        $scope.showMeCreateCoupon = false;
-        $scope.showMeUpdateCoupon = false;
-		$scope.showMeDeleteCoupon = !$scope.showMeDeleteCoupon;
 		$scope.showMeFindCoupon = false;
 		$scope.showMeGetAllCoupons = false;
 		$scope.showMeGetAllCouponsByType = false;
@@ -60,7 +50,6 @@ app.controller('myCtrl', function($scope) {
     $scope.myFuncFindCoupon = function() {
         $scope.showMeCreateCoupon = false;
         $scope.showMeUpdateCoupon = false;
-		$scope.showMeDeleteCoupon = false;
 		$scope.showMeFindCoupon = !$scope.showMeFindCoupon;
 		$scope.showMeGetAllCoupons = false;
 		$scope.showMeGetAllCouponsByType = false;
@@ -69,7 +58,6 @@ app.controller('myCtrl', function($scope) {
     $scope.myFuncGetAllCoupons = function() {
         $scope.showMeCreateCoupon = false;
         $scope.showMeUpdateCoupon = false;
-		$scope.showMeDeleteCoupon = false;
 		$scope.showMeFindCoupon = false;
 		$scope.showMeGetAllCoupons = !$scope.showMeGetAllCoupons;
 		$scope.showMeGetAllCouponsByType = false;
@@ -78,7 +66,6 @@ app.controller('myCtrl', function($scope) {
     $scope.myFuncGetAllCouponsByType = function() {
         $scope.showMeCreateCoupon = false;
         $scope.showMeUpdateCoupon = false;
-		$scope.showMeDeleteCoupon = false;
 		$scope.showMeFindCoupon = false;
 		$scope.showMeGetAllCoupons = false;
 		$scope.showMeGetAllCouponsByType = !$scope.showMeGetAllCouponsByType;
@@ -86,8 +73,8 @@ app.controller('myCtrl', function($scope) {
 });
 
 function CreateCoupon1() {
-    	var couponid = $("#createcouponcompanyid").val();
-    	var companyid = $("#createcouponcouponid").val();
+    	var couponid = $("#createcouponcouponid").val();
+    	var companyid = $("#createcouponcompanyid").val();
     	var title = $("#createcoupontitle").val();
     	var startdate = $("#createcouponstartdate").val();
     	var enddate = $("#createcouponenddate").val();
@@ -95,12 +82,10 @@ function CreateCoupon1() {
     	var type = $("#createcoupontype").val();
     	var message = $("#createcouponmessage").val();
     	var price = $("#createcouponprice").val();
-    	var image = $("#createcouponimage").val();
-    	
-    	console.log(typeof startdate);
+    	/*var image = $("#createcouponimage").val();*/
     	
     	xhr = new XMLHttpRequest();
-    	var url = "http://localhost:8080/jerseyservice/rest/company/createcoupon/" + couponid + "/" + companyid + "/" + title + "/" + startdate + "/" + enddate + "/" + amount + "/" + type + "/" + message + "/" + price;
+    	var url = "http://localhost:8080/jerseyservice/rest/company/createcoupon/" + couponid + "/" + companyid + "/" + title + "/" + startdate + "/" + enddate + "/" + amount + "/" + type + "/" + message + "/" + price; //+ "/" + image;
     	xhr.open("POST", url, true);
     	xhr.setRequestHeader("Content-type", "application/json");
     	xhr.onreadystatechange = function () { 
@@ -113,7 +98,105 @@ function CreateCoupon1() {
     	}
     	xhr.send();
     }
-    
+function UpdateCoupon1() {
+	var couponid = $("#updatecouponcouponid").val();
+	var companyid = $("#updatecouponcompanyid").val();
+	var title = $("#updatecoupontitle").val();
+	var startdate = $("#updatecouponstartdate").val();
+	var enddate = $("#updatecouponenddate").val();
+	var amount = $("#updatecouponamount").val();
+	var type = $("#updatecoupontype").val();
+	var message = $("#updatecouponmessage").val();
+	var price = $("#updatecouponprice").val();
+	/*var image = $("#updatecouponimage").val();*/
+	
+	xhr = new XMLHttpRequest();
+	var url = "http://localhost:8080/jerseyservice/rest/company/updatecoupon/" + couponid + "/" + companyid + "/" + title + "/" + startdate + "/" + enddate + "/" + amount + "/" + type + "/" + message + "/" + price; //+ "/" + image;
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-type", "application/json");
+	xhr.onreadystatechange = function () { 
+	     if (xhr.status == 200) {
+	        var messageboxHtml = document.getElementById("updatecouponmessagebox");
+	        messageboxHtml.innerHTML = xhr.responseText;
+	    } else {
+	    	 alert('Action failed: ' + xhr.responseText);
+	    }
+	}
+	xhr.send();
+}    
+
+function FindCoupon1() {
+	var extractedCuoponId = $("#findcouponcouponid").val();
+	var extractedCompanyId = $("#findcouponcompanyid").val();
+	xhr = new XMLHttpRequest();
+	var url = "http://localhost:8080/jerseyservice/rest/company/getcoupon/" + extractedCuoponId + "/" + extractedCompanyId;
+	xhr.open("GET", url, true);
+	xhr.setRequestHeader("Content-type", "application/json");
+	xhr.send();	
+	xhr.onreadystatechange = function() {
+		if (this.status == 200) {	
+			var responseAsString = xhr.responseText;
+			try {
+				var responseAsJsonObj = JSON.parse(responseAsString);
+			} catch (err) {
+				console.log("error in parsing JSON");
+			}							
+			var findcoupontitledHtml = document.getElementById("findcoupontitle");
+			findcoupontitledHtml.value = responseAsJsonObj.title;
+			var findcouponstartdateHtml = document.getElementById("findcouponstartdate");
+			findcouponstartdateHtml.value = new Date (responseAsJsonObj.startDate).toDateString();
+			var findcouponenddateHtml = document.getElementById("findcouponenddate");
+			findcouponenddateHtml.value = new Date (responseAsJsonObj.endDate).toDateString();
+			var findcouponamountHtml = document.getElementById("findcouponamount");
+			findcouponamountHtml.value = responseAsJsonObj.amount;
+			var findcoupontypeHtml = document.getElementById("findcoupontype");
+			findcoupontypeHtml.value = responseAsJsonObj.type;
+			var findcouponmessageHtml = document.getElementById("findcouponmessage");
+			findcouponmessageHtml.value = responseAsJsonObj.message;
+			var findcouponpriceHtml = document.getElementById("findcouponprice");
+			findcouponpriceHtml.value = responseAsJsonObj.price;
+			/*var findcouponimageHtml = document.getElementById("findcouponimage");
+			findcouponimageHtml.value = responseAsJsonObj.image;*/
+			
+			var messageBox = document.getElementById("findcouponmessagebox");
+			messageBox.innerHTML = "got coupon";
+			
+		} else { 
+				if (this.status == 201){
+					var messageboxHtml = document.getElementById("findcouponmessagebox");
+	        		messageboxHtml.innerHTML = xhr.responseText;
+				} else {
+						alert('Action failed: ' + xhr.responseText);
+						}
+				}
+	}	 
+}
+function DeleteCoupon1() {
+	var couponid = $("#findcouponcouponid").val();
+	var companyid = $("#findcouponcompanyid").val();
+	var title = $("#findcoupontitle").val();
+	var startdate = $("#findcouponstartdate").val();
+	var enddate = $("#findcouponenddate").val();
+	var amount = $("#findcouponamount").val();
+	var type = $("#findcoupontype").val();
+	var message = $("#findcouponmessage").val();
+	var price = $("#findcouponprice").val();
+	/*var image = $("#findcouponimage").val();*/
+	
+	xhr = new XMLHttpRequest();
+	var url = "http://localhost:8080/jerseyservice/rest/company/deletecoupon/" + couponid + "/" + companyid + "/" + title + "/" + startdate + "/" + enddate + "/" + amount + "/" + type + "/" + message + "/" + price; //+ "/" + image;
+	xhr.open("DELETE", url, true);
+	xhr.setRequestHeader("Content-type", "application/json");
+	xhr.onreadystatechange = function () { 
+	     if (xhr.status == 200) {
+	        var messageboxHtml = document.getElementById("findcouponmessagebox");
+	        messageboxHtml.innerHTML = xhr.responseText;
+	    } else {
+	    	 alert('Action failed: ' + xhr.responseText);
+	    }
+	}
+	xhr.send();
+}
 </script>
 
 <div id="Company">
@@ -126,8 +209,7 @@ function CreateCoupon1() {
   		<ul>
 		    <li><a ng-click="myFuncCreateCoupon()" href="#">Create Coupon</a></li>
 		    <li><a ng-click="myFuncUpdateCoupon()" href="#">Update Coupon</a></li>
-		    <li><a ng-click="myFuncDeleteCoupon()" href="#">Delete Coupon</a></li>
-		    <li><a ng-click="myFuncFindCoupon()" href="#">Find Coupon</a></li>
+		    <li><a ng-click="myFuncFindCoupon()" href="#">Find and Delete Coupon</a></li>
 		    <li><a ng-click="myFuncGetAllCoupons()" href="#">Get All Coupons</a></li>
 		    <li><a ng-click="myFuncGetAllCouponsByType()" href="#">Get All Coupons By Type</a></li>
  		</ul>
@@ -137,10 +219,10 @@ function CreateCoupon1() {
 		<h1>Create Coupon</h1>
 			<form action="createcoupon">
 				<div name= "createcoupon">
-					Coupon ID: <input type="number" placeholder="Coupon ID" name="couponId" id="createcouponcouponid"/> 
+					Coupon ID: <input type="number" placeholder="Coupon ID" min=1 name="couponId" id="createcouponcouponid"/> 
 					<br/>
 					<br/>
-					Company ID: <input type="number" placeholder="Company ID"  name="companyId" id="createcouponcompanyid"/>  			
+					Company ID: <input type="number" placeholder="Company ID" min=1 name="companyId" id="createcouponcompanyid"/>  			
 					<br/>
 					<br/>
 					Title: <input type="text" placeholder="Title"  name="title" id="createcoupontitle"/> 
@@ -152,7 +234,7 @@ function CreateCoupon1() {
 					End Date: <input type="date" placeholder="End Date"  name="endDate" id="createcouponenddate"/>
 					<br/>
 					<br/>
-					Amount: <input type="number" placeholder="Amount"  name="amount" id="createcouponamount"/>
+					Amount: <input type="number" placeholder="Amount" min=1 name="amount" id="createcouponamount"/>
 					<br/>
 					<br/>
 					Type: <select name="Type" id="createcoupontype"> 
@@ -171,14 +253,15 @@ function CreateCoupon1() {
 					<textarea cols="30" rows="5" id="createcouponmessage"> </textarea>
 					<br/>
 					<br/>
-					Price: <input type="number" placeholder="Price"  name="price" id="createcouponprice"/>
+					Price: <input type="number" placeholder="Price" min=0 name="price" id="createcouponprice"/>
+					<!-- <br/>
+					<br/>
+					Select an image : <input type="file" name="image" size="45" id="createcouponimage"/> --> 
 					<br/>
 					<br/>
-					Select an image : <input type="file" name="image" size="45" id="createcouponimage"/> 
 					<br/>
-					<br/>
-					<br/>
-					<input value="Submit" type="button" onclick="CreateCoupon1()"/>
+					<input value="Create coupon" type="button" onclick="CreateCoupon1()"/>
+					<button type="reset" value="Reset">Reset</button>
 					<br/>
 					<br/>
 					<div id="createcouponmessagebox"> <textarea> </textarea></div>
@@ -190,10 +273,10 @@ function CreateCoupon1() {
 		<h1>Update Coupon</h1>
 			<form action="updatecoupon">
 				<div name= "updatecoupon">
-					Coupon ID: <input type="number" placeholder="Coupon ID"  name="couponId" id="updatecouponcouponid"/> 
+					Coupon ID: <input type="number" placeholder="Coupon ID" min=1 name="couponId" id="updatecouponcouponid"/> 
 					<br/>
 					<br/>
-					Company ID: <input type="number" placeholder="Company ID"  name="companyId" id="updatecouponcompanyid"/>  			
+					Company ID: <input type="number" placeholder="Company ID" min=1 name="companyId" id="updatecouponcompanyid"/>  			
 					<br/>
 					<br/>
 					Title: <input type="text" placeholder="Title"  name="title" id="updatecoupontitle"/> 
@@ -205,7 +288,7 @@ function CreateCoupon1() {
 					End Date: <input type="date" placeholder="End Date"  name="endDate" id="updatecouponenddate"/>
 					<br/>
 					<br/>
-					Amount: <input type="number" placeholder="Amount"  name="amount" id="updatecouponamount"/>
+					Amount: <input type="number" placeholder="Amount" min=1 name="amount" id="updatecouponamount"/>
 					<br/>
 					<br/>
 					Type: <select name="Type" id="updatecoupontype"> 
@@ -224,14 +307,15 @@ function CreateCoupon1() {
 					<textarea cols="30" rows="5" id="updatecouponmessage"> </textarea>
 					<br/>
 					<br/>
-					Price: <input type="number" placeholder="Price"  name="price" id="updatecouponprice"/>
+					Price: <input type="number" placeholder="Price" min=0 name="price" id="updatecouponprice"/>
+					<!-- <br/>
+					<br/>
+					Select an image : <input type="file" name="image" size="45" id="updatecouponimage"/>  -->
 					<br/>
 					<br/>
-					Select an image : <input type="file" name="image" size="45" id="updatecouponimage"/> 
 					<br/>
-					<br/>
-					<br/>
-					<input value="Submit" type="button" onclick="UpdateCoupon1()"/>
+					<input value="Update coupon" type="button" onclick="UpdateCoupon1()"/>
+					<button type="reset" value="Reset">Reset</button>
 					<br/>
 					<br/>
 					<div id="updatecouponmessagebox"> <textarea> </textarea></div>
@@ -239,105 +323,46 @@ function CreateCoupon1() {
 			</form>		
 </article>
 
-<article ng-show="showMeDeleteCoupon">
-		<h1>Delete Coupon</h1>
-			<form action="deletecoupon">
-				<div name= "deletecoupon">
-					Coupon ID: <input type="number" placeholder="Coupon ID"  name="couponId" id="deletecouponcouponid"/> 
-					<br/>
-					<br/>
-					Company ID: <input type="number" placeholder="Company ID"  name="companyId" id="deletecouponcompanyid"/>  			
-					<br/>
-					<br/>
-					Title: <input type="text" placeholder="Title"  name="title" id="deletecoupontitle"/> 
-					<br/>
-					<br/>
-					Start Date: <input type="date" placeholder="Start Date"  name="startDate" id="deletecouponstartdate"/>
-					<br/>
-					<br/>
-					End Date: <input type="date" placeholder="End Date"  name="endDate" id="deletecouponenddate"/>
-					<br/>
-					<br/>
-					Amount: <input type="number" placeholder="Amount"  name="amount" id="deletecouponamount"/>
-					<br/>
-					<br/>
-					Type: <select name="Type" id="deletecoupontype"> 
-					<option value="RESTURANT"> RESTURANT </option> 
-					<option value="ELECTRICITY"> ELECTRICITY </option>
-					<option value="FOOD"> FOOD </option> 
-					<option value="HEALTH"> HEALTH </option> 
-					<option value="SPORTS"> SPORTS </option> 
-					<option value="CAMPING"> CAMPING </option> 
-					<option value="TRAVELLING"> TRAVELLING </option> 
-					</select>
-					<br/>
-					<br/>
-					Message:
-					<br/>
-					<textarea cols="30" rows="5" id="deletecouponmessage"> </textarea>
-					<br/>
-					<br/>
-					Price: <input type="number" placeholder="Price"  name="price" id="deletecouponprice"/>
-					<br/>
-					<br/>
-					Select an image : <input type="file" name="image" size="45" id="deletecouponimage"/> 
-					<br/>
-					<br/>
-					<br/>
-					<input value="Submit" type="button" onclick="DeleteCoupon1()"/>
-					<br/>
-					<br/>
-					<div id="deletecouponmessagebox"> <textarea> </textarea></div>
-				</div>
-			</form>		
-</article>
-
 <article ng-show="showMeFindCoupon">
-		<h1>Find Coupon</h1>
+		<h1>Find and Delete Coupon</h1>
 			<form action="findcoupon">
 				<div name= "findcoupon">
-					Coupon ID: <input type="number" placeholder="Coupon ID"  name="couponId" id="findcouponcouponid"/> 
+					Please enter Coupon ID: <input type="number" placeholder="Coupon ID" min=1 name="couponId" id="findcouponcouponid"/> 
 					<br/>
 					<br/>
-					Company ID: <input type="number" placeholder="Company ID"  name="companyId" id="findcouponcompanyid"/>  			
+					Please enter Company ID: <input type="number" placeholder="Company ID" min=1 name="companyId" id="findcouponcompanyid"/>  			
 					<br/>
 					<br/>
-					Title: <input type="text" placeholder="Title"  name="title" id="findcoupontitle"/> 
+					Title: <input type="text" readonly placeholder="Title" name="title" id="findcoupontitle"/> 
 					<br/>
 					<br/>
-					Start Date: <input type="date" placeholder="Start Date"  name="startDate" id="findcouponstartdate"/>
+					Start Date: <input type="text" readonly placeholder="Start Date"  name="startDate" id="findcouponstartdate"/>
 					<br/>
 					<br/>
-					End Date: <input type="date" placeholder="End Date"  name="endDate" id="findcouponenddate"/>
+					End Date: <input type="text" readonly placeholder="End Date"  name="endDate" id="findcouponenddate"/>
 					<br/>
 					<br/>
-					Amount: <input type="number" placeholder="Amount"  name="amount" id="findcouponamount"/>
+					Amount: <input type="text" readonly placeholder="Amount" name="amount" id="findcouponamount"/>
 					<br/>
 					<br/>
-					Type: <select name="Type" id="findcoupontype"> 
-					<option value="RESTURANT"> RESTURANT </option> 
-					<option value="ELECTRICITY"> ELECTRICITY </option>
-					<option value="FOOD"> FOOD </option> 
-					<option value="HEALTH"> HEALTH </option> 
-					<option value="SPORTS"> SPORTS </option> 
-					<option value="CAMPING"> CAMPING </option> 
-					<option value="TRAVELLING"> TRAVELLING </option> 
-					</select>
+					Type: <input type="text" readonly placeholder="Type" name="type" id="findcoupontype"> 
 					<br/>
 					<br/>
 					Message:
 					<br/>
-					<textarea cols="30" rows="5" id="findcouponmessage"> </textarea>
+					<textarea cols="30" rows="5" id="findcouponmessage" readonly> </textarea>
 					<br/>
 					<br/>
-					Price: <input type="number" placeholder="Price"  name="price" id="findcouponprice"/>
+					Price: <input type="text" readonly placeholder="Price" name="price" id="findcouponprice"/>
+					<!-- <br/>
+					<br/>
+					Image : <input type="file" readonly name="image" size="45" id="findcouponimage"/>  -->
 					<br/>
 					<br/>
-					Select an image : <input type="file" name="image" size="45" id="findcouponimage"/> 
 					<br/>
-					<br/>
-					<br/>
-					<input value="Submit" type="button" onclick="FindCoupon1()"/>
+					<input value="Find coupon" type="button" onclick="FindCoupon1()"/>
+					<input value="Delete coupon" type="button" onclick="DeleteCoupon1()"/>
+					<button type="reset" value="Reset">Reset</button>
 					<br/>
 					<br/>
 					<div id="findcouponmessagebox"> <textarea> </textarea></div>
@@ -349,10 +374,10 @@ function CreateCoupon1() {
 		<h1>Get All Coupons</h1>
 			<form action="getallcoupons">
 				<div name= "getallcoupons">
-					Coupon ID: <input type="number" placeholder="Coupon ID"  name="couponId" id="getallcouponscouponid"/> 
+					Coupon ID: <input type="number" placeholder="Coupon ID" min=1 name="couponId" id="getallcouponscouponid"/> 
 					<br/>
 					<br/>
-					Company ID: <input type="number" placeholder="Company ID"  name="companyId" id="getallcouponscompanyid"/>  			
+					Company ID: <input type="number" placeholder="Company ID" min=1 name="companyId" id="getallcouponscompanyid"/>  			
 					<br/>
 					<br/>
 					Title: <input type="text" placeholder="Title"  name="title" id="getallcouponstitle"/> 
@@ -364,7 +389,7 @@ function CreateCoupon1() {
 					End Date: <input type="date" placeholder="End Date"  name="endDate" id="getallcouponsenddate"/>
 					<br/>
 					<br/>
-					Amount: <input type="number" placeholder="Amount"  name="amount" id="getallcouponsamount"/>
+					Amount: <input type="number" placeholder="Amount" min=1 name="amount" id="getallcouponsamount"/>
 					<br/>
 					<br/>
 					Type: <select name="Type" id="getallcouponstype"> 
@@ -383,14 +408,15 @@ function CreateCoupon1() {
 					<textarea cols="30" rows="5" id="getallcouponsmessage"> </textarea>
 					<br/>
 					<br/>
-					Price: <input type="number" placeholder="Price"  name="price" id="getallcouponsprice"/>
+					Price: <input type="number" placeholder="Price" min=0 name="price" id="getallcouponsprice"/>
+					<!-- <br/>
 					<br/>
-					<br/>
-					Select an image : <input type="file" name="image" size="45" id="getallcouponsimage"/> 
+					Select an image : <input type="file" name="image" size="45" id="getallcouponsimage"/>  -->
 					<br/>
 					<br/>
 					<br/>
 					<input value="Submit" type="button" onclick="GetAllCouponsCoupon1()"/>
+					<button type="reset" value="Reset">Reset</button>
 					<br/>
 					<br/>
 					<div id="getallcouponsmessagebox"> <textarea> </textarea></div>
@@ -402,10 +428,10 @@ function CreateCoupon1() {
 		<h1>Get All Coupons By Type</h1>
 			<form action="getallcouponsbytype">
 				<div name= "getallcouponsbytype">
-					Coupon ID: <input type="number" placeholder="Coupon ID"  name="couponId" id="getallcouponsbytypecouponid"/> 
+					Coupon ID: <input type="number" placeholder="Coupon ID" min=1 name="couponId" id="getallcouponsbytypecouponid"/> 
 					<br/>
 					<br/>
-					Company ID: <input type="number" placeholder="Company ID"  name="companyId" id="getallcouponsbytypecompanyid"/>  			
+					Company ID: <input type="number" placeholder="Company ID" min=1 name="companyId" id="getallcouponsbytypecompanyid"/>  			
 					<br/>
 					<br/>
 					Title: <input type="text" placeholder="Title"  name="title" id="getallcouponsbytypetitle"/> 
@@ -417,7 +443,7 @@ function CreateCoupon1() {
 					End Date: <input type="date" placeholder="End Date"  name="endDate" id="getallcouponsbytypeenddate"/>
 					<br/>
 					<br/>
-					Amount: <input type="number" placeholder="Amount"  name="amount" id="getallcouponsbytypeamount"/>
+					Amount: <input type="number" placeholder="Amount" min=1 name="amount" id="getallcouponsbytypeamount"/>
 					<br/>
 					<br/>
 					Type: <select name="Type" id="getallcouponsbytypetype"> 
@@ -436,14 +462,15 @@ function CreateCoupon1() {
 					<textarea cols="30" rows="5" id="getallcouponsbytypemessage"> </textarea>
 					<br/>
 					<br/>
-					Price: <input type="number" placeholder="Price"  name="price" id="getallcouponsbytypeprice"/>
+					Price: <input type="number" placeholder="Price" min=0 name="price" id="getallcouponsbytypeprice"/>
+					<!-- <br/>
 					<br/>
-					<br/>
-					Select an image : <input type="file" name="image" size="45" id="getallcouponsbytypeimage"/> 
+					Select an image : <input type="file" name="image" size="45" id="getallcouponsbytypeimage"/>  -->
 					<br/>
 					<br/>
 					<br/>
 					<input value="Submit" type="button" onclick="GetAllCouponsByTypeCoupon1()"/>
+					<button type="reset" value="Reset">Reset</button>
 					<br/>
 					<br/>
 					<div id="getallcouponsbytypemessagebox"> <textarea> </textarea></div>

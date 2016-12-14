@@ -210,7 +210,7 @@ public class CompanyDBDAO implements CompanyDAO {
 			String couponQuery = "SELECT * FROM Coupon where Company_Id = " + companyId;
 			ResultSet resultSet = statement.executeQuery(couponQuery);
 			while (resultSet.next()) {
-				CouponDO tempCouponDO = new CouponDO(Long.parseLong(resultSet.getString("Company_ID")), Long.parseLong(resultSet.getString("Coupon_ID")),
+				CouponDO tempCouponDO = new CouponDO(Long.parseLong(resultSet.getString("Coupon_ID")), Long.parseLong(resultSet.getString("Company_ID")),
 						resultSet.getString("Title"), convertToDate(resultSet.getString("Start_Date")), convertToDate(resultSet.getString("End_Date")),
 						Integer.parseInt(resultSet.getString("Amount")), Type.valueOf(resultSet.getString("Type")),
 						resultSet.getString("Message"), Double.parseDouble(resultSet.getString("Price")),

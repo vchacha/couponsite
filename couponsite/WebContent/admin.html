@@ -8,7 +8,7 @@
 	<style >
 		nav {
 			    float: left;
-			    max-width: 160px;
+			    max-width: 310px;
 			    margin: 0;
 			    padding: 1em;
 		}
@@ -16,11 +16,22 @@
 		    text-decoration: none;
 		}
 		article {
-		    margin-left: 170px;
+		    margin-left: 320px;
 		    border-left: 1px solid gray;
 		    padding: 1em;
 		    overflow: hidden;
 		    }
+		table, th , td  {
+   		border: 1px solid grey;
+    	border-collapse: collapse;
+    	padding: 5px;
+		}
+		table tr:nth-child(odd) {
+    	background-color: #f1f1f1;
+		}
+		table tr:nth-child(even) {
+    	background-color: #ffffff;
+		}  
 	</style>
 <meta charset="ISO-8859-1">
 <title>CouponSite</title>
@@ -34,132 +45,128 @@ app.controller('myCtrl', function($scope) {
     $scope.myFuncCreateCompany = function() {
         $scope.showMeCreateCompany = !$scope.showMeCreateCompany;
         $scope.showMeUpdateCompany = false;
-		$scope.showMeDeleteCompany = false;
 		$scope.showMeFindCompany = false;
 		$scope.showMeGetAllCompany = false;
 		$scope.showMeCreateCustomer = false;
 		$scope.showMeUpdateCustomer = false;
-		$scope.showMeDeleteCustomer = false;
 		$scope.showMeFindCustomer = false;
 		$scope.showMeGetAllCustomer = false;
+	    $scope.showMeGetAllCouponsByType = false;
+	    $scope.showMeGetAllPurchaseCoupons = false;
+	    $scope.showMeGetAllPurchaseCouponsByCustomer = false;
     }
 	$scope.showMeUpdateCompany = false;
     $scope.myFuncUpdateCompany = function() {
         $scope.showMeCreateCompany = false;
 		$scope.showMeUpdateCompany = !$scope.showMeUpdateCompany;
-		$scope.showMeDeleteCompany = false;
 		$scope.showMeFindCompany = false;
 		$scope.showMeGetAllCompany = false;
 		$scope.showMeCreateCustomer = false;
 		$scope.showMeUpdateCustomer = false;
-		$scope.showMeDeleteCustomer = false;
 		$scope.showMeFindCustomer = false;
 		$scope.showMeGetAllCustomer = false;
-    }
-	$scope.showMeDeleteCompany = false;
-	$scope.myFuncDeleteCompany = function() {
-        $scope.showMeCreateCompany = false;
-        $scope.showMeUpdateCompany = false;
-		$scope.showMeDeleteCompany = !$scope.showMeDeleteCompany;
-		$scope.showMeFindCompany = false;
-		$scope.showMeGetAllCompany = false;
-		$scope.showMeCreateCustomer = false;
-		$scope.showMeUpdateCustomer = false;
-		$scope.showMeDeleteCustomer = false;
-		$scope.showMeFindCustomer = false;
-		$scope.showMeGetAllCustomer = false;
+	    $scope.showMeGetAllCouponsByType = false;
+	    $scope.showMeGetAllPurchaseCoupons = false;
+	    $scope.showMeGetAllPurchaseCouponsByCustomer = false;
     }
 	$scope.showMeFindCompany = false;
 	$scope.myFuncFindCompany = function() {
         $scope.showMeCreateCompany = false;
         $scope.showMeUpdateCompany = false;
-		$scope.showMeDeleteCompany = false;
 		$scope.showMeFindCompany = !$scope.showMeFindCompany;
 		$scope.showMeGetAllCompany = false;
 		$scope.showMeCreateCustomer = false;
 		$scope.showMeUpdateCustomer = false;
-		$scope.showMeDeleteCustomer = false;
 		$scope.showMeFindCustomer = false;
 		$scope.showMeGetAllCustomer = false;
+	    $scope.showMeGetAllCouponsByType = false;
+	    $scope.showMeGetAllPurchaseCoupons = false;
+	    $scope.showMeGetAllPurchaseCouponsByCustomer = false;
     }	
 	$scope.showMeGetAllCompany = false;
 	$scope.myFuncGetAllCompany = function() {
         $scope.showMeCreateCompany = false;
         $scope.showMeUpdateCompany = false;
-		$scope.showMeDeleteCompany = false;
 		$scope.showMeFindCompany = false;
-		$scope.showMeGetAllCompany = false;
+		$scope.showMeGetAllCompany = !$scope.showMeGetAllCompany;
 		$scope.showMeCreateCustomer = false;
 		$scope.showMeUpdateCustomer = false;
-		$scope.showMeDeleteCustomer = false;
 		$scope.showMeFindCustomer = false;
 		$scope.showMeGetAllCustomer = false;
+	    $scope.showMeGetAllCouponsByType = false;
+	    $scope.showMeGetAllPurchaseCoupons = false;
+	    $scope.showMeGetAllPurchaseCouponsByCustomer = false;
     }		
 	
     $scope.showMeCreateCustomer = false;
     $scope.myFuncCreateCustomer = function() {
         $scope.showMeCreateCompany = false;
 		$scope.showMeUpdateCompany = false;
-		$scope.showMeDeleteCompany = false;
 		$scope.showMeFindCompany = false;
 		$scope.showMeGetAllCompany = false;
 		$scope.showMeCreateCustomer = !$scope.showMeCreateCustomer;
 		$scope.showMeUpdateCustomer = false;
-		$scope.showMeDeleteCustomer = false;
 		$scope.showMeFindCustomer = false;
 		$scope.showMeGetAllCustomer = false;
+	    $scope.showMeGetAllCouponsByType = false;
+	    $scope.showMeGetAllPurchaseCoupons = false;
+	    $scope.showMeGetAllPurchaseCouponsByCustomer = false;
     }	
 	$scope.showMeUpdateCustomer = false;
     $scope.myFuncUpdateCustomer = function() {
         $scope.showMeCreateCompany = false;
 		$scope.showMeUpdateCompany = false;
-		$scope.showMeDeleteCompany = false;
 		$scope.showMeFindCompany = false;
 		$scope.showMeGetAllCompany = false;
 		$scope.showMeCreateCustomer = false;
 		$scope.showMeUpdateCustomer = !$scope.showMeUpdateCustomer;
-		$scope.showMeDeleteCustomer = false;
 		$scope.showMeFindCustomer = false;
 		$scope.showMeGetAllCustomer = false;
-    }
-	$scope.showMeDeleteCustomer = false;
-    $scope.myFuncDeleteCustomer = function() {
-        $scope.showMeCreateCompany = false;
-		$scope.showMeUpdateCompany = false;
-		$scope.showMeDeleteCompany = false;
-		$scope.showMeFindCompany = false;
-		$scope.showMeGetAllCompany = false;
-		$scope.showMeCreateCustomer = false;
-		$scope.showMeUpdateCustomer = false;
-		$scope.showMeDeleteCustomer = !$scope.showMeDeleteCustomer;
-		$scope.showMeFindCustomer = false;
-		$scope.showMeGetAllCustomer = false;
+	    $scope.showMeGetAllCouponsByType = false;
+	    $scope.showMeGetAllPurchaseCoupons = false;
+	    $scope.showMeGetAllPurchaseCouponsByCustomer = false;
     }
 	$scope.showMeFindCustomer = false;
     $scope.myFuncFindCustomer = function() {
         $scope.showMeCreateCompany = false;
 		$scope.showMeUpdateCompany = false;
-		$scope.showMeDeleteCompany = false;
 		$scope.showMeFindCompany = false;
 		$scope.showMeGetAllCompany = false;
 		$scope.showMeCreateCustomer = false;
 		$scope.showMeUpdateCustomer = false;
-		$scope.showMeDeleteCustomer = false;
 		$scope.showMeFindCustomer = !$scope.showMeFindCustomer;
 		$scope.showMeGetAllCustomer = false;
+	    $scope.showMeGetAllCouponsByType = false;
+	    $scope.showMeGetAllPurchaseCoupons = false;
+	    $scope.showMeGetAllPurchaseCouponsByCustomer = false;
     }
 	$scope.showMeGetAllCustomer = false;
     $scope.myFuncGetAllCustomer = function() {
         $scope.showMeCreateCompany = false;
 		$scope.showMeUpdateCompany = false;
-		$scope.showMeDeleteCompany = false;
 		$scope.showMeFindCompany = false;
 		$scope.showMeGetAllCompany = false;
 		$scope.showMeCreateCustomer = false;
 		$scope.showMeUpdateCustomer = false;
-		$scope.showMeDeleteCustomer = false;
+		$scope.showMeFindCustomer = false;
+		$scope.showMeGetAllCustomer = !$scope.showMeGetAllCustomer;
+	    $scope.showMeGetAllCouponsByType = false;
+	    $scope.showMeGetAllPurchaseCoupons = false;
+	    $scope.showMeGetAllPurchaseCouponsByCustomer = false;
+    }
+    $scope.showMeGetAllCouponsByType = false;
+    $scope.myFuncGetAllCouponsByType = function() {
+        $scope.showMeCreateCompany = false;
+		$scope.showMeUpdateCompany = false;
+		$scope.showMeFindCompany = false;
+		$scope.showMeGetAllCompany = false;
+		$scope.showMeCreateCustomer = false;
+		$scope.showMeUpdateCustomer = false;
 		$scope.showMeFindCustomer = false;
 		$scope.showMeGetAllCustomer = false;
+	    $scope.showMeGetAllCouponsByType = !$scope.showMeGetAllCouponsByType;
+	    $scope.showMeGetAllPurchaseCoupons = false;
+	    $scope.showMeGetAllPurchaseCouponsByCustomer = false;
     }
 });
 
@@ -207,30 +214,29 @@ function UpdateCompany1() {
 		}
 	xhr.send();
 }
-
 function DeleteCompany1() {
-	var companyid = $("#deletecompanycompanyid").val();
-	var companyname = $("#deletecompanycompanyname").val();
-	var password = $("#deletecompanypassword").val();
-	var email = $("#deletecompanyemail").val();
-	xhr = new XMLHttpRequest();
-	var url = "http://localhost:8080/jerseyservice/rest/admin/deletecompany/" + companyid + "/" + companyname + "/" + password + "/" + email;
-	xhr.open("DELETE", url, true);
-	xhr.setRequestHeader("Content-type", "application/json");
-	xhr.onreadystatechange = function () { 
-	     if (xhr.status == 200) {
-	        var messageboxHtml = document.getElementById("deletecompanymessagebox");
+var companyid = $("#findcompanycompanyid").val();
+var companyname = $("#findcompanycompanyname").val();
+var password = $("#findcompanypassword").val();
+var email = $("#findcompanyemail").val();
+xhr = new XMLHttpRequest();
+var url = "http://localhost:8080/jerseyservice/rest/admin/deletecompany/" + companyid + "/" + companyname + "/" + password + "/" + email;
+xhr.open("DELETE", url, true);
+xhr.setRequestHeader("Content-type", "application/json");
+xhr.onreadystatechange = function () { 
+     if (xhr.status == 200) {
+        var messageboxHtml = document.getElementById("findcompanymessagebox");
+        messageboxHtml.innerHTML = xhr.responseText;
+    } else {
+    	if (xhr.status == 201) {
+	        var messageboxHtml = document.getElementById("findcompanymessagebox");
 	        messageboxHtml.innerHTML = xhr.responseText;
-	    } else {
-	    	if (xhr.status == 201) {
-		        var messageboxHtml = document.getElementById("deletecompanymessagebox");
-		        messageboxHtml.innerHTML = xhr.responseText;
-	    			} else {
-	    				 alert('Action failed: ' + xhr.responseText);
-	    				}
-	    		}
-		}
-	xhr.send();
+    			} else {
+    				 alert('Action failed: ' + xhr.responseText);
+    				}
+    		}
+	}
+xhr.send();
 }
 function FindCompany1() {
 	var extractedCompanyId = $("#findcompanycompanyid").val();
@@ -266,6 +272,48 @@ function FindCompany1() {
 				}
 	}	 
 }
+function GetAllCompanies1() {
+	xhr = new XMLHttpRequest();
+	var url = "http://localhost:8080/jerseyservice/rest/admin/getallcompanies";
+	xhr.open("GET", url, true);
+	xhr.setRequestHeader("Content-type", "application/json");
+	xhr.send();	
+	xhr.onreadystatechange = function() {
+		if (this.status == 200) {
+			var responseAsString = xhr.responseText;
+			try {
+				var responseArray = JSON.parse(responseAsString);
+			} catch (err) {
+				console.log("error in parsing JSON");
+			}	
+			var i;
+			var out = "<table><tr><th>Company ID</th><th>Company Name</th><th>Password</th><th>Email</th></tr>";
+			
+			for(i = 0; i < responseArray.length; i++) {
+		        out += "<tr><td>" +
+		        responseArray[i].companyId +
+		        "</td><td>" +
+		        responseArray[i].companyName +
+		        "</td><td>" +
+		        responseArray[i].password +
+		        "</td><td>" +
+		        responseArray[i].email +
+		        "</td></tr>";
+		    }
+		    out += "</table>";
+		    document.getElementById("getallcompaniestable").innerHTML = out;
+		    var messageBox = document.getElementById("getallcompanymessagebox");
+			messageBox.innerHTML = "got all companies successfully";
+		} else { 
+				if (this.status == 201){
+					var messageboxHtml = document.getElementById("getallcompanymessagebox");
+	        		messageboxHtml.innerHTML = xhr.responseText;
+				} else {
+						alert('Action failed: ' + xhr.responseText);
+						}
+				}
+	}	 
+}
 function CreateCustomer1() {
 	var customerid = $("#createcustomercustomerid").val();
 	var customername = $("#createcustomercustomername").val();
@@ -285,7 +333,6 @@ function CreateCustomer1() {
 	}
 	xhr.send();
 }
-
 function UpdateCustomer1() {
 	var customerid = $("#updatecustomercustomerid").val();
 	var customername = $("#updatecustomercustomername").val();
@@ -310,30 +357,29 @@ function UpdateCustomer1() {
 		}
 	xhr.send();
 }
-
 function DeleteCustomer1() {
-	var customerid = $("#deletecustomercustomerid").val();
-	var customername = $("#deletecustomercustomername").val();
-	var password = $("#deletecustomerpassword").val();
-	var email = $("#deletecustomeremail").val();
-	xhr = new XMLHttpRequest();
-	var url = "http://localhost:8080/jerseyservice/rest/admin/deletecustomer/" + customerid + "/" + customername + "/" + password + "/" + email;
-	xhr.open("DELETE", url, true);
-	xhr.setRequestHeader("Content-type", "application/json");
-	xhr.onreadystatechange = function () { 
-	     if (xhr.status == 200) {
-	        var messageboxHtml = document.getElementById("deletecustomermessagebox");
+var customerid = $("#findcustomercustomerid").val();
+var customername = $("#findcustomercustomername").val();
+var password = $("#findcustomerpassword").val();
+var email = $("#findcustomeremail").val();
+xhr = new XMLHttpRequest();
+var url = "http://localhost:8080/jerseyservice/rest/admin/deletecustomer/" + customerid + "/" + customername + "/" + password + "/" + email;
+xhr.open("DELETE", url, true);
+xhr.setRequestHeader("Content-type", "application/json");
+xhr.onreadystatechange = function () { 
+     if (xhr.status == 200) {
+        var messageboxHtml = document.getElementById("findcustomermessagebox");
+        messageboxHtml.innerHTML = xhr.responseText;
+    } else {
+    	if (xhr.status == 201) {
+	        var messageboxHtml = document.getElementById("findcustomermessagebox");
 	        messageboxHtml.innerHTML = xhr.responseText;
-	    } else {
-	    	if (xhr.status == 201) {
-		        var messageboxHtml = document.getElementById("deletecustomermessagebox");
-		        messageboxHtml.innerHTML = xhr.responseText;
-	    			} else {
-	    				 alert('Action failed: ' + xhr.responseText);
-	    				}
-	    		}
-		}
-	xhr.send();
+    			} else {
+    				 alert('Action failed: ' + xhr.responseText);
+    				}
+    		}
+	}
+xhr.send();
 }
 function FindCustomer1() {
 	var extractedCustomerId = $("#findcustomercustomerid").val();
@@ -369,6 +415,115 @@ function FindCustomer1() {
 				}
 	}	 
 }
+function GetAllCustomers1() {
+	xhr = new XMLHttpRequest();
+	var url = "http://localhost:8080/jerseyservice/rest/admin/getallcustomers";
+	xhr.open("GET", url, true);
+	xhr.setRequestHeader("Content-type", "application/json");
+	xhr.send();	
+	xhr.onreadystatechange = function() {
+		if (this.status == 200) {
+			var responseAsString = xhr.responseText;
+			try {
+				var responseArray = JSON.parse(responseAsString);
+			} catch (err) {
+				console.log("error in parsing JSON");
+			}	
+			var i;
+			var out = "<table><tr><th>Customer ID</th><th>Customer Name</th><th>Password</th><th>Email</th></tr>";
+			
+			for(i = 0; i < responseArray.length; i++) {
+		        out += "<tr><td>" +
+		        responseArray[i].customerId +
+		        "</td><td>" +
+		        responseArray[i].customerName +
+		        "</td><td>" +
+		        responseArray[i].password +
+		        "</td><td>" +
+		        responseArray[i].email +
+		        "</td></tr>";
+		    }
+		    out += "</table>";
+		    document.getElementById("getallcustomerstable").innerHTML = out;
+		    var messageBox = document.getElementById("getallcustomermessagebox");
+			messageBox.innerHTML = "got all customers successfully";
+		} else { 
+				if (this.status == 201){
+					var messageboxHtml = document.getElementById("getallcustomermessagebox");
+	        		messageboxHtml.innerHTML = xhr.responseText;
+				} else {
+						alert('Action failed: ' + xhr.responseText);
+						}
+				}
+	}	 
+}
+function GetAllCouponsByType1() {
+	var extractedCompanyId = $("#getallcouponsbytypecompanyid").val();
+	var extractedType = $("#getallcouponsbytypetype").val();
+	xhr = new XMLHttpRequest();
+	if (extractedCompanyId !="" && extractedType !=""){
+		var url = "http://localhost:8080/jerseyservice/rest/admin/getallcouponsbycompanyandtype/" + extractedCompanyId + "/" + extractedType;
+	} else {
+		if (extractedCompanyId != ""  && extractedType == ""){
+			var url = "http://localhost:8080/jerseyservice/rest/admin/getallcouponsbycompany/" + extractedCompanyId;
+		} else {
+			if (extractedCompanyId == "" && extractedType !== ""){
+				var url = "http://localhost:8080/jerseyservice/rest/admin/getallcouponsbytype/" + extractedType;
+			} else {
+				var url = "http://localhost:8080/jerseyservice/rest/admin/getallcoupons";
+			}
+		}
+	}
+	
+	xhr.open("GET", url, true);
+	xhr.setRequestHeader("Content-type", "application/json");
+	xhr.send();	
+	xhr.onreadystatechange = function() {
+		if (this.status == 200) {
+			var responseAsString = xhr.responseText;
+			try {
+				var responseArray = JSON.parse(responseAsString);
+			} catch (err) {
+				console.log("error in parsing JSON");
+			}	
+			var i;
+			var out = "<table><tr><th>Coupon ID</th><th>Company ID</th><th>Title</th><th>Start Date</th><th>End Date</th><th>Amount</th><th>Type</th><th>Message</th><th>Price</th></tr>";
+			
+			for(i = 0; i < responseArray.length; i++) {
+		        out += "<tr><td>" +
+		        responseArray[i].couponId +
+		        "</td><td>" +
+		        responseArray[i].companyId +
+		        "</td><td>" +
+		        responseArray[i].title +
+		        "</td><td>" +
+		        new Date(responseArray[i].startDate).toDateString() +
+		        "</td><td>" +
+		        new Date(responseArray[i].endDate).toDateString() +
+		        "</td><td>" +
+		        responseArray[i].amount +
+		        "</td><td>" +
+		        responseArray[i].type +
+		        "</td><td>" +
+		        responseArray[i].message +
+		        "</td><td>" +
+		        responseArray[i].price +
+		        "</td></tr>";
+		    }
+		    out += "</table>";
+		    document.getElementById("getallcouponsbytypetable").innerHTML = out;
+		    var messageBox = document.getElementById("getallcouponsbytypemessagebox");
+			messageBox.innerHTML = "got all coupons successfully";
+		} else { 
+				if (this.status == 201){
+					var messageboxHtml = document.getElementById("getallcouponsbytypemessagebox");
+	        		messageboxHtml.innerHTML = xhr.responseText;
+				} else {
+						alert('Action failed: ' + xhr.responseText);
+						}
+				}
+	}	 
+}
 </script>
 
 <div id="Admin">
@@ -381,16 +536,19 @@ function FindCustomer1() {
   		<ul>
 		    <li><a ng-click="myFuncCreateCompany()" href="#">Create Company</a></li>
 		    <li><a ng-click="myFuncUpdateCompany()" href="#">Update Company</a></li>
-		    <li><a ng-click="myFuncDeleteCompany()" href="#">Delete Company</a></li>
-		    <li><a ng-click="myFuncFindCompany()" href="#">Find Company</a></li>
-		    <li><a ng-click="myFuncGetAllCompany()" href="#">Get All Companies</a></li>
+		    <li><a ng-click="myFuncFindCompany()" href="#">Find and Delete Company</a></li>
+		    <li><a ng-click="myFuncGetAllCompany()" href="#">Get all Companies</a></li>
 		    <br/>
 			<br/>
 			<li><a ng-click="myFuncCreateCustomer()" href="#">Create Customer</a></li>
 		    <li><a ng-click="myFuncUpdateCustomer()" href="#">Update Customer</a></li>
-		    <li><a ng-click="myFuncDeleteCustomer()" href="#">Delete Customer</a></li>
-		    <li><a ng-click="myFuncFindCustomer()" href="#">Find Customer</a></li>
-		    <li><a ng-click="myFuncGetAllCustomer()" href="#">Get All Customers</a></li>
+		    <li><a ng-click="myFuncFindCustomer()" href="#">Find and Delete Customer</a></li>
+		    <li><a ng-click="myFuncGetAllCustomer()" href="#">Get all Customers</a></li>
+		    <br/>
+			<br/>
+		    <li><a ng-click="myFuncGetAllCouponsByType()" href="#">Get Coupons</a></li>
+		    <li><a ng-click="myFuncGetAllPurchaseCoupons()" href="#">Get all purchase Coupons</a></li>
+		    <li><a ng-click="myFuncGetAllPurchaseCouponsByCustomer()" href="#">Get all purchase Coupons by Customer</a></li>
   		</ul>
 	</nav>
 
@@ -410,7 +568,8 @@ function FindCustomer1() {
 					Email: <input type="email" placeholder="Email"  name="email" id="createcompanyemail"/>
 					<br/>					
 					<br/>
-					<input value="Submit" type="button" onclick="CreateCompany1()"/>
+					<input value="Create company" type="button" onclick="CreateCompany1()"/>
+					<button type="reset" value="Reset">Reset</button>
 					<br/>
 					<br/>
 					<div id="createcompanymessagebox"> <textarea> </textarea></div>
@@ -434,7 +593,8 @@ function FindCustomer1() {
 					Email: <input type="email" placeholder="Email"  name="email" id="updatecompanyemail"/>
 					<br/>					
 					<br/>
-					<input value="Submit" type="button" onclick="UpdateCompany1()"/>
+					<input value="Update company" type="button" onclick="UpdateCompany1()"/>
+					<button type="reset" value="Reset">Reset</button>
 					<br/>
 					<br/>
 					<div id="updatecompanymessagebox"> <textarea> </textarea></div>
@@ -442,35 +602,11 @@ function FindCustomer1() {
 			</form>		
 </article>
 
-<article ng-show="showMeDeleteCompany">
-		<h1>Delete Company</h1>
-			<form action="deletecompany">
-				<div name= "deletecompany">
-					Company ID: <input type="number" placeholder="Company ID"  name="companyid" id="deletecompanycompanyid"/> 
-					<br/>
-					<br/>
-					Company Name: <input type="text" placeholder="Company Name"  name="companyname" id="deletecompanycompanyname"/> 			
-					<br/>
-					<br/>
-					Password: <input type="text" placeholder="Password"  name="password" id="deletecompanypassword"/> 
-					<br/>
-					<br/>
-					Email: <input type="email" placeholder="Email"  name="email" id="deletecompanyemail"/>
-					<br/>					
-					<br/>
-					<input value="Submit" type="button" onclick="DeleteCompany1()"/>
-					<br/>
-					<br/>
-					<div id="deletecompanymessagebox"> <textarea> </textarea></div>
-				</div>
-			</form>		
-</article>
-
 <article ng-show="showMeFindCompany">
-		<h1>Find Company by ID</h1>
+		<h1>Find Company by ID and Delete Customer</h1>
 			<form action="findcompany">
 				<div name= "findcompany">
-					Company ID: <input type="number" placeholder="Company ID"  name="companyid" id="findcompanycompanyid"/> 
+					Please enter Company ID: <input type="number" placeholder="Company ID"  name="companyid" id="findcompanycompanyid"/> 
 					<br/>
 					<br/>
 					Company Name: <input type="text" readonly placeholder="Company Name"  name="companyname" id="findcompanycompanyname"/> 			
@@ -482,11 +618,26 @@ function FindCustomer1() {
 					Email: <input type="email" readonly placeholder="Email"  name="email" id="findcompanyemail"/>
 					<br/>					
 					<br/>
-					<input value="Submit" type="button" onclick="FindCompany1()"/>
+					<input value="Find company" type="button" onclick="FindCompany1()"/>
+					<input value="Delete company" type="button" onclick="DeleteCompany1()"/>
 					<button type="reset" value="Reset">Reset</button>
 					<br/>
 					<br/>
 					<div id="findcompanymessagebox"> <textarea> </textarea></div>
+				</div>
+			</form>		
+</article>
+
+<article ng-show="showMeGetAllCompany">
+		<h1>Get All Companies</h1>
+			<form action="getallcompany">
+				<div name= "getallcompany">
+					<input value="Click here to get all companies" type="button" onclick="GetAllCompanies1()"/>
+					<br/>
+					<br/>
+					<div id="getallcompanymessagebox"> <textarea> </textarea></div>
+					<br/>
+					<div id= getallcompaniestable> </div>
 				</div>
 			</form>		
 </article>
@@ -507,7 +658,8 @@ function FindCustomer1() {
 					Email: <input type="email" placeholder="Email"  name="email" id="createcustomeremail"/>
 					<br/>
 					<br/>
-					<input value="Submit" type="button" onclick="CreateCustomer1()"/>
+					<input value="Create customer" type="button" onclick="CreateCustomer1()"/>
+					<button type="reset" value="Reset">Reset</button>
 					<br/>
 					<br/>
 					<div id="createcustomermessagebox"> <textarea> </textarea></div>
@@ -531,7 +683,8 @@ function FindCustomer1() {
 					Email: <input type="email" placeholder="Email"  name="email" id="updatecustomeremail"/>
 					<br/>
 					<br/>
-					<input value="Submit" type="button" onclick="UpdateCustomer1()"/>
+					<input value="Update customer" type="button" onclick="UpdateCustomer1()"/>
+					<button type="reset" value="Reset">Reset</button>
 					<br/>
 					<br/>
 					<div id="updatecustomermessagebox"> <textarea> </textarea></div>
@@ -539,35 +692,11 @@ function FindCustomer1() {
 				</form>		
 </article>
 
-<article ng-show="showMeDeleteCustomer"> 
-		<h1>Delete Customer</h1>
-			<form action="deletecustomer">
-				<div name="deletecustomer">
-					Customer ID: <input type="number" placeholder="Customer ID"  name="customerid" id="deletecustomercustomerid"/> 
-					<br/>
-					<br/>
-					Customer Name: <input type="text" placeholder="Customer Name"  name="customername" id="deletecustomercustomername"/> 			
-					<br/>
-					<br/>
-					Password: <input type="text" placeholder="Password"  name="password" id="deletecustomerpassword"/> 
-					<br/>
-					<br/>
-					Email: <input type="email" placeholder="Email"  name="email" id="deletecustomeremail"/>
-					<br/>
-					<br/>
-					<input value="Submit" type="button" onclick="DeleteCustomer1()"/>
-					<br/>
-					<br/>
-					<div id="deletecustomermessagebox"> <textarea> </textarea></div>
-					</div>			
-			</form>	
-</article>
-
 <article ng-show="showMeFindCustomer"> 
-		<h1>Find Customer by ID</h1>
+		<h1>Find Customer by ID and Delete Customer</h1>
 			<form action="findcustomer">
 				<div name="findcustomer">
-					Customer ID: <input type="number" placeholder="Customer ID"  name="customerid" id="findcustomercustomerid"/> 
+					Please enter Customer ID: <input type="number" placeholder="Customer ID"  name="customerid" id="findcustomercustomerid"/> 
 					<br/>
 					<br/>
 					Customer Name: <input type="text" readonly placeholder="Customer Name"  name="customername" id="findcustomercustomername"/> 			
@@ -579,12 +708,56 @@ function FindCustomer1() {
 					Email: <input type="email" readonly placeholder="Email"  name="email" id="findcustomeremail"/>
 					<br/>
 					<br/>
-					<input value="Submit" type="button" onclick="FindCustomer1()"/>
+					<input value="Find customer" type="button" onclick="FindCustomer1()"/>
+					<input value="Delete customer" type="button" onclick="DeleteCustomer1()"/>
 					<button type="reset" value="Reset">Reset</button>
 					<br/>
 					<br/>
 					<div id="findcustomermessagebox"> <textarea> </textarea></div>
 					</div>			
+			</form>		
+</article>
+
+<article ng-show="showMeGetAllCustomer">
+		<h1>Get All Customers</h1>
+			<form action="getallcustomer">
+				<div name= "getallcustomer">
+					<input value="Click here to get all customers" type="button" onclick="GetAllCustomers1()"/>
+					<br/>
+					<br/>
+					<div id="getallcustomermessagebox"> <textarea> </textarea></div>
+					<br/>
+					<div id= getallcustomerstable> </div>
+				</div>
+			</form>		
+</article>
+
+<article ng-show="showMeGetAllCouponsByType">
+		<h1>Get Coupons</h1>
+			<form action="getallcouponsbytype">
+				<div name= "getallcouponsbytype">
+					Please enter Company ID: <input type="number" placeholder="Company ID"  name="companyid" id="getallcouponsbytypecompanyid"/>
+					<br/>
+					<br/> 
+					Please select Type of coupon: <select name="Type" id="getallcouponsbytypetype"> 
+					<option></option>
+					<option value="RESTURANT"> RESTURANT </option> 
+					<option value="ELECTRICITY"> ELECTRICITY </option>
+					<option value="FOOD"> FOOD </option> 
+					<option value="HEALTH"> HEALTH </option> 
+					<option value="SPORTS"> SPORTS </option> 
+					<option value="CAMPING"> CAMPING </option> 
+					<option value="TRAVELLING"> TRAVELLING </option> 
+					</select>
+					<br/>
+					<br/>
+					<input value="Click here to get coupons" type="button" onclick="GetAllCouponsByType1()"/>
+					<br/>
+					<br/>
+					<div id="getallcouponsbytypemessagebox"> <textarea> </textarea></div>
+					<br/>
+					<div id= getallcouponsbytypetable> </div>
+				</div>
 			</form>		
 </article>
 

@@ -81,7 +81,7 @@ public class CouponDBDAO implements CouponDAO {
 				String query = deletePurchasedCouponsByCouponId(purchasedCouponDOs);
 				statement.executeUpdate(query);				
 			}
-			int numberOfRemoveRecords = statement.executeUpdate("DELETE FROM Coupon WHERE coupon_id = " + couponDO.getCouponId());
+			int numberOfRemoveRecords = statement.executeUpdate("DELETE FROM Coupon WHERE (coupon_id = " + couponDO.getCouponId() + " and company_id = " + couponDO.getCompanyId() + ")");
 			statement.close();
 			return numberOfRemoveRecords;
 		} catch (SQLException e) {
@@ -326,9 +326,7 @@ public class CouponDBDAO implements CouponDAO {
 
 	private String updateCouponInsertQuery(long couponId, long companyId, String title, Date startDate, Date endDate,
 			int amount, Type type, String message, double price, String image) {
-		StringBuilder sb = new StringBuilder("Update Coupon SET Company_Id = ");
-		sb.append(surroundWithCommas(String.valueOf(companyId)));
-		sb.append(", Title = ");
+		StringBuilder sb = new StringBuilder("Update Coupon SET Title = ");
 		sb.append(surroundWithCommas(title));
 		sb.append(", Start_Date = ");
 		sb.append(surroundWithCommas(convertDateToSimpleString(startDate)));
@@ -344,7 +342,7 @@ public class CouponDBDAO implements CouponDAO {
 		sb.append(surroundWithCommas(String.valueOf(price)));
 		sb.append(", Image = ");
 		sb.append(surroundWithCommas(image));
-		sb.append("WHERE Coupon_Id = " + couponId);
+		sb.append("WHERE (Coupon_Id = " + couponId + " and Company_Id = " + companyId + ")");
 		return sb.toString();
 	}
 

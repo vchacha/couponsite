@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="js/jquery-1.11.0.min.js"></script>
+<script src="js/jquery.dataTables.js"></script>
+
+<head>
+<style>
+nav {
+	float: left;
+	max-width: 200px;
+	margin: 0;
+	padding: 1em;
+}
+
+nav ul a {
+	text-decoration: none;
+}
+
+article {
+	margin-left: 210px;
+	border-left: 1px solid gray;
+	padding: 1em;
+	overflow: hidden;
+}
+
+table, th, td {
+	border: 1px solid grey;
+	border-collapse: collapse;
+	padding: 5px;
+}
+
+table tr:nth-child(odd) {
+	background-color: #f1f1f1;
+}
+
+table tr:nth-child(even) {
+	background-color: #ffffff;
+}
+</style>
+<meta charset="ISO-8859-1">
+<title>CouponSite</title>
+</head>
+
+<script>
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope) {
+    $scope.showMeViewAllCoupons = false;
+    $scope.myFuncViewAllCoupons = function() {
+        $scope.showMeViewAllCoupons = !$scope.showMeViewAllCoupons;
+        $scope.showMeGetAllPurchaseCoupons = false;
+        xhr = new XMLHttpRequest();
+    	var url = "http://localhost:8080/jerseyservice/rest/admin/getallcoupons";
+    	xhr.open("GET", url, true);
+    	xhr.setRequestHeader("Content-type", "application/json");
+    	xhr.send();	
+    	xhr.onreadystatechange = function() {
+    		if (this.status == 200) {
+    			var responseAsString = xhr.responseText;
+    			try {
+    				var responseArray = JSON.parse(responseAsString);
+    			} catch (err) {
+    				console.log("error in parsing JSON");
+    			}
+    			var i;
+    			var out = "<table id=myTable><tr><th>Coupon ID</th><th>Company ID</th><th>Title</th><th>Start Date</th><th>End Date</th><th>Amount</th><th>Type</th><th>Message</th><th>Price</th><th></th></tr>";
+    			
+    			for(i = 0; i < responseArray.length; i++) {
+    		        out += "<tr><td>" +
+    		        responseArray[i].couponId +
+    		        "</td><td>" +
+    		        responseArray[i].companyId +
+    		        "</td><td>" +
+    		        responseArray[i].title +
+    		        "</td><td>" +
+    		        new Date(responseArray[i].startDate).toDateString() +
+    		        "</td><td>" +
+    		        new Date(responseArray[i].endDate).toDateString() +
+    		        "</td><td>" +
+    		        responseArray[i].amount +
+    		        "</td><td>" +
+    		        responseArray[i].type +
+    		        "</td><td>" +
+    		        responseArray[i].message +
+    		        "</td><td>" +
+    		        responseArray[i].price +
+    		        "</td><td>" +
+    		        '<input id= button' + i + ' value="To purchase" type="button" onclick="PurchaseCoupon1(' + i + ')"/>' +
+    		        "</td></tr>";
+    		    }
+    		    out += "</table>";
+    		    document.getElementById("viewallcouponstable").innerHTML = out;
+    		} else { 
+    				if (this.status == 201){
+    					alert(xhr.responseText);
+    				} else {
+    						alert('Action failed: ' + xhr.responseText);
+    						}
+    				}
+    	}	 
+    }
+    $scope.showMeGetAllPurchaseCoupons = false;
+    $scope.myFuncGetAllPurchaseCoupons = function() {
+        $scope.showMeViewAllCoupons = false;
+        $scope.showMeGetAllPurchaseCoupons = !$scope.showMeGetAllPurchaseCoupons;
+    }
+});
+
+function PurchaseCoupon1(rowNumber) {
+	var couponTable = document.getElementById("myTable");
+    var extractedCustomerId = $("#viewallcouponscustomerid").val();
+    var couponId = couponTable.rows.item(rowNumber+1).cells[0].innerHTML;
+    var companyId = couponTable.rows.item(rowNumber+1).cells[1].innerHTML;
+    var title = couponTable.rows.item(rowNumber+1).cells[2].innerHTML;
+    var startDate = couponTable.rows.item(rowNumber+1).cells[3].innerHTML;
+    var endDate = couponTable.rows.item(rowNumber+1).cells[4].innerHTML;
+    var amount = couponTable.rows.item(rowNumber+1).cells[5].innerHTML;
+    var type = couponTable.rows.item(rowNumber+1).cells[6].innerHTML;
+    var message = couponTable.rows.item(rowNumber+1).cells[7].innerHTML;
+    var price = couponTable.rows.item(rowNumber+1).cells[8].innerHTML;
+	xhr = new XMLHttpRequest();
+	if (extractedCustomerId =="") {
+		var messageBox = document.getElementById("viewallcouponsmessagebox");
+		messageBox.innerHTML = "Please Enter your CustomerID";
+		return;
+	  } else{
+		  var url = "http://localhost:8080/jerseyservice/rest/customer/purchasecoupon/" + extractedCustomerId + "/" + couponId + "/" + companyId + "/" + title + "/" + startDate + "/" + endDate + "/" + amount + "/" + type + "/" + message + "/" + price; 
+	  }    
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-type", "application/json");
+	xhr.onreadystatechange = function () { 
+	     if (xhr.status == 200) {
+	        var messageboxHtml = document.getElementById("viewallcouponsmessagebox");
+	        messageboxHtml.innerHTML = xhr.responseText;
+	    } else {
+	    	 alert('Action failed: ' + xhr.responseText);
+	    }
+	}
+	xhr.send();
+}
+	
+ function GetAllPurchaseCoupons1() {
+	var extractedCustomerId = $("#getallpurchasecouponscustomerid").val();
+	var extractedType = $("#getallpurchasecouponstype").val();
+	var extractedPrice = $("#getallpurchasecouponsprice").val();
+	xhr = new XMLHttpRequest();
+	if (extractedCustomerId =="") {
+		var messageBox = document.getElementById("getallpurchasecouponsmessagebox");
+		messageBox.innerHTML = "Please Enter your CustomerID";
+		return;
+	  } 
+	 if (extractedType !="" && extractedPrice !="") {
+		var messageBox = document.getElementById("getallpurchasecouponsmessagebox");
+		messageBox.innerHTML = "Please select Type or Price, not both";
+		return;
+	 }
+	 if (extractedType !="" && extractedPrice =="") {
+		 var url = "http://localhost:8080/jerseyservice/rest/customer/getallpurchasecouponbytype/" + extractedCustomerId + "/" + extractedType;
+		}
+	 else if (extractedType =="" && extractedPrice !="") {
+		 var url = "http://localhost:8080/jerseyservice/rest/customer/getallpurchasecouponbyprice/" + extractedCustomerId + "/" + extractedPrice;
+		} 
+	 else {
+		 var url = "http://localhost:8080/jerseyservice/rest/customer/getallpurchasecouponsbycustomer/" + extractedCustomerId;
+		}
+    
+	xhr.open("GET", url, true);
+	xhr.setRequestHeader("Content-type", "application/json");
+	xhr.send();	
+	xhr.onreadystatechange = function() {
+		if (this.status == 200) {
+			var responseAsString = xhr.responseText;
+			try {
+				var responseArray = JSON.parse(responseAsString);
+			} catch (err) {
+				console.log("error in parsing JSON");
+			}	
+			var i;
+			var out = "<table><tr><th>Coupon ID</th><th>Company ID</th><th>Title</th><th>Start Date</th><th>End Date</th><th>Amount</th><th>Type</th><th>Message</th><th>Price</th></tr>";
+			
+			for(i = 0; i < responseArray.length; i++) {
+		        out += "<tr><td>" +
+		        responseArray[i].couponId +
+		        "</td><td>" +
+		        responseArray[i].companyId +
+		        "</td><td>" +
+		        responseArray[i].title +
+		        "</td><td>" +
+		        new Date(responseArray[i].startDate).toDateString() +
+		        "</td><td>" +
+		        new Date(responseArray[i].endDate).toDateString() +
+		        "</td><td>" +
+		        responseArray[i].amount +
+		        "</td><td>" +
+		        responseArray[i].type +
+		        "</td><td>" +
+		        responseArray[i].message +
+		        "</td><td>" +
+		        responseArray[i].price +
+		        "</td></tr>";
+		    }
+		    out += "</table>";
+		    document.getElementById("getallpurchasecouponstable").innerHTML = out;
+		    var messageBox = document.getElementById("getallpurchasecouponsmessagebox");
+			messageBox.innerHTML = "got all coupons successfully";
+		} else { 
+				if (this.status == 201){
+					var messageboxHtml = document.getElementById("getallpurchasecouponsmessagebox");
+	        		messageboxHtml.innerHTML = xhr.responseText;
+				} else {
+						alert('Action failed: ' + xhr.responseText);
+						}
+				}
+	}	 
+}
+</script>
+
+<div id="Customer">
+	<header>
+		<h1>Welcome Customer Client</h1>
+	</header>
+</div>
+<body ng-app="myApp" ng-controller="myCtrl">
+	<nav>
+		<ul>
+			<li><a ng-click="myFuncViewAllCoupons()" href="#"> View all Coupons</a></li>
+			<li><a ng-click="myFuncGetAllPurchaseCoupons()" href="#"> Get all purchase Coupons</a></li>
+		</ul>
+	</nav>
+	
+<article ng-show="showMeGetAllPurchaseCoupons">
+		<h1>Get purchase Coupons</h1>
+		<form action="getallpurchasecoupons">
+			<div name="getallpurchasecoupons">
+				Please enter Customer ID: <input type="number" placeholder="Customer ID" name="customerid" id="getallpurchasecouponscustomerid"/>
+				<br/>
+				<br/>
+				Please select Type of coupon: <select name="Type" id="getallpurchasecouponstype">
+					<option></option>
+					<option value="RESTURANT">RESTURANT</option>
+					<option value="ELECTRICITY">ELECTRICITY</option>
+					<option value="FOOD">FOOD</option>
+					<option value="HEALTH">HEALTH</option>
+					<option value="SPORTS">SPORTS</option>
+					<option value="CAMPING">CAMPING</option>
+					<option value="TRAVELLING">TRAVELLING</option>
+				</select> 
+				<br/>
+				<br/> 
+				Please enter Price: <input type="number" placeholder="Price" min=0 name="price" id="getallpurchasecouponsprice"/>
+				<br/>
+				<br/> 
+				<input value="Click here to get coupons" type="button" onclick="GetAllPurchaseCoupons1()"/>
+				<button type="reset" value="Reset">Reset</button>
+				<br/>
+				<br/>
+				<div id="getallpurchasecouponsmessagebox"> <textarea> </textarea></div>
+				<br/>
+				<div id="getallpurchasecouponstable"></div>
+			</div>
+		</form>
+</article>
+	
+<article ng-show="showMeViewAllCoupons">
+		<h1>All Coupons</h1>
+		<form action="viewallcoupons">
+			<div name="viewallcoupons">
+				Please enter Customer ID: <input type="number" placeholder="Customer ID" name="customerid" id="viewallcouponscustomerid"/>
+				<br/>
+				<br/>
+				<div id="viewallcouponsmessagebox"> <textarea> </textarea></div>
+				<br/>
+				<div id="viewallcouponstable"></div>
+			</div>
+		</form>
+	</article>
+</body>
+</html>

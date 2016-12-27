@@ -53,7 +53,6 @@ app.controller('myCtrl', function($scope) {
 		$scope.showMeGetAllCustomer = false;
 	    $scope.showMeGetAllCouponsByType = false;
 	    $scope.showMeGetAllPurchaseCoupons = false;
-	    $scope.showMeGetAllPurchaseCouponsByCustomer = false;
     }
 	$scope.showMeUpdateCompany = false;
     $scope.myFuncUpdateCompany = function() {
@@ -67,7 +66,6 @@ app.controller('myCtrl', function($scope) {
 		$scope.showMeGetAllCustomer = false;
 	    $scope.showMeGetAllCouponsByType = false;
 	    $scope.showMeGetAllPurchaseCoupons = false;
-	    $scope.showMeGetAllPurchaseCouponsByCustomer = false;
     }
 	$scope.showMeFindCompany = false;
 	$scope.myFuncFindCompany = function() {
@@ -81,7 +79,6 @@ app.controller('myCtrl', function($scope) {
 		$scope.showMeGetAllCustomer = false;
 	    $scope.showMeGetAllCouponsByType = false;
 	    $scope.showMeGetAllPurchaseCoupons = false;
-	    $scope.showMeGetAllPurchaseCouponsByCustomer = false;
     }	
 	$scope.showMeGetAllCompany = false;
 	$scope.myFuncGetAllCompany = function() {
@@ -95,7 +92,6 @@ app.controller('myCtrl', function($scope) {
 		$scope.showMeGetAllCustomer = false;
 	    $scope.showMeGetAllCouponsByType = false;
 	    $scope.showMeGetAllPurchaseCoupons = false;
-	    $scope.showMeGetAllPurchaseCouponsByCustomer = false;
     }		
 	
     $scope.showMeCreateCustomer = false;
@@ -110,7 +106,6 @@ app.controller('myCtrl', function($scope) {
 		$scope.showMeGetAllCustomer = false;
 	    $scope.showMeGetAllCouponsByType = false;
 	    $scope.showMeGetAllPurchaseCoupons = false;
-	    $scope.showMeGetAllPurchaseCouponsByCustomer = false;
     }	
 	$scope.showMeUpdateCustomer = false;
     $scope.myFuncUpdateCustomer = function() {
@@ -124,7 +119,6 @@ app.controller('myCtrl', function($scope) {
 		$scope.showMeGetAllCustomer = false;
 	    $scope.showMeGetAllCouponsByType = false;
 	    $scope.showMeGetAllPurchaseCoupons = false;
-	    $scope.showMeGetAllPurchaseCouponsByCustomer = false;
     }
 	$scope.showMeFindCustomer = false;
     $scope.myFuncFindCustomer = function() {
@@ -138,7 +132,6 @@ app.controller('myCtrl', function($scope) {
 		$scope.showMeGetAllCustomer = false;
 	    $scope.showMeGetAllCouponsByType = false;
 	    $scope.showMeGetAllPurchaseCoupons = false;
-	    $scope.showMeGetAllPurchaseCouponsByCustomer = false;
     }
 	$scope.showMeGetAllCustomer = false;
     $scope.myFuncGetAllCustomer = function() {
@@ -152,7 +145,6 @@ app.controller('myCtrl', function($scope) {
 		$scope.showMeGetAllCustomer = !$scope.showMeGetAllCustomer;
 	    $scope.showMeGetAllCouponsByType = false;
 	    $scope.showMeGetAllPurchaseCoupons = false;
-	    $scope.showMeGetAllPurchaseCouponsByCustomer = false;
     }
     $scope.showMeGetAllCouponsByType = false;
     $scope.myFuncGetAllCouponsByType = function() {
@@ -166,7 +158,19 @@ app.controller('myCtrl', function($scope) {
 		$scope.showMeGetAllCustomer = false;
 	    $scope.showMeGetAllCouponsByType = !$scope.showMeGetAllCouponsByType;
 	    $scope.showMeGetAllPurchaseCoupons = false;
-	    $scope.showMeGetAllPurchaseCouponsByCustomer = false;
+    }
+    $scope.showMeGetAllPurchaseCoupons = false;
+    $scope.myFuncGetAllPurchaseCoupons = function() {
+        $scope.showMeCreateCompany = false;
+		$scope.showMeUpdateCompany = false;
+		$scope.showMeFindCompany = false;
+		$scope.showMeGetAllCompany = false;
+		$scope.showMeCreateCustomer = false;
+		$scope.showMeUpdateCustomer = false;
+		$scope.showMeFindCustomer = false;
+		$scope.showMeGetAllCustomer = false;
+	    $scope.showMeGetAllCouponsByType = false;
+	    $scope.showMeGetAllPurchaseCoupons = !$scope.showMeGetAllPurchaseCoupons;
     }
 });
 
@@ -524,6 +528,64 @@ function GetAllCouponsByType1() {
 				}
 	}	 
 }
+function GetAllPurchaseCoupons1() {
+	var extractedCustomerId = $("#getallpurchasecouponscustomerid").val();
+	xhr = new XMLHttpRequest();
+	if (extractedCustomerId !="" ){
+		var url = "http://localhost:8080/jerseyservice/rest/admin/getallpurchasecouponsbycustomer/" + extractedCustomerId;
+		} else {
+			var url = "http://localhost:8080/jerseyservice/rest/admin/getallpurchasecoupons";
+	}
+	
+	xhr.open("GET", url, true);
+	xhr.setRequestHeader("Content-type", "application/json");
+	xhr.send();	
+	xhr.onreadystatechange = function() {
+		if (this.status == 200) {
+			var responseAsString = xhr.responseText;
+			try {
+				var responseArray = JSON.parse(responseAsString);
+			} catch (err) {
+				console.log("error in parsing JSON");
+			}	
+			var i;
+			var out = "<table><tr><th>Coupon ID</th><th>Company ID</th><th>Title</th><th>Start Date</th><th>End Date</th><th>Amount</th><th>Type</th><th>Message</th><th>Price</th></tr>";
+			
+			for(i = 0; i < responseArray.length; i++) {
+		        out += "<tr><td>" +
+		        responseArray[i].couponId +
+		        "</td><td>" +
+		        responseArray[i].companyId +
+		        "</td><td>" +
+		        responseArray[i].title +
+		        "</td><td>" +
+		        new Date(responseArray[i].startDate).toDateString() +
+		        "</td><td>" +
+		        new Date(responseArray[i].endDate).toDateString() +
+		        "</td><td>" +
+		        responseArray[i].amount +
+		        "</td><td>" +
+		        responseArray[i].type +
+		        "</td><td>" +
+		        responseArray[i].message +
+		        "</td><td>" +
+		        responseArray[i].price +
+		        "</td></tr>";
+		    }
+		    out += "</table>";
+		    document.getElementById("getallpurchasecouponstable").innerHTML = out;
+		    var messageBox = document.getElementById("getallpurchasecouponsmessagebox");
+			messageBox.innerHTML = "got all coupons successfully";
+		} else { 
+				if (this.status == 201){
+					var messageboxHtml = document.getElementById("getallpurchasecouponsmessagebox");
+	        		messageboxHtml.innerHTML = xhr.responseText;
+				} else {
+						alert('Action failed: ' + xhr.responseText);
+						}
+				}
+	}	 
+}
 </script>
 
 <div id="Admin">
@@ -547,8 +609,7 @@ function GetAllCouponsByType1() {
 		    <br/>
 			<br/>
 		    <li><a ng-click="myFuncGetAllCouponsByType()" href="#">Get Coupons</a></li>
-		    <li><a ng-click="myFuncGetAllPurchaseCoupons()" href="#">Get all purchase Coupons</a></li>
-		    <li><a ng-click="myFuncGetAllPurchaseCouponsByCustomer()" href="#">Get all purchase Coupons by Customer</a></li>
+		    <li><a ng-click="myFuncGetAllPurchaseCoupons()" href="#">Get purchase Coupons</a></li>
   		</ul>
 	</nav>
 
@@ -757,6 +818,23 @@ function GetAllCouponsByType1() {
 					<div id="getallcouponsbytypemessagebox"> <textarea> </textarea></div>
 					<br/>
 					<div id= getallcouponsbytypetable> </div>
+				</div>
+			</form>		
+</article>
+
+<article ng-show="showMeGetAllPurchaseCoupons">
+		<h1>Get purchase Coupons</h1>
+			<form action="getallpurchasecoupons">
+				<div name= "getallpurchasecoupons">
+					Please enter Customer ID: <input type="number" placeholder="Customer ID"  name="customerid" id="getallpurchasecouponscustomerid"/>
+					<br/>
+					<br/>
+					<input value="Click here to get purchase coupons" type="button" onclick="GetAllPurchaseCoupons1()"/>
+					<br/>
+					<br/>
+					<div id="getallpurchasecouponsmessagebox"> <textarea> </textarea></div>
+					<br/>
+					<div id= getallpurchasecouponstable> </div>
 				</div>
 			</form>		
 </article>

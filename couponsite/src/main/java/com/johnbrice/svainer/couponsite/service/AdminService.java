@@ -278,6 +278,39 @@ public class AdminService {
 		
 		} catch (CouponValidationException e) {	
 			return Response.status(500).entity("Wasn't able to find any coupon").build();
+		}	
+}
+	@Path("/getallpurchasecoupons")
+	@GET
+	@Produces("application/json")
+	public Response getAllPurchaseCoupons() {
+		Collection<CouponDO> coupons = new ArrayList<>();
+		try{
+			coupons = couponClientFacadeAdmin.getAllPurchaseCoupons();
+				if (coupons.isEmpty()){
+					return Response.status(201).entity("Any coupon doesn't exist").build();
+				} else {		
+					return Response.status(200).entity(coupons).build();
+				}
+		} catch (CouponValidationException e) {	
+			return Response.status(500).entity("Wasn't able to find any coupon").build();
+		}
+}
+	@Path("/getallpurchasecouponsbycustomer/{customerid}")
+	@GET
+	@Produces("application/json")
+	public Response getAllPurchaseCouponsByCustomer(@PathParam("customerid") long customerId) {
+		Collection<CouponDO> coupons = new ArrayList<>();
+		try{
+			coupons = couponClientFacadeAdmin.getAllPurchaseCouponsByCustomer(customerId);
+				if (coupons.isEmpty()){
+					return Response.status(201).entity("This customer doesn't purchase any coupon").build();
+				} else {		
+					return Response.status(200).entity(coupons).build();
+				}
+		
+		} catch (CouponValidationException e) {	
+			return Response.status(500).entity("Wasn't able to find any coupon to this customer").build();
 		}
 }
 	@Path("/hello")

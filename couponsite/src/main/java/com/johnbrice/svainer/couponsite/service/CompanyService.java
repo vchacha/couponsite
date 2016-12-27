@@ -3,6 +3,7 @@ package com.johnbrice.svainer.couponsite.service;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -62,6 +63,7 @@ public class CompanyService {
 				price, "image");
 		try {
 			couponClientFacadeCompany.createCoupon(couponDO);
+			
 			return Response.status(200).entity("Successfully created coupon").build();
 			
 		} catch (CouponValidationException e) {
@@ -147,21 +149,41 @@ public class CompanyService {
 		}
 	}
 
-	@Path("/getallcoupon/{companyid}")
+	@Path("/getallcouponsbycompany/{companyid}")
 	@GET
 	@Produces("application/json")
-	public Collection<CouponDO> getAllCouponsByCompany(@PathParam("companyid") long companyId) {
-
-		return couponClientFacadeCompany.getAllCouponsByCompany(companyId);
+	public Response getAllCouponsByCompany(@PathParam("companyid") long companyId) {
+		Collection<CouponDO> coupons = new ArrayList<>();
+		try{
+			coupons = couponClientFacadeCompany.getAllCouponsByCompany(companyId);
+				if (coupons.isEmpty()){
+					return Response.status(201).entity("To this company doesn't exist any coupon").build();
+				} else {		
+					return Response.status(200).entity(coupons).build();
+				}
+		} catch (CouponValidationException e) {	
+			return Response.status(500).entity("Wasn't able to find any coupon").build();
+		}
 		
 	}
 
-	@Path("/getcouponbytype/{companyid}/{type}")
+	@Path("/getallcouponsbycompanyandtype/{companyid}/{type}")
 	@GET
 	@Produces("application/json")
-	public Collection<CouponDO> getAllCouponsByCompanyAndType(@PathParam("companyid") long companyId,
-			@PathParam("type") Type type) {
-		return couponClientFacadeCompany.getAllCouponsByCompanyAndType(companyId, type);
+	public Response getAllCouponsByCompanyAndType(@PathParam("companyid") long companyId,
+			@PathParam("type") String type) {
+		Collection<CouponDO> coupons = new ArrayList<>();
+		try{
+			coupons = couponClientFacadeCompany.getAllCouponsByCompanyAndType(companyId, Type.valueOf(type));
+				if (coupons.isEmpty()){
+					return Response.status(201).entity("To this company doesn't exist any coupon").build();
+				} else {		
+					return Response.status(200).entity(coupons).build();
+				}
+		
+		} catch (CouponValidationException e) {	
+			return Response.status(500).entity("Wasn't able to find any coupon").build();
+		}
 	}
 	
 	@Path("/createcouponhello/{hi}")

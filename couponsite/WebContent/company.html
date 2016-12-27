@@ -9,7 +9,7 @@
 	<style >
 		nav {
 			    float: left;
-			    max-width: 160px;
+			    max-width: 200px;
 			    margin: 0;
 			    padding: 1em;
 		}
@@ -17,11 +17,22 @@
 		    text-decoration: none;
 		}
 		article {
-		    margin-left: 170px;
+		    margin-left: 210px;
 		    border-left: 1px solid gray;
 		    padding: 1em;
 		    overflow: hidden;
 		    }
+		table, th , td  {
+   		border: 1px solid grey;
+    	border-collapse: collapse;
+    	padding: 5px;
+		}
+		table tr:nth-child(odd) {
+    	background-color: #f1f1f1;
+		}
+		table tr:nth-child(even) {
+    	background-color: #ffffff;
+		}
 	</style>
 <meta charset="ISO-8859-1">
 <title>CouponSite</title>
@@ -36,7 +47,6 @@ app.controller('myCtrl', function($scope) {
         $scope.showMeUpdateCoupon = false;
 		$scope.showMeFindCoupon = false;
 		$scope.showMeGetAllCoupons = false;
-		$scope.showMeGetAllCouponsByType = false;
     }
     $scope.showMeUpdateCoupon = false;
     $scope.myFuncUpdateCoupon = function() {
@@ -44,7 +54,6 @@ app.controller('myCtrl', function($scope) {
         $scope.showMeUpdateCoupon = !$scope.showMeUpdateCoupon;
 		$scope.showMeFindCoupon = false;
 		$scope.showMeGetAllCoupons = false;
-		$scope.showMeGetAllCouponsByType = false;
     }
     $scope.showMeFindCoupon = false;
     $scope.myFuncFindCoupon = function() {
@@ -52,7 +61,6 @@ app.controller('myCtrl', function($scope) {
         $scope.showMeUpdateCoupon = false;
 		$scope.showMeFindCoupon = !$scope.showMeFindCoupon;
 		$scope.showMeGetAllCoupons = false;
-		$scope.showMeGetAllCouponsByType = false;
     }
     $scope.showMeGetAllCoupons = false;
     $scope.myFuncGetAllCoupons = function() {
@@ -60,15 +68,6 @@ app.controller('myCtrl', function($scope) {
         $scope.showMeUpdateCoupon = false;
 		$scope.showMeFindCoupon = false;
 		$scope.showMeGetAllCoupons = !$scope.showMeGetAllCoupons;
-		$scope.showMeGetAllCouponsByType = false;
-    }
-    $scope.showMeGetAllCouponsByType = false;
-    $scope.myFuncGetAllCouponsByType = function() {
-        $scope.showMeCreateCoupon = false;
-        $scope.showMeUpdateCoupon = false;
-		$scope.showMeFindCoupon = false;
-		$scope.showMeGetAllCoupons = false;
-		$scope.showMeGetAllCouponsByType = !$scope.showMeGetAllCouponsByType;
     }
 });
 
@@ -197,6 +196,65 @@ function DeleteCoupon1() {
 	}
 	xhr.send();
 }
+function GetAllCoupons1() {
+	var extractedCompanyId = $("#getallcouponscompanyid").val();
+	var extractedType = $("#getallcouponstype").val();
+	xhr = new XMLHttpRequest();
+	if (extractedType !="" ){
+		var url = "http://localhost:8080/jerseyservice/rest/company/getallcouponsbycompanyandtype/" + extractedCompanyId + "/" + extractedType;
+		} else {
+			var url = "http://localhost:8080/jerseyservice/rest/company/getallcouponsbycompany/" + extractedCompanyId;
+	}
+	
+	xhr.open("GET", url, true);
+	xhr.setRequestHeader("Content-type", "application/json");
+	xhr.send();	
+	xhr.onreadystatechange = function() {
+		if (this.status == 200) {
+			var responseAsString = xhr.responseText;
+			try {
+				var responseArray = JSON.parse(responseAsString);
+			} catch (err) {
+				console.log("error in parsing JSON");
+			}	
+			var i;
+			var out = "<table><tr><th>Coupon ID</th><th>Company ID</th><th>Title</th><th>Start Date</th><th>End Date</th><th>Amount</th><th>Type</th><th>Message</th><th>Price</th></tr>";
+			
+			for(i = 0; i < responseArray.length; i++) {
+		        out += "<tr><td>" +
+		        responseArray[i].couponId +
+		        "</td><td>" +
+		        responseArray[i].companyId +
+		        "</td><td>" +
+		        responseArray[i].title +
+		        "</td><td>" +
+		        new Date(responseArray[i].startDate).toDateString() +
+		        "</td><td>" +
+		        new Date(responseArray[i].endDate).toDateString() +
+		        "</td><td>" +
+		        responseArray[i].amount +
+		        "</td><td>" +
+		        responseArray[i].type +
+		        "</td><td>" +
+		        responseArray[i].message +
+		        "</td><td>" +
+		        responseArray[i].price +
+		        "</td></tr>";
+		    }
+		    out += "</table>";
+		    document.getElementById("getallcouponstable").innerHTML = out;
+		    var messageBox = document.getElementById("getallcouponsmessagebox");
+			messageBox.innerHTML = "got coupons successfully";
+		} else { 
+				if (this.status == 201){
+					var messageboxHtml = document.getElementById("getallcouponsmessagebox");
+	        		messageboxHtml.innerHTML = xhr.responseText;
+				} else {
+						alert('Action failed: ' + xhr.responseText);
+						}
+				}
+	}	 
+}
 </script>
 
 <div id="Company">
@@ -210,8 +268,7 @@ function DeleteCoupon1() {
 		    <li><a ng-click="myFuncCreateCoupon()" href="#">Create Coupon</a></li>
 		    <li><a ng-click="myFuncUpdateCoupon()" href="#">Update Coupon</a></li>
 		    <li><a ng-click="myFuncFindCoupon()" href="#">Find and Delete Coupon</a></li>
-		    <li><a ng-click="myFuncGetAllCoupons()" href="#">Get All Coupons</a></li>
-		    <li><a ng-click="myFuncGetAllCouponsByType()" href="#">Get All Coupons By Type</a></li>
+		    <li><a ng-click="myFuncGetAllCoupons()" href="#">Get Coupons</a></li>
  		</ul>
 	</nav>
 
@@ -374,25 +431,11 @@ function DeleteCoupon1() {
 		<h1>Get All Coupons</h1>
 			<form action="getallcoupons">
 				<div name= "getallcoupons">
-					Coupon ID: <input type="number" placeholder="Coupon ID" min=1 name="couponId" id="getallcouponscouponid"/> 
+					Please enter Company ID: <input type="number" placeholder="Company ID"  name="companyid" id="getallcouponscompanyid"/>
 					<br/>
-					<br/>
-					Company ID: <input type="number" placeholder="Company ID" min=1 name="companyId" id="getallcouponscompanyid"/>  			
-					<br/>
-					<br/>
-					Title: <input type="text" placeholder="Title"  name="title" id="getallcouponstitle"/> 
-					<br/>
-					<br/>
-					Start Date: <input type="date" placeholder="Start Date"  name="startDate" id="getallcouponsstartdate"/>
-					<br/>
-					<br/>
-					End Date: <input type="date" placeholder="End Date"  name="endDate" id="getallcouponsenddate"/>
-					<br/>
-					<br/>
-					Amount: <input type="number" placeholder="Amount" min=1 name="amount" id="getallcouponsamount"/>
-					<br/>
-					<br/>
-					Type: <select name="Type" id="getallcouponstype"> 
+					<br/> 
+					Please select Type of coupon: <select name="Type" id="getallcouponstype"> 
+					<option></option>
 					<option value="RESTURANT"> RESTURANT </option> 
 					<option value="ELECTRICITY"> ELECTRICITY </option>
 					<option value="FOOD"> FOOD </option> 
@@ -403,77 +446,12 @@ function DeleteCoupon1() {
 					</select>
 					<br/>
 					<br/>
-					Message:
-					<br/>
-					<textarea cols="30" rows="5" id="getallcouponsmessage"> </textarea>
-					<br/>
-					<br/>
-					Price: <input type="number" placeholder="Price" min=0 name="price" id="getallcouponsprice"/>
-					<!-- <br/>
-					<br/>
-					Select an image : <input type="file" name="image" size="45" id="getallcouponsimage"/>  -->
-					<br/>
-					<br/>
-					<br/>
-					<input value="Submit" type="button" onclick="GetAllCouponsCoupon1()"/>
-					<button type="reset" value="Reset">Reset</button>
+					<input value="Click here to get coupons" type="button" onclick="GetAllCoupons1()"/>
 					<br/>
 					<br/>
 					<div id="getallcouponsmessagebox"> <textarea> </textarea></div>
-				</div>
-			</form>		
-</article>
-
-<article ng-show="showMeGetAllCouponsByType">
-		<h1>Get All Coupons By Type</h1>
-			<form action="getallcouponsbytype">
-				<div name= "getallcouponsbytype">
-					Coupon ID: <input type="number" placeholder="Coupon ID" min=1 name="couponId" id="getallcouponsbytypecouponid"/> 
 					<br/>
-					<br/>
-					Company ID: <input type="number" placeholder="Company ID" min=1 name="companyId" id="getallcouponsbytypecompanyid"/>  			
-					<br/>
-					<br/>
-					Title: <input type="text" placeholder="Title"  name="title" id="getallcouponsbytypetitle"/> 
-					<br/>
-					<br/>
-					Start Date: <input type="date" placeholder="Start Date"  name="startDate" id="getallcouponsbytypestartdate"/>
-					<br/>
-					<br/>
-					End Date: <input type="date" placeholder="End Date"  name="endDate" id="getallcouponsbytypeenddate"/>
-					<br/>
-					<br/>
-					Amount: <input type="number" placeholder="Amount" min=1 name="amount" id="getallcouponsbytypeamount"/>
-					<br/>
-					<br/>
-					Type: <select name="Type" id="getallcouponsbytypetype"> 
-					<option value="RESTURANT"> RESTURANT </option> 
-					<option value="ELECTRICITY"> ELECTRICITY </option>
-					<option value="FOOD"> FOOD </option> 
-					<option value="HEALTH"> HEALTH </option> 
-					<option value="SPORTS"> SPORTS </option> 
-					<option value="CAMPING"> CAMPING </option> 
-					<option value="TRAVELLING"> TRAVELLING </option> 
-					</select>
-					<br/>
-					<br/>
-					Message:
-					<br/>
-					<textarea cols="30" rows="5" id="getallcouponsbytypemessage"> </textarea>
-					<br/>
-					<br/>
-					Price: <input type="number" placeholder="Price" min=0 name="price" id="getallcouponsbytypeprice"/>
-					<!-- <br/>
-					<br/>
-					Select an image : <input type="file" name="image" size="45" id="getallcouponsbytypeimage"/>  -->
-					<br/>
-					<br/>
-					<br/>
-					<input value="Submit" type="button" onclick="GetAllCouponsByTypeCoupon1()"/>
-					<button type="reset" value="Reset">Reset</button>
-					<br/>
-					<br/>
-					<div id="getallcouponsbytypemessagebox"> <textarea> </textarea></div>
+					<div id=getallcouponstable> </div>				
 				</div>
 			</form>		
 </article>

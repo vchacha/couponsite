@@ -29,10 +29,10 @@ public class SessionFilter implements Filter {
 		String requestURI = request.getRequestURI();
 
 		if (requestURI.contains("login")) {
-			System.out.println("session login");
+			//System.out.println("session login");
 			HttpSession session = request.getSession();
 			boolean isSessionActive = session == null ? false : true;
-			System.out.println("isSessionActive: " + isSessionActive);
+		//	System.out.println("isSessionActive: " + isSessionActive);
 			if (session != null) {
 				System.out.println("sessioId: " + session.getId());
 			}
@@ -43,10 +43,10 @@ public class SessionFilter implements Filter {
 		HttpSession session = request.getSession(false);
 
 		if (session == null) {
-			System.out.println("session is null:-)");
+			//System.out.println("session is null:-)");
 			response.sendRedirect("http://localhost:8080/jerseyservice/login.html");
 		} else {
-			System.out.println("session Do Filter");
+			//System.out.println("session Do Filter");
 			filterChain.doFilter(servletRequest, servletResponse);
 		}
 

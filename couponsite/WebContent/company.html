@@ -3,8 +3,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script src="js/jquery-1.11.0.min.js"></script>
-    <script src="js/jquery.dataTables.js"></script>
-    
+    <script src="js/jquery.dataTables.js"></script>  
 <head>
 	<style >
 		nav {
@@ -82,7 +81,11 @@ function CreateCoupon1() {
     	var message = $("#createcouponmessage").val();
     	var price = $("#createcouponprice").val();
     	/*var image = $("#createcouponimage").val();*/
-    	
+    	if(couponid =="" || companyid == "" || title == "" || startdate == "" || enddate == "" ||  amount == "" || type == "" || message=="" || price ==""){
+    		var messageBox = document.getElementById("createcouponmessagebox");
+    		messageBox.innerHTML = "To create coupon, please enter all fields";
+    		return;
+    	}
     	xhr = new XMLHttpRequest();
     	var url = "http://localhost:8080/jerseyservice/rest/company/createcoupon/" + couponid + "/" + companyid + "/" + title + "/" + startdate + "/" + enddate + "/" + amount + "/" + type + "/" + message + "/" + price; //+ "/" + image;
     	xhr.open("POST", url, true);
@@ -109,6 +112,11 @@ function UpdateCoupon1() {
 	var price = $("#updatecouponprice").val();
 	/*var image = $("#updatecouponimage").val();*/
 	
+	if(couponid =="" || companyid == "" || title == "" || startdate == "" || enddate == "" ||  amount == "" || type == "" || message=="" || price ==""){
+		var messageBox = document.getElementById("updatecouponmessagebox");
+		messageBox.innerHTML = "To update coupon, please enter all fields";
+		return;
+	}
 	xhr = new XMLHttpRequest();
 	var url = "http://localhost:8080/jerseyservice/rest/company/updatecoupon/" + couponid + "/" + companyid + "/" + title + "/" + startdate + "/" + enddate + "/" + amount + "/" + type + "/" + message + "/" + price; //+ "/" + image;
 	xhr.open("POST", url, true);
@@ -128,6 +136,11 @@ function FindCoupon1() {
 	var extractedCuoponId = $("#findcouponcouponid").val();
 	var extractedCompanyId = $("#findcouponcompanyid").val();
 	xhr = new XMLHttpRequest();
+	if (extractedCuoponId == "" || extractedCompanyId == ""){
+		var messageBox = document.getElementById("findcouponmessagebox");
+		messageBox.innerHTML = "To find company, please enter Coupon ID and Company ID";
+		return;
+	}
 	var url = "http://localhost:8080/jerseyservice/rest/company/getcoupon/" + extractedCuoponId + "/" + extractedCompanyId;
 	xhr.open("GET", url, true);
 	xhr.setRequestHeader("Content-type", "application/json");
@@ -182,6 +195,12 @@ function DeleteCoupon1() {
 	var price = $("#findcouponprice").val();
 	/*var image = $("#findcouponimage").val();*/
 	
+	if(couponid =="" || companyid == "" || title == "" || startdate == "" || enddate == "" ||  amount == "" || type == "" || message=="" || price ==""){
+		var messageBox = document.getElementById("findcouponmessagebox");
+		messageBox.innerHTML = "To delete coupon, please enter Coupon ID and Company ID, and find him";
+		return;
+	}
+	
 	xhr = new XMLHttpRequest();
 	var url = "http://localhost:8080/jerseyservice/rest/company/deletecoupon/" + couponid + "/" + companyid + "/" + title + "/" + startdate + "/" + enddate + "/" + amount + "/" + type + "/" + message + "/" + price; //+ "/" + image;
 	xhr.open("DELETE", url, true);
@@ -200,6 +219,11 @@ function GetAllCoupons1() {
 	var extractedCompanyId = $("#getallcouponscompanyid").val();
 	var extractedType = $("#getallcouponstype").val();
 	xhr = new XMLHttpRequest();
+	if (extractedCompanyId == ""){
+		var messageBox = document.getElementById("getallcouponsmessagebox");
+		messageBox.innerHTML = "Please enter your Company ID";
+		return;
+	}
 	if (extractedType !="" ){
 		var url = "http://localhost:8080/jerseyservice/rest/company/getallcouponsbycompanyandtype/" + extractedCompanyId + "/" + extractedType;
 		} else {
@@ -255,11 +279,24 @@ function GetAllCoupons1() {
 				}
 	}	 
 }
+function logout1() {
+	xhr = new XMLHttpRequest();
+	var url = "http://localhost:8080/jerseyservice/rest/logout";
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-type", "application/json");
+	xhr.onreadystatechange = function () {
+		if (xhr.status == 200) {
+			location.href="login.html";	
+		}
+	}
+	xhr.send();
+}
 </script>
 
 <div id="Company">
 	<header>
    		<h1>Welcome Company Client</h1>
+   		<input type="button" onclick="logout1()" value="Logout"/>
 	</header>
 </div>
 <body ng-app="myApp" ng-controller="myCtrl">
@@ -447,6 +484,7 @@ function GetAllCoupons1() {
 					<br/>
 					<br/>
 					<input value="Click here to get coupons" type="button" onclick="GetAllCoupons1()"/>
+					<button type="reset" value="Reset">Reset</button>
 					<br/>
 					<br/>
 					<div id="getallcouponsmessagebox"> <textarea> </textarea></div>

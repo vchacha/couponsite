@@ -179,6 +179,11 @@ function CreateCompany1() {
 	var companyname = $("#createcompanycompanyname").val();
 	var password = $("#createcompanypassword").val();
 	var email = $("#createcompanyemail").val();
+	if (companyid == "" || companyname == "" || password == "" || email == ""){
+		var messageBox = document.getElementById("createcompanymessagebox");
+		messageBox.innerHTML = "To create company please enter all fields";
+		return;
+	}
 	xhr = new XMLHttpRequest();
 	var url = "http://localhost:8080/jerseyservice/rest/admin/createcompany/" + companyid + "/" + companyname + "/" + password + "/" + email;
 	xhr.open("POST", url, true);
@@ -199,6 +204,11 @@ function UpdateCompany1() {
 	var companyname = $("#updatecompanycompanyname").val();
 	var password = $("#updatecompanypassword").val();
 	var email = $("#updatecompanyemail").val();
+	if (companyid == "" || companyname == "" || password == "" || email == ""){
+		var messageBox = document.getElementById("updatecompanymessagebox");
+		messageBox.innerHTML = "To update company please enter all fields";
+		return;
+	}
 	xhr = new XMLHttpRequest();
 	var url = "http://localhost:8080/jerseyservice/rest/admin/updatecompany/" + companyid + "/" + companyname + "/" + password + "/" + email;
 	xhr.open("POST", url, true);
@@ -223,6 +233,11 @@ var companyid = $("#findcompanycompanyid").val();
 var companyname = $("#findcompanycompanyname").val();
 var password = $("#findcompanypassword").val();
 var email = $("#findcompanyemail").val();
+if(companyid == "" || companyname == "" || password == "" || email == ""){	
+	var messageBox = document.getElementById("findcompanymessagebox");
+	messageBox.innerHTML = "To delete company, please enter Company ID and find her";
+	return;
+}
 xhr = new XMLHttpRequest();
 var url = "http://localhost:8080/jerseyservice/rest/admin/deletecompany/" + companyid + "/" + companyname + "/" + password + "/" + email;
 xhr.open("DELETE", url, true);
@@ -244,6 +259,11 @@ xhr.send();
 }
 function FindCompany1() {
 	var extractedCompanyId = $("#findcompanycompanyid").val();
+	if(extractedCompanyId == ""){
+		var messageBox = document.getElementById("findcompanymessagebox");
+		messageBox.innerHTML = "To find and/or delete company, please enter Company ID";
+		return;
+	}
 	xhr = new XMLHttpRequest();
 	var url = "http://localhost:8080/jerseyservice/rest/admin/getcompany/" + extractedCompanyId;
 	xhr.open("GET", url, true);
@@ -323,6 +343,11 @@ function CreateCustomer1() {
 	var customername = $("#createcustomercustomername").val();
 	var password = $("#createcustomerpassword").val();
 	var email = $("#createcustomeremail").val();
+	if (customerid == "" || customername == "" || password == "" || email == ""){
+		var messageBox = document.getElementById("createcustomermessagebox");
+		messageBox.innerHTML = "To create customer please enter all fields";
+		return;
+	}
 	xhr = new XMLHttpRequest();
 	var url = "http://localhost:8080/jerseyservice/rest/admin/createcustomer/" + customerid + "/" + customername + "/" + password + "/" + email;
 	xhr.open("POST", url, true);
@@ -342,6 +367,11 @@ function UpdateCustomer1() {
 	var customername = $("#updatecustomercustomername").val();
 	var password = $("#updatecustomerpassword").val();
 	var email = $("#updatecustomeremail").val();
+	if (customerid == "" || customername == "" || password == "" || email == ""){
+		var messageBox = document.getElementById("updatecustomermessagebox");
+		messageBox.innerHTML = "To update customer please enter all fields";
+		return;
+	}
 	xhr = new XMLHttpRequest();
 	var url = "http://localhost:8080/jerseyservice/rest/admin/updatecustomer/" + customerid + "/" + customername + "/" + password + "/" + email;
 	xhr.open("POST", url, true);
@@ -366,6 +396,11 @@ var customerid = $("#findcustomercustomerid").val();
 var customername = $("#findcustomercustomername").val();
 var password = $("#findcustomerpassword").val();
 var email = $("#findcustomeremail").val();
+if (customerid == "" || customername == "" || password == "" || email == ""){
+	var messageBox = document.getElementById("findcustomermessagebox");
+	messageBox.innerHTML = "To delete customer please enter all fields and find him";
+	return;
+}
 xhr = new XMLHttpRequest();
 var url = "http://localhost:8080/jerseyservice/rest/admin/deletecustomer/" + customerid + "/" + customername + "/" + password + "/" + email;
 xhr.open("DELETE", url, true);
@@ -387,6 +422,11 @@ xhr.send();
 }
 function FindCustomer1() {
 	var extractedCustomerId = $("#findcustomercustomerid").val();
+	if (extractedCustomerId == ""){
+		var messageBox = document.getElementById("findcustomermessagebox");
+		messageBox.innerHTML = "To find and/or delete customer, please enter all fields";
+		return;
+	}
 	xhr = new XMLHttpRequest();
 	var url = "http://localhost:8080/jerseyservice/rest/admin/getcustomer/" + extractedCustomerId;
 	xhr.open("GET", url, true);
@@ -586,11 +626,25 @@ function GetAllPurchaseCoupons1() {
 				}
 	}	 
 }
+function logout1() {
+	xhr = new XMLHttpRequest();
+	var url = "http://localhost:8080/jerseyservice/rest/logout";
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-type", "application/json");
+	xhr.onreadystatechange = function () {
+		if (xhr.status == 200) {
+			location.href="login.html";	
+		}
+	}
+	xhr.send();
+}
+	
 </script>
 
 <div id="Admin">
 	<header>
    		<h1>Welcome Admin</h1>
+   		<input type="button" onclick="logout1()" value="Logout"/>
 	</header>
 </div>
 <body ng-app="myApp" ng-controller="myCtrl">

@@ -19,25 +19,34 @@ import com.johnbrice.svainer.couponsite.core.logic.exception.LoginException;
  *  
  */
 public class LoginManager {
+	
+	private CouponClientFacade couponClientFacade;
 
 	public CouponClientFacade login(String id, String password, ClientType clientType) {
 		if (isLoginSucceed(id, password, clientType)) {
 			if (clientType.equals(ClientType.ADMIN)) {
-				System.out.println("ADMIN SUCCESS");
-				return new AdminFacade(new CompanyDBDAO(), new CustomerDBDAO(), new CouponDBDAO());
+				//System.out.println("ADMIN SUCCESS");
+				couponClientFacade = new AdminFacade(new CompanyDBDAO(), new CustomerDBDAO(), new CouponDBDAO());
+				return couponClientFacade;
 			}
 
 			if (clientType.equals(ClientType.COMPANY)) {
-				System.out.println("COMPANY SUCCESS");
-				return new CompanyFacade(new CouponDBDAO(), new CompanyDBDAO());
+				//System.out.println("COMPANY SUCCESS");
+				couponClientFacade = new CompanyFacade(new CouponDBDAO(), new CompanyDBDAO());
+				return couponClientFacade;
 			}
 
 			if (clientType.equals(ClientType.CUSTOMER)) {
-				return new CustomerFacade(new CustomerDBDAO());
+				couponClientFacade = new CustomerFacade(new CustomerDBDAO());
+				return couponClientFacade;
 			}
 		}
 		throw new LoginException(
 				"id or/and password are not valid! Please try again");
+	}
+	
+	public CouponClientFacade getCouponClientFacade() {
+		return couponClientFacade;
 	}
 
 	private boolean isLoginSucceed(String id, String password, ClientType clientType) {

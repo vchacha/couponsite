@@ -313,11 +313,11 @@ public class AdminService {
 			return Response.status(500).entity("Wasn't able to find any coupon to this customer").build();
 		}
 }
-	@Path("/hello")
+	/*@Path("/hello")
 	@GET
 	@Produces("application/json")
 	public String helloWorld() {
 		HttpSession session = httpServletRequest.getSession();
 		return "hello world " + "session.id: " + session.getId();
-	}
+	}*/
 }
